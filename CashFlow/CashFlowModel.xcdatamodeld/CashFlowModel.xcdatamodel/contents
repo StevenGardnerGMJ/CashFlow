@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14135" systemVersion="18D109" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Amodel" representedClassName="Amodel" syncable="YES" codeGenerationType="class">
+        <attribute name="myinfo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="nowstatus" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="numbers" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="Bmodel" representedClassName="Bmodel" syncable="YES" codeGenerationType="class"/>
+    <entity name="Cmodel" representedClassName="Cmodel" syncable="YES" codeGenerationType="class"/>
+    <entity name="Timemodel" representedClassName="Timemodel" syncable="YES" codeGenerationType="class">
+        <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Amodel" positionX="-63" positionY="-18" width="128" height="88"/>
+        <element name="Bmodel" positionX="-18" positionY="27" width="128" height="30"/>
+        <element name="Cmodel" positionX="18" positionY="63" width="128" height="30"/>
+        <element name="Timemodel" positionX="-18" positionY="18" width="128" height="60"/>
+    </elements>
+</model>
