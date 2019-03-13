@@ -29,6 +29,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         print("---times---")
         var i = 0
         for key in arrA {
+            // dic  key--arrayvalue
             insertClass(numbers: arrAnumber[i], nowstatus: key, keyArr: ["numbers","nowstatus"], modelname: "Amodel")
             i = i + 1
         }
