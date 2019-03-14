@@ -19,20 +19,15 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     
     
-    let myStateDic = Dictionary<String, Float>()
+    var myStateDic = Dictionary<String, Float>()
     var dic = Dictionary<String, String>()
     let headRUID:String = "headerRUID"
     
     var tableVC = UITableView()
     
     override func viewWillDisappear(_ animated: Bool) {
-        print("---times---")
-        var i = 0
-        for key in arrA {
-            // dic  key--arrayvalue
-            insertClass(numbers: arrAnumber[i], nowstatus: key, keyArr: ["numbers","nowstatus"], modelname: "Amodel")
-            i = i + 1
-        }
+        print("saveAdata")
+       saveAdata()
     }
     
     override func viewDidLoad() {
@@ -40,7 +35,6 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
-        getData()
         
         tableVC = UITableView(frame: self.view.frame, style: .grouped)
         tableVC.delegate = self
@@ -54,14 +48,25 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func getData() {
-        
+        arrMyInfo = ["苹果公司现任CEO","15718867368","成为千万富翁","中国北京"]
         arrAnumber = getClass(modelname: "Amodel")
         if arrAnumber.count != arrA.count {
             for _ in arrA {
-                arrAnumber.append(Float(123))
+                arrAnumber.append(Float(1.00))
             }
+        } else {
+            
         }
-        
+    }
+    
+    func saveAdata() {
+        deleteClass()
+        var i = 0
+        for key in arrA {
+            let arrs = [key,arrAnumber[i]] as [Any]
+            insertClass(arrays: arrs, keyArr: ["status","value"], modelname: "Amodel")
+            i = i + 1
+        }
     }
     
     
@@ -92,7 +97,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         switch indexPath.row {
         case 0:
-            let detailtext:String =  "苹果公司现任CEO"
+            let detailtext:String =  arrMyInfo[0]
             cellA.detailTextLabel?.text = "\(detailtext)"
         default:
             let number = NSNumber(value: arrAnumber[indexPath.row])
@@ -132,15 +137,22 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         alterC.title = "修改\(title)"
         alterC.addTextField { (textF:UITextField) in
             textF.placeholder = "请输入要修改的值"
+            if row == 0 {
+                textF.keyboardType =  .default
+            } else {
+                textF.keyboardType = .decimalPad
+            }
         }
         
         let cancelBtn = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         let sureBtn = UIAlertAction(title: "确定", style: .default, handler: { (action) in
-            let textStr:String = (alterC.textFields?.last?.text)!
+            var textStr:String = (alterC.textFields?.last?.text)!
+            if row == 0 {
+                self.arrMyInfo[0] = textStr
+                textStr = "0.01" } //0号位职业
             let str_double:Double = Double(textStr)!
             let value = Float(str_double)
-            self.arrAnumber[1] = value
-            print(self.arrAnumber)
+            self.arrAnumber[row] = value
             self.tableVC.reloadData()
         })
         alterC.addAction(cancelBtn)

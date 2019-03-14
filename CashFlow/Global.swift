@@ -21,21 +21,81 @@ func getContext() -> NSManagedObjectContext {
 
 //MARK:    修改班级信息
 func modifyClass() {
+    let app = UIApplication.shared.delegate as! AppDelegate
+    let context = getContext()
+    
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Amodel")
+    
+    fetchRequest.predicate = NSPredicate(format: "value = 2", "")
+    
+    
+    
+    // 异步请求由两部分组成：普通的request和completion handler
+    
+    // 返回结果在finalResult中
+    
+    let asyncFecthRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result: NSAsynchronousFetchResult!) in
+        
+        
+        
+        //对返回的数据做处理。
+        
+        let fetchObject  = result.finalResult! as! [Amodel]
+        
+        for c in fetchObject{
+            c.value = 99999
+            app.saveContext()
+            
+        }
+        
+    }
+    
+    
+    
+    // 执行异步请求调用execute
+    
+    do {
+        
+        try context.execute(asyncFecthRequest)
+        
+    } catch  {
+        
+        print("error")
+        
+    }
 }
 //MARK:    删除班级信息
 func deleteClass() -> Void {
+   let app = UIApplication.shared.delegate as! AppDelegate
+   let context = getContext()
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Amodel")
+    let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result:NSAsynchronousFetchResult) in
+        let fetchObject = result.finalResult! as! [Amodel]
+        for c in fetchObject{
+            context.delete(c)
+        }
+        app.saveContext()
+    }
+    
+    
+    do {
+        try context.execute(asyncFetchRequest)
+    } catch  {
+        print("error")
+    }
 }
 
 // 插入信息
-func insertClass(numbers:Float,nowstatus:String,keyArr:Array<String>,modelname:String) {
+func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
     let context = getContext()
     let Entity = NSEntityDescription.entity(forEntityName: modelname, in: context)
     
     let classEntity = NSManagedObject(entity: Entity!, insertInto: context)
     
     
-    classEntity.setValue(numbers, forKey: keyArr[0])
-    classEntity.setValue(nowstatus, forKey: keyArr[1])
+    classEntity.setValue(arrays[0], forKey: keyArr[0])
+    classEntity.setValue(arrays[1], forKey: keyArr[1])
+//    classEntity.setValue(myInfo, forKey: keyArr[3])
     
     
     do {
@@ -48,6 +108,7 @@ func insertClass(numbers:Float,nowstatus:String,keyArr:Array<String>,modelname:S
 
 // 得到信息
 func getClass(modelname:String)-> Array<Float> {
+    print("getClass")
     let context = getContext()
     var arr = Array<Float>()
     
@@ -58,8 +119,8 @@ func getClass(modelname:String)-> Array<Float> {
         let fetchObject = result.finalResult as! [Amodel] // arr数据
         
         for  c in fetchObject{
-            arr.append(c.numbers)
-            print("\(c.nowstatus ?? "")--\(c.numbers)")
+            arr.append(c.value)
+            print("\(c.status ?? "")--\(c.value)")
         }
     }
     do {
