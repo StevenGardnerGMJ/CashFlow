@@ -57,6 +57,8 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         } else {
             
         }
+        modifyClass()
+        
     }
     
     func saveAdata() {
@@ -64,7 +66,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         var i = 0
         for key in arrA {
             let arrs = [key,arrAnumber[i]] as [Any]
-            insertClass(arrays: arrs, keyArr: ["status","value"], modelname: "Amodel")
+            insertClass(arrays: arrs, keyArr: ["status","value"], modelname: "Amodel",myinfo: arrMyInfo[0])
             i = i + 1
         }
     }

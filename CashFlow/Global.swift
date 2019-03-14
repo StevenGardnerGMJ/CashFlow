@@ -28,15 +28,7 @@ func modifyClass() {
     
     fetchRequest.predicate = NSPredicate(format: "value = 2", "")
     
-    
-    
-    // 异步请求由两部分组成：普通的request和completion handler
-    
-    // 返回结果在finalResult中
-    
     let asyncFecthRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result: NSAsynchronousFetchResult!) in
-        
-        
         
         //对返回的数据做处理。
         
@@ -50,18 +42,10 @@ func modifyClass() {
         
     }
     
-    
-    
-    // 执行异步请求调用execute
-    
     do {
-        
         try context.execute(asyncFecthRequest)
-        
     } catch  {
-        
         print("error")
-        
     }
 }
 //MARK:    删除班级信息
@@ -86,16 +70,15 @@ func deleteClass() -> Void {
 }
 
 // 插入信息
-func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
+func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String,myinfo:String) {
     let context = getContext()
     let Entity = NSEntityDescription.entity(forEntityName: modelname, in: context)
     
     let classEntity = NSManagedObject(entity: Entity!, insertInto: context)
     
-    
     classEntity.setValue(arrays[0], forKey: keyArr[0])
     classEntity.setValue(arrays[1], forKey: keyArr[1])
-//    classEntity.setValue(myInfo, forKey: keyArr[3])
+    classEntity.setValue(myinfo, forKey: "myinfo")
     
     
     do {
@@ -120,7 +103,7 @@ func getClass(modelname:String)-> Array<Float> {
         
         for  c in fetchObject{
             arr.append(c.value)
-            print("\(c.status ?? "")--\(c.value)")
+            print("\(c.status ?? "")--\(c.value)--\(c.myinfo ?? "")")
         }
     }
     do {
