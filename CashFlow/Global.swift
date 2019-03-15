@@ -18,6 +18,43 @@ func getContext() -> NSManagedObjectContext {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     return appDelegate.persistentContainer.viewContext
 }
+//MARK:批量更新
+
+func batchUpdate(){
+    
+    let batchUpdate = NSBatchUpdateRequest(entityName: "Amodel")
+    
+    //所要更新的属性 和 更新的值
+    
+    batchUpdate.propertiesToUpdate = ["value": 55555]
+    
+    //被影响的Stores
+    
+    batchUpdate.affectedStores = getContext().persistentStoreCoordinator!.persistentStores
+    
+    //配置返回数据的类型
+    
+    batchUpdate.resultType = .updatedObjectsCountResultType
+    
+
+    //执行批量更新
+    
+    do {
+        
+        let batchResult = try getContext().execute(batchUpdate) as! NSBatchUpdateResult
+        
+        //批量更新的结果，上面resultType类型指定为updatedObjectsCountResultType，所以result显示的为 更新的个数
+        
+        print("\(batchResult.result!)")
+        
+    } catch   {
+        
+        print("error")
+        
+    }
+    
+}
+
 
 //MARK:    统计信息
 func countClass() {
@@ -68,7 +105,7 @@ func countClass() {
     
 }
 
-//MARK:    修改班级信息
+/// MARK: 修改班级信息
 func modifyClass() {
     let app = UIApplication.shared.delegate as! AppDelegate
     let context = getContext()
@@ -139,7 +176,7 @@ func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String,myinfo:
 }
 
 // 得到信息
-func getClass(modelname:String)-> Array<Float> {
+func getClass(modelname:String) { // -> Array<Float>
     print("getClass")
     let context = getContext()
     var arr = Array<Float>()
@@ -149,18 +186,19 @@ func getClass(modelname:String)-> Array<Float> {
     let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result : NSAsynchronousFetchResult!) in
    
         let fetchObject = result.finalResult as! [Amodel] // arr数据
-        
-        for  c in fetchObject{
-            arr.append(c.value)
+        for  c in fetchObject {
+            arr.append(c.value) // BLock内延迟处理
             print("\(c.status ?? "")--\(c.value)--\(c.myinfo ?? "")")
         }
+        
     }
+    // 执行异步请求调用execute
     do {
         try context.execute(asyncFetchRequest)
     } catch  {
         print("error")
     }
-    return arr
+    
 }
 
 

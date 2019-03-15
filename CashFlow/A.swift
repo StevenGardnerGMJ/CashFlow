@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import CoreData
 
 
 class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
@@ -48,8 +48,8 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func getData() {
-        arrMyInfo = ["苹果公司现任CEO","15718867368","成为千万富翁","中国北京"]
-        arrAnumber = getClass(modelname: "Amodel")
+        arrMyInfo = ["苹果公司现任CEO","17611707368","成为千万富翁","中国北京"]
+        getClassA(modelname: "Amodel")
         if arrAnumber.count != arrA.count {
             for _ in arrA {
                 arrAnumber.append(Float(1.00))
@@ -57,7 +57,32 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         } else {
             
         }
-        modifyClass()
+    }
+    
+    func getClassA(modelname:String) { // -> Array<Float>
+        print("getClass")
+        let context = getContext()
+        var arr = Array<Float>()
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Amodel")
+        
+        let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result : NSAsynchronousFetchResult!) in
+            
+            let fetchObject = result.finalResult as! [Amodel] // arr数据
+            for  c in fetchObject {
+                arr.append(c.value) // BLock内延迟处理
+                print("\(c.status ?? "")--\(c.value)--\(c.myinfo ?? "")")
+                
+            }
+            self.arrAnumber = arr
+            self.tableVC.reloadData()
+        }
+        // 执行异步请求调用execute
+        do {
+            try context.execute(asyncFetchRequest)
+        } catch  {
+            print("error")
+        }
         
     }
     
