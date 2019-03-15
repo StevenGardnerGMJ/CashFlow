@@ -19,6 +19,55 @@ func getContext() -> NSManagedObjectContext {
     return appDelegate.persistentContainer.viewContext
 }
 
+//MARK:    统计信息
+func countClass() {
+   
+    let context = getContext()
+   
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Amodel")
+    
+    //请求的描述，按classNo 从小到大排序
+    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "value", ascending: true)]
+    
+    //请求的结果类型
+    //        NSManagedObjectResultType：返回一个managed object（默认值）
+    //        NSCountResultType：返回满足fetch request的object数量
+    //        NSDictionaryResultType：返回字典结果类型
+    //        NSManagedObjectIDResultType：返回唯一的标示符而不是managed object
+    
+    fetchRequest.resultType = .dictionaryResultType
+    
+//创建NSExpressionDescription来请求进行平均值计算，取名为AverageNo，通过这个名字，从fetch请求返回的字典中找到平均值
+    let description = NSExpressionDescription()
+    description.name = "AverageNo"
+    
+    //指定要进行平均值计算的字段名classNo并设置返回值类型
+    let args  = [NSExpression(forKeyPath: "value")]
+    
+    // forFunction参数有sum:求和 count:计算个数 min:最小值 max:最大值 average:平均值等等
+    description.expression = NSExpression(forFunction: "average:", arguments: args)
+    
+    description.expressionResultType = .floatAttributeType
+    
+    // 设置请求的propertiesToFetch属性为description告诉fetchRequest，我们需要对数据进行求平均值
+    
+    fetchRequest.propertiesToFetch = [description]
+    
+    do {
+        
+        let entries =  try context.fetch(fetchRequest)
+        
+        let result = entries.first! as! NSDictionary
+        
+        let averageNo = result["AverageNo"]!
+        
+        print("\(averageNo)")
+    } catch  {
+        print("failed")
+    }
+    
+}
+
 //MARK:    修改班级信息
 func modifyClass() {
     let app = UIApplication.shared.delegate as! AppDelegate
