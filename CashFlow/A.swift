@@ -12,7 +12,8 @@ import CoreData
 
 class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
-    
+    let attributeName = ["status","value","myinfo"]
+    let enteryName    = "Amodel"
     let arrA = ["职业","小孩","工资","持有现金","月收现金","自由进度"]// 主动收入，被动收入
     var arrAnumber = Array<Float>()
     var arrMyInfo = Array<String>()
@@ -48,9 +49,10 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func getData() {
-        arrMyInfo = ["苹果公司现任CEO","17611707368","成为千万富翁","中国北京"]
+        
         getClassA(modelname: "Amodel")
         if arrAnumber.count != arrA.count {
+            arrMyInfo = ["苹果公司现任CEO","17611707368","成为千万富翁","中国北京"]
             for _ in arrA {
                 arrAnumber.append(Float(1.00))
             }
@@ -63,7 +65,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         print("getClass")
         let context = getContext()
         var arr = Array<Float>()
-        
+        var arr2 = Array<String>()
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Amodel")
         
         let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result : NSAsynchronousFetchResult!) in
@@ -71,10 +73,11 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let fetchObject = result.finalResult as! [Amodel] // arr数据
             for  c in fetchObject {
                 arr.append(c.value) // BLock内延迟处理
+                arr2.append(c.myinfo ?? "")
                 print("\(c.status ?? "")--\(c.value)--\(c.myinfo ?? "")")
-                
             }
             self.arrAnumber = arr
+            self.arrMyInfo  = arr2
             self.tableVC.reloadData()
         }
         // 执行异步请求调用execute
@@ -90,8 +93,8 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         deleteClass()
         var i = 0
         for key in arrA {
-            let arrs = [key,arrAnumber[i]] as [Any]
-            insertClass(arrays: arrs, keyArr: ["status","value"], modelname: "Amodel",myinfo: arrMyInfo[0])
+            let arrs = [key,arrAnumber[i],arrMyInfo[i]] as [Any]
+            insertClass(arrays: arrs, keyArr: attributeName, modelname: enteryName)
             i = i + 1
         }
     }
@@ -110,7 +113,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerRUID") as! headerAView
         header.imagV.image = UIImage(named: "现金流headerV")
-        header.titleLab.text = "Steven  Gardner"
+        header.titleLab.text = arrMyInfo[1]
         return header
         
     }
@@ -119,13 +122,19 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
     var cellA = tableView.dequeueReusableCell(withIdentifier: "Cell")!
         cellA = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
+//        cellA.selectionStyle = .none
         cellA.textLabel?.text  = arrA[indexPath.row]
         cellA.imageView?.image = UIImage(named: arrA[indexPath.row])
+        
         
         switch indexPath.row {
         case 0:
             let detailtext:String =  arrMyInfo[0]
             cellA.detailTextLabel?.text = "\(detailtext)"
+        case 5:
+            let number = NSNumber(value: arrAnumber[indexPath.row])
+            let percent = NumberFormatter.localizedString(from: number, number: .percent)
+            cellA.detailTextLabel?.text = percent
         default:
             let number = NSNumber(value: arrAnumber[indexPath.row])
             let detailtext = NumberFormatter.localizedString(from: number, number: .currencyAccounting)
@@ -184,7 +193,11 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         })
         alterC.addAction(cancelBtn)
         alterC.addAction(sureBtn)
-        self.present(alterC, animated: true, completion: nil)
+        
+//        DispatchQueue.main.async {
+            self.present(alterC, animated: true, completion: nil)
+
+        
     }
     
     

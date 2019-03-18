@@ -156,15 +156,28 @@ func deleteClass() -> Void {
 }
 
 // 插入信息
-func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String,myinfo:String) {
+func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
     let context = getContext()
     let Entity = NSEntityDescription.entity(forEntityName: modelname, in: context)
     
     let classEntity = NSManagedObject(entity: Entity!, insertInto: context)
     
-    classEntity.setValue(arrays[0], forKey: keyArr[0])
-    classEntity.setValue(arrays[1], forKey: keyArr[1])
-    classEntity.setValue(myinfo, forKey: "myinfo")
+//    classEntity.setValue(arrays[0], forKey: keyArr[0])
+//    classEntity.setValue(arrays[1], forKey: keyArr[1])
+//    classEntity.setValue(myinfo, forKey: "myinfo")
+    switch keyArr.count {
+    case 3:
+        var i = 0
+        for key in keyArr {
+            classEntity.setValue(arrays[i], forKey: key)
+            i = i + 1
+        }
+    case 2:
+        classEntity.setValue(arrays[0], forKey: keyArr[0])
+        classEntity.setValue(arrays[1], forKey: keyArr[1])
+    default:
+        print("插入信息")
+    }
     
     
     do {
@@ -180,7 +193,6 @@ func getClass(modelname:String) { // -> Array<Float>
     print("getClass")
     let context = getContext()
     var arr = Array<Float>()
-    
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Amodel")
     
     let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result : NSAsynchronousFetchResult!) in
