@@ -239,8 +239,9 @@ func getImagewithcolor(color:UIColor) -> UIImage {
     
     return image!
 }
-public let default_H = 40
-public let default_w = 200
+public let default_H:CGFloat = 40
+public let default_row_H:CGFloat = 64
+public let default_w:CGFloat = 200
 
 
 

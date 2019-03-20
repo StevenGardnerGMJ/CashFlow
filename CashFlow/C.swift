@@ -10,7 +10,7 @@ import UIKit
 
 class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
-    //
+ 
    //
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
@@ -129,8 +129,6 @@ class headerCView: UITableViewHeaderFooterView {
         contentBtn.layer.masksToBounds = true
         contentBtn.layer.borderColor = UIColor.gray.cgColor
         contentBtn.layer.borderWidth = 1
-        
-        
     }
     
 }
