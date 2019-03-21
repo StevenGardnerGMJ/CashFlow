@@ -5,20 +5,46 @@
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="Bmodel" representedClassName="Bmodel" syncable="YES" codeGenerationType="class"/>
-    <entity name="Cmodel" representedClassName="Cmodel" syncable="YES" codeGenerationType="class"/>
+    <entity name="Assets" representedClassName="Assets" syncable="YES" codeGenerationType="class">
+        <attribute name="keyname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="Bmodel" representedClassName="Bmodel" syncable="YES" codeGenerationType="class">
+        <attribute name="income" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="outcome" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="Cmodel" representedClassName="Cmodel" syncable="YES" codeGenerationType="class">
+        <attribute name="assets" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="liabilities" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="relations" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="Income" representedClassName="Income" syncable="YES" codeGenerationType="class">
+        <attribute name="keyname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="Liabilities" representedClassName="Liabilities" syncable="YES" codeGenerationType="class"/>
     <entity name="Myinfo" representedClassName="Myinfo" syncable="YES" codeGenerationType="class">
         <attribute name="person" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Outcome" representedClassName="Outcome" syncable="YES" codeGenerationType="class">
+        <attribute name="keyname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
+    <entity name="Relations" representedClassName="Relations" syncable="YES" codeGenerationType="class"/>
     <entity name="Timemodel" representedClassName="Timemodel" syncable="YES" codeGenerationType="class">
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
     </entity>
     <elements>
         <element name="Amodel" positionX="-63" positionY="-18" width="128" height="90"/>
-        <element name="Bmodel" positionX="-18" positionY="27" width="128" height="30"/>
-        <element name="Cmodel" positionX="18" positionY="63" width="128" height="30"/>
+        <element name="Bmodel" positionX="-18" positionY="27" width="128" height="75"/>
+        <element name="Cmodel" positionX="18" positionY="63" width="128" height="90"/>
         <element name="Timemodel" positionX="-18" positionY="18" width="128" height="60"/>
         <element name="Myinfo" positionX="-18" positionY="18" width="128" height="30"/>
+        <element name="Income" positionX="-9" positionY="27" width="128" height="75"/>
+        <element name="Outcome" positionX="0" positionY="36" width="128" height="75"/>
+        <element name="Assets" positionX="9" positionY="72" width="128" height="75"/>
+        <element name="Liabilities" positionX="18" positionY="81" width="128" height="45"/>
+        <element name="Relations" positionX="27" positionY="90" width="128" height="45"/>
     </elements>
 </model>

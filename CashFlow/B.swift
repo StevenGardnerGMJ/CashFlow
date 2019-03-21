@@ -5,8 +5,10 @@
 //  Created by David on 2019/1/17.
 //  Copyright © 2019年 葛茂菁. All rights reserved.
 //
+//  三方库模仿Mail.app的SwipeCellKit
 
 import UIKit
+
 
 class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -23,6 +25,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
             print("A清除")
         }
         let editAction = UITableViewRowAction(style: .default, title: "编辑") { (action, indexpath) in
+            self.showAlter()
             print("编辑")
         }
         let moreAction = UITableViewRowAction(style: .normal, title: "更多") { (action, indexpath) in
@@ -110,6 +113,10 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableV.register(headerAView.self, forHeaderFooterViewReuseIdentifier: "headerB")
         tableV.register(headerBView.self, forHeaderFooterViewReuseIdentifier: "headerC")
         view.addSubview(tableV)
+    }
+    
+    func showAlter() {
+        print("编辑弹窗")
     }
     
     func getData(arr:Array<String>) -> Array<String> {

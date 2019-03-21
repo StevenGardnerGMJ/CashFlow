@@ -150,7 +150,6 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleteRowAction = UITableViewRowAction(style: .destructive, title: "清除") { (action, indexPath) in
             print("A清除")
-            self.getData()
         }
         let editRowAction = UITableViewRowAction(style: .default, title: "编辑") { (action, indexPath) in
             print("B编辑")
