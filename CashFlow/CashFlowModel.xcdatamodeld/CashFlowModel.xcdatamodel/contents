@@ -22,7 +22,10 @@
         <attribute name="keyname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="Liabilities" representedClassName="Liabilities" syncable="YES" codeGenerationType="class"/>
+    <entity name="Liabilities" representedClassName="Liabilities" syncable="YES" codeGenerationType="class">
+        <attribute name="keyname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
     <entity name="Myinfo" representedClassName="Myinfo" syncable="YES" codeGenerationType="class">
         <attribute name="person" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
@@ -31,10 +34,14 @@
         <attribute name="keyname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="Relations" representedClassName="Relations" syncable="YES" codeGenerationType="class"/>
+    <entity name="Relations" representedClassName="Relations" syncable="YES" codeGenerationType="class">
+        <attribute name="business" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dates" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
     <entity name="Timemodel" representedClassName="Timemodel" syncable="YES" codeGenerationType="class">
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
     </entity>
+    <configuration name="ConfigurationA"/>
     <elements>
         <element name="Amodel" positionX="-63" positionY="-18" width="128" height="90"/>
         <element name="Bmodel" positionX="-18" positionY="27" width="128" height="75"/>
@@ -44,7 +51,7 @@
         <element name="Income" positionX="-9" positionY="27" width="128" height="75"/>
         <element name="Outcome" positionX="0" positionY="36" width="128" height="75"/>
         <element name="Assets" positionX="9" positionY="72" width="128" height="75"/>
-        <element name="Liabilities" positionX="18" positionY="81" width="128" height="45"/>
-        <element name="Relations" positionX="27" positionY="90" width="128" height="45"/>
+        <element name="Liabilities" positionX="18" positionY="81" width="128" height="73"/>
+        <element name="Relations" positionX="27" positionY="90" width="128" height="73"/>
     </elements>
 </model>

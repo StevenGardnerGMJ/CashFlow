@@ -10,7 +10,30 @@ import UIKit
 
 class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
- 
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && indexPath.row == 2 {
+            print("----3----3333---333---")
+            let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 160))
+            datePicker.locale = .current //Locale(identifier:"zh_CN")
+            datePicker.timeZone = NSTimeZone.system
+            datePicker.layer.borderWidth = 2
+            datePicker.layer.masksToBounds = true
+            datePicker.layer.borderColor = UIColor.lightGray.cgColor
+            datePicker.datePickerMode = .date
+            datePicker.addTarget(self, action: #selector(choseDate), for: .valueChanged)
+           
+        }
+    }
+    @objc func choseDate(datePicker:UIDatePicker) {
+        let choseDate = datePicker.date
+        let dateFormater = DateFormatter.init()
+        dateFormater.dateFormat = "YYYY-MM-dd HH-mm-ss"
+        print(dateFormater.string(from: choseDate))
+    }
+    
+    
+    
    //
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
@@ -73,11 +96,16 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         return cell!
     }
     
+
+    
     
     /// 资产
     let assets = ["总成本","股票","基金","银行存款","银行存单","房地产","公寓","商铺","企业投资","其他C"]
     /// 负债
     let liabilities = ["总贷款","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他C"]
+    // 人情往来 relations
+    let relations = ["李四总送来五十大寿礼金6万","张三总送来53度飞天茅台一箱美元教育金券5w"]
+    let relatDate = Array<Date>()// 日期
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,6 +126,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
 }
+
 class headerCView: UITableViewHeaderFooterView {
     let imageV = UIImageView()
     let titleL = UILabel()
