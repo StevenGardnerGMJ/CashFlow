@@ -12,6 +12,7 @@ class C1: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.title = "C1"
         self.navigationItem.rightBarButtonItem = 	UIBarButtonItem(image: UIImage(named: "增加"), style: .plain, target: self, action: #selector(addRelations))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "c1reuse")
     }

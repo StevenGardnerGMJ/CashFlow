@@ -27,7 +27,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             self.view.addSubview(datePicker)
         } else {
             let c1VC = C1.init()
-            self.present(c1VC, animated: true, completion: nil)
+            self.navigationController?.pushViewController(c1VC, animated: true)
         }
     }
     
