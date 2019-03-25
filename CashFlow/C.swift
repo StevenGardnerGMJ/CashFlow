@@ -25,9 +25,12 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             datePicker.datePickerMode = .date
             datePicker.addTarget(self, action: #selector(choseDate), for: .valueChanged)
             self.view.addSubview(datePicker)
-           
+        } else {
+            let c1VC = C1.init()
+            self.present(c1VC, animated: true, completion: nil)
         }
     }
+    
     @objc func choseDate(datePicker:UIDatePicker) {
         let choseDate = datePicker.date
         let dateFormater = DateFormatter.init()

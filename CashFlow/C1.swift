@@ -13,6 +13,7 @@ class C1: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.rightBarButtonItem = 	UIBarButtonItem(image: UIImage(named: "增加"), style: .plain, target: self, action: #selector(addRelations))
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "c1reuse")
     }
 
     @objc func addRelations() {
@@ -20,6 +21,10 @@ class C1: UITableViewController {
     
     }
     // MARK: - Table view data source
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 64
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -33,19 +38,50 @@ class C1: UITableViewController {
 
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    var cell = tableView.dequeueReusableCell(withIdentifier: "c1reuse", for: indexPath)
-        cell = UITableViewCell.init(style: .value1, reuseIdentifier: "c1reuse")
-        cell.textLabel?.text = "c1"
+        var cell = tableView.dequeueReusableCell(withIdentifier: "c1reuse")!
+        cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: "c1reuse")
+        cell.textLabel?.text = "张三总送来53度飞天茅台一箱美元教育金券5w"
+        cell.detailTextLabel?.text = "2019-03-25"
         return cell
     }
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         print("leadingSwipeActions")
-        return true
+        let action = UIContextualAction(style: .normal, title: "Mark") { (action, view, handler) in
+            self.updateMarkState(for: indexPath)
+            handler(true)
+        }
+        action.backgroundColor = UIColor.green
+        
+        if markState(for: indexPath) {
+            action.title = "Unmark"
+            action.backgroundColor = UIColor.green
+        }
+        
+        let configuration = UISwipeActionsConfiguration(actions: [action])
+        return configuration
     }
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         print("trailingSwipeActions")
+        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handler) in
+            self.removeItem(at: indexPath)
+            handler(true)
+        }
+        
+        let configuration = UISwipeActionsConfiguration(actions: [action])
+        return configuration
+        
+    }
+    func  updateMarkState(for: IndexPath) {
+        
+    }
+    
+    func removeItem(at: IndexPath) {
+        
+    }
+    func markState(for: IndexPath) -> Bool {
         return true
     }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
