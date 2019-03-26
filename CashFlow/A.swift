@@ -16,7 +16,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let enteryName    = "Amodel"
     let arrA = ["职业","小孩","工资","持有现金","月收现金","自由进度"]// 主动收入，被动收入
     var arrAnumber = Array<Float>()
-    var arrMyInfo = Array<String>()
+    var arrMyInfo  = Array<String>()
     
     
     
@@ -28,7 +28,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     override func viewWillDisappear(_ animated: Bool) {
         print("saveAdata")
-       saveAdata()
+        saveAdata()
     }
     
     override func viewDidLoad() {
@@ -59,6 +59,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         } else {
             
         }
+        self.tableVC.reloadData()
     }
     
     func getClassA(modelname:String) { // -> Array<Float>
@@ -75,6 +76,12 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 arr.append(c.value) // BLock内延迟处理
                 arr2.append(c.myinfo ?? "")
                 print("\(c.status ?? "")--\(c.value)--\(c.myinfo ?? "")")
+            }
+            guard arr.count == 0 {
+                
+            }
+            guard arr2.count == 0 {
+                
             }
             self.arrAnumber = arr
             self.arrMyInfo  = arr2
@@ -129,8 +136,14 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         switch indexPath.row {
         case 0:
-            let detailtext:String =  arrMyInfo[0]
-            cellA.detailTextLabel?.text = "\(detailtext)"
+            guard arrMyInfo.count == 0 else {
+            let detailtext = arrMyInfo[0]
+                
+                cellA.detailTextLabel?.text = "\(detailtext)"
+                print("\(detailtext)")
+                return cellA
+            }
+            cellA.detailTextLabel?.text = "C---1"
         case 5:
             let number = NSNumber(value: arrAnumber[indexPath.row])
             let percent = NumberFormatter.localizedString(from: number, number: .percent)
@@ -188,7 +201,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let str_double:Double = Double(textStr)!
             let value = Float(str_double)
             self.arrAnumber[row] = value
-            self.tableVC.reloadData()
+            
         })
         alterC.addAction(cancelBtn)
         alterC.addAction(sureBtn)

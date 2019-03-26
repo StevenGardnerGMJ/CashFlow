@@ -9,16 +9,29 @@
 import UIKit
 
 class C1: UITableViewController {
+    
+    let reuseID = "cellC1"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.title = "C1"
         self.navigationItem.rightBarButtonItem = 	UIBarButtonItem(image: UIImage(named: "增加"), style: .plain, target: self, action: #selector(addRelations))
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "c1reuse")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseID)
     }
 
     @objc func addRelations() {
-        print("添加事件")
+        print("----添加时间----")
+        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 160))
+        datePicker.center = self.view.center
+        datePicker.backgroundColor = .white
+        datePicker.locale = Locale(identifier:"zh_CN")
+        datePicker.timeZone = NSTimeZone.system
+        datePicker.layer.borderWidth = 2
+        datePicker.layer.masksToBounds = true
+        datePicker.layer.borderColor = UIColor.lightGray.cgColor
+        datePicker.datePickerMode = .date
+        datePicker.addTarget(self, action: #selector(choseDate), for: .valueChanged)
+        self.view.addSubview(datePicker)
     
     }
     // MARK: - Table view data source
@@ -39,8 +52,8 @@ class C1: UITableViewController {
 
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "c1reuse")!
-        cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: "c1reuse")
+        var cell = tableView.dequeueReusableCell(withIdentifier: reuseID)!
+        cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: reuseID)
         cell.textLabel?.text = "张三总送来53度飞天茅台一箱美元教育金券5w"
         cell.detailTextLabel?.text = "2019-03-25"
         return cell
@@ -81,6 +94,12 @@ class C1: UITableViewController {
     }
     func markState(for: IndexPath) -> Bool {
         return true
+    }
+    @objc func choseDate(datePicker:UIDatePicker) {
+        let choseDate = datePicker.date
+        let dateFormater = DateFormatter.init()
+        dateFormater.dateFormat = "YYYY-MM-dd HH-mm-ss"
+        print(dateFormater.string(from: choseDate))
     }
     
     /*

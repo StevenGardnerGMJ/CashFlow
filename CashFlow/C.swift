@@ -13,30 +13,14 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 2 {
-            print("----3----3333---333---")
-            let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 160))
-            datePicker.center = self.view.center
-            datePicker.backgroundColor = .white
-            datePicker.locale = Locale(identifier:"zh_CN")
-            datePicker.timeZone = NSTimeZone.system
-            datePicker.layer.borderWidth = 2
-            datePicker.layer.masksToBounds = true
-            datePicker.layer.borderColor = UIColor.lightGray.cgColor
-            datePicker.datePickerMode = .date
-            datePicker.addTarget(self, action: #selector(choseDate), for: .valueChanged)
-            self.view.addSubview(datePicker)
-        } else {
             let c1VC = C1.init()
             self.navigationController?.pushViewController(c1VC, animated: true)
+        } else {
+            
         }
     }
     
-    @objc func choseDate(datePicker:UIDatePicker) {
-        let choseDate = datePicker.date
-        let dateFormater = DateFormatter.init()
-        dateFormater.dateFormat = "YYYY-MM-dd HH-mm-ss"
-        print(dateFormater.string(from: choseDate))
-    }
+    
     
     
     
@@ -82,8 +66,10 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellC")
-        
+        var cell = tableView.dequeueReusableCell(withIdentifier: "cellC")
+        cell = UITableViewCell(style: .value1, reuseIdentifier: "cellC")
+        cell?.selectionStyle = .none
+        cell?.detailTextLabel?.text = "￥10000"
         if indexPath.section == 0 {
             if indexPath.row == 0 {
                 cell?.textLabel?.text = "总资产"
