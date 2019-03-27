@@ -18,7 +18,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var arrAnumber = Array<Float>()
     var arrMyInfo  = Array<String>()
     
-    
+    let arrDefault = ["苹果公司现任CEO","steven@gmail.com","成为富翁","中国北京","17611707368","请叫我殿下"]
     
     var myStateDic = Dictionary<String, Float>()
     var dic = Dictionary<String, String>()
@@ -52,9 +52,9 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         getClassA(modelname: "Amodel")
         if arrAnumber.count != arrA.count {
-            arrMyInfo = ["苹果公司现任CEO","17611707368","成为千万富翁","中国北京"]
+            arrMyInfo = arrDefault
             for _ in arrA {
-                arrAnumber.append(Float(1.00))
+                arrAnumber.append(Float(1.00))// default
             }
         } else {
             
@@ -77,14 +77,11 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 arr2.append(c.myinfo ?? "")
                 print("\(c.status ?? "")--\(c.value)--\(c.myinfo ?? "")")
             }
-            guard arr.count == 0 {
-                
+            guard arr.count == 0, arr2.count == 0 else {
+                self.arrAnumber = arr
+                self.arrMyInfo  = arr2
+                return
             }
-            guard arr2.count == 0 {
-                
-            }
-            self.arrAnumber = arr
-            self.arrMyInfo  = arr2
             self.tableVC.reloadData()
         }
         // 执行异步请求调用execute
@@ -129,21 +126,14 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
     var cellA = tableView.dequeueReusableCell(withIdentifier: "Cell")!
         cellA = UITableViewCell(style: .value1, reuseIdentifier: "Cell")
-//        cellA.selectionStyle = .none
         cellA.textLabel?.text  = arrA[indexPath.row]
         cellA.imageView?.image = UIImage(named: arrA[indexPath.row])
         
         
         switch indexPath.row {
         case 0:
-            guard arrMyInfo.count == 0 else {
             let detailtext = arrMyInfo[0]
-                
-                cellA.detailTextLabel?.text = "\(detailtext)"
-                print("\(detailtext)")
-                return cellA
-            }
-            cellA.detailTextLabel?.text = "C---1"
+            cellA.detailTextLabel?.text = "\(detailtext)"
         case 5:
             let number = NSNumber(value: arrAnumber[indexPath.row])
             let percent = NumberFormatter.localizedString(from: number, number: .percent)
@@ -201,7 +191,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let str_double:Double = Double(textStr)!
             let value = Float(str_double)
             self.arrAnumber[row] = value
-            
+           self.tableVC.reloadData()
         })
         alterC.addAction(cancelBtn)
         alterC.addAction(sureBtn)

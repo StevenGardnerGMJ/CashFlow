@@ -9,7 +9,16 @@
 import UIKit
 
 class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
-
+    
+    let arrTotal = ["总资产","总负债","总人情"]
+    /// 资产
+    let assets = ["总资产","股票","基金","银行存款","银行存单","房地产","公寓","商铺","企业投资","其他C"]
+    /// 负债
+    let liabilities = ["总贷款","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他C"]
+    // 人情往来 relations
+    let relations = ["李四总送来五十大寿礼金6万","张三总送来53度飞天茅台一箱美元教育金券5w"]
+    let relatDate = Array<Date>()// 日期
+    
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 2 {
@@ -20,11 +29,11 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         }
     }
     
-    
-    
-    
-    
    //
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 64 
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return 200
@@ -71,13 +80,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         cell?.selectionStyle = .none
         cell?.detailTextLabel?.text = "￥10000"
         if indexPath.section == 0 {
-            if indexPath.row == 0 {
-                cell?.textLabel?.text = "总资产"
-            } else if indexPath.row == 1 {
-                cell?.textLabel?.text = "总负债"
-            } else {
-                cell?.textLabel?.text = "总人情"
-            }
+            cell?.textLabel?.text = arrTotal[indexPath.row]
         } else if indexPath.section == 1 {
             // 资产
             cell?.textLabel?.text = assets[indexPath.row]
@@ -85,19 +88,12 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             // 负债
             cell?.textLabel?.text =   liabilities[indexPath.row]
         }
+        let nameStr = cell?.textLabel?.text ?? ""
+        cell?.imageView?.image = UIImage(named: nameStr)
         return cell!
     }
     
 
-    
-    
-    /// 资产
-    let assets = ["总成本","股票","基金","银行存款","银行存单","房地产","公寓","商铺","企业投资","其他C"]
-    /// 负债
-    let liabilities = ["总贷款","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他C"]
-    // 人情往来 relations
-    let relations = ["李四总送来五十大寿礼金6万","张三总送来53度飞天茅台一箱美元教育金券5w"]
-    let relatDate = Array<Date>()// 日期
     
     override func viewDidLoad() {
         super.viewDidLoad()
