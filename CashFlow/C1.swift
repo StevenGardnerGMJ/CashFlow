@@ -11,12 +11,18 @@ import UIKit
 class C1: UITableViewController {
     
     let reuseID = "cellC1"
+    var arrC1   = Array<String>()
+    var datePickerVisible:Bool = false
+    var defaultArr = ["张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        arrC1 = defaultArr
         self.navigationController?.title = "C1"
         self.navigationItem.rightBarButtonItem = 	UIBarButtonItem(image: UIImage(named: "增加"), style: .plain, target: self, action: #selector(addRelations))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseID)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reDatePicker")
+        
     }
 
     @objc func addRelations() {
@@ -37,31 +43,87 @@ class C1: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 64
+        if indexPath.section == 0 && indexPath.row == 2 {
+            return 216
+        } else {
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+        
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 10
+        if section == 0 && datePickerVisible {
+            return 3
+        } else {
+            return super.tableView(tableView, numberOfRowsInSection: section)//arrC1.count
+        }
+       
     }
-
+    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
+        if indexPath.section == 0 && indexPath.row == 2 {
+            let newIndexPath = IndexPath(row: 0, section: indexPath.section)
+            return super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
+        } else {
+            return super.tableView(tableView, indentationLevelForRowAt: indexPath)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 && indexPath.row == 1 {
+            if !datePickerVisible {
+                self.showDatePicker()
+            } else {
+                self.hideDatePicker()
+            }
+        }
+    }
+    func showDatePicker() {
+        datePickerVisible = true
+        let indexPathDatePicker = IndexPath(row: 2, section: 0)
+        self.tableView.insertRows(at: [indexPathDatePicker],
+                                  with: .automatic)
+    }
+    func hideDatePicker() {
+        datePickerVisible = false
+        let indexPathDatePicker = IndexPath(row: 2, section: 0)
+        self.tableView.deleteRows(at: [indexPathDatePicker],
+                                  with: .fade)
+        
+    }
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: reuseID)!
-        cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: reuseID)
-        cell.textLabel?.text = "张三总送来53度飞天茅台一箱美元教育金券5w"
-        cell.detailTextLabel?.text = "2019-03-25"
-        return cell
+        if indexPath.row == 1 {
+            let cellD = tableView.dequeueReusableCell(withIdentifier: "reDatePicker")
+            let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 216))
+            datePicker.tag = 100
+            datePicker.locale = Locale(identifier: "zh_CN")
+            cellD?.contentView.addSubview(datePicker)
+            datePicker.addTarget(self, action:#selector(dateChanged(_:)),
+                                 for: .valueChanged)
+            return cellD!
+        }else {
+            var cell = tableView.dequeueReusableCell(withIdentifier: reuseID)!
+            cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: reuseID)
+            cell.textLabel?.text = arrC1[indexPath.row]
+            cell.detailTextLabel?.text = "2019-03-25"
+            return cell
+//            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+    }
+    @objc func dateChanged(_ dateChanged:UIDatePicker) -> Void {
+        let formatter = DateFormatter()
+        //日期样式
+        formatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
+        print(formatter.dateFormat)
     }
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         print("leadingSwipeActions")
         let action = UIContextualAction(style: .normal, title: "Mark") { (action, view, handler) in
-            self.updateMarkState(for: indexPath)
+            self.updateMarkState(indexP:indexPath)
             handler(true)
         }
         action.backgroundColor = UIColor.green
@@ -85,12 +147,16 @@ class C1: UITableViewController {
         return configuration
         
     }
-    func  updateMarkState(for: IndexPath) {
-        
+    func  updateMarkState(indexP: IndexPath) {
+//        defaultArr.append("\(indexP.row)")
+        defaultArr.insert("\(indexP.row)", at: indexP.row)
+        tableView.reloadData()
     }
     
     func removeItem(at: IndexPath) {
-        
+        print("删除")
+        defaultArr.remove(at: at.row)
+        tableView.reloadData()
     }
     func markState(for: IndexPath) -> Bool {
         return true

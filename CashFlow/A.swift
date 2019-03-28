@@ -18,7 +18,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var arrAnumber = Array<Float>()
     var arrMyInfo  = Array<String>()
     
-    let arrDefault = ["苹果公司现任CEO","steven@gmail.com","成为富翁","中国北京","17611707368","请叫我殿下"]
+    let arrDefault = ["职业","E-mail","生活目标","常驻地","电话","昵称"]
     
     var myStateDic = Dictionary<String, Float>()
     var dic = Dictionary<String, String>()
@@ -52,12 +52,10 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         getClassA(modelname: "Amodel")
         if arrAnumber.count != arrA.count {
-            arrMyInfo = arrDefault
             for _ in arrA {
                 arrAnumber.append(Float(1.00))// default
+                arrMyInfo.append("苹果公司现任CEO")
             }
-        } else {
-            
         }
         self.tableVC.reloadData()
     }
@@ -166,6 +164,9 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         editRowAction.backgroundColor   = UIColor.gray
        
         return [deleteRowAction,editRowAction,topRowAction]
+    }
+    func destructive() {
+    
     }
     
     
