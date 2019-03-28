@@ -27,17 +27,17 @@ class C1: UITableViewController {
 
     @objc func addRelations() {
         print("----添加时间----")
-        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 160))
-        datePicker.center = self.view.center
-        datePicker.backgroundColor = .white
-        datePicker.locale = Locale(identifier:"zh_CN")
-        datePicker.timeZone = NSTimeZone.system
-        datePicker.layer.borderWidth = 2
-        datePicker.layer.masksToBounds = true
-        datePicker.layer.borderColor = UIColor.lightGray.cgColor
-        datePicker.datePickerMode = .date
-        datePicker.addTarget(self, action: #selector(choseDate), for: .valueChanged)
-        self.view.addSubview(datePicker)
+//        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 160))
+//        datePicker.center = self.view.center
+//        datePicker.backgroundColor = .white
+//        datePicker.locale = Locale(identifier:"zh_CN")
+//        datePicker.timeZone = NSTimeZone.system
+//        datePicker.layer.borderWidth = 2
+//        datePicker.layer.masksToBounds = true
+//        datePicker.layer.borderColor = UIColor.lightGray.cgColor
+//        datePicker.datePickerMode = .date
+//        datePicker.addTarget(self, action: #selector(choseDate), for: .valueChanged)
+//        self.view.addSubview(datePicker)
     
     }
     // MARK: - Table view data source
@@ -46,7 +46,7 @@ class C1: UITableViewController {
         if indexPath.section == 0 && indexPath.row == 2 {
             return 216
         } else {
-            return super.tableView(tableView, heightForRowAt: indexPath)
+            return 64//super.tableView(tableView, heightForRowAt: indexPath)
         }
     }
 
@@ -59,7 +59,7 @@ class C1: UITableViewController {
         if section == 0 && datePickerVisible {
             return 3
         } else {
-            return super.tableView(tableView, numberOfRowsInSection: section)//arrC1.count
+            return arrC1.count//super.tableView(tableView, numberOfRowsInSection: section)
         }
        
     }
@@ -69,6 +69,7 @@ class C1: UITableViewController {
             return super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
         } else {
             return super.tableView(tableView, indentationLevelForRowAt: indexPath)
+            //indexPath.row
         }
     }
     
