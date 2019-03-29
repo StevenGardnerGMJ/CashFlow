@@ -13,13 +13,14 @@ class C1: UITableViewController {
     let reuseID = "cellC1"
     var arrC1   = Array<String>()
     var datePickerVisible:Bool = false
+    var sIndex = 1
     var defaultArr = ["张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
         arrC1 = defaultArr
         self.navigationController?.title = "C1"
-        self.navigationItem.rightBarButtonItem = 	UIBarButtonItem(image: UIImage(named: "增加"), style: .plain, target: self, action: #selector(addRelations))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "增加"), style: .plain, target: self, action: #selector(addRelations))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseID)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reDatePicker")
         
@@ -43,7 +44,7 @@ class C1: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 && indexPath.row == 2 {
+        if indexPath.section == 0 && indexPath.row == sIndex + 1 {
             return 216
         } else {
             return 64//super.tableView(tableView, heightForRowAt: indexPath)
@@ -57,9 +58,9 @@ class C1: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 && datePickerVisible {
-            return 3//arrC1.count
+            return sIndex + 2//arrC1.count
         } else {
-            return 2//super.tableView(tableView, numberOfRowsInSection: section)
+            return sIndex + 1//super.tableView(tableView, numberOfRowsInSection: section)
         }
        
     }
@@ -67,7 +68,10 @@ class C1: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section == 0 && indexPath.row == 1 {
+        sIndex = indexPath.row
+        tableView.reloadData()
+        
+        if indexPath.section == 0 && indexPath.row == sIndex {
             if !datePickerVisible {
                 self.showDatePicker()
             } else {
@@ -77,14 +81,14 @@ class C1: UITableViewController {
     }
     func showDatePicker() {
         datePickerVisible = true
-        let indexPathDatePicker = IndexPath(row: 2, section: 0)
+        let indexPathDatePicker = IndexPath(row: sIndex + 1, section: 0)
         self.tableView.insertRows(at: [indexPathDatePicker],
                                   with: .automatic)
     }
     func hideDatePicker() {
       if datePickerVisible {
         datePickerVisible = false
-        let indexPathDatePicker = IndexPath(row: 2, section: 0)
+        let indexPathDatePicker = IndexPath(row: sIndex + 1, section: 0)
         self.tableView.deleteRows(at: [indexPathDatePicker],
                                   with: .fade)
         }
@@ -92,7 +96,7 @@ class C1: UITableViewController {
     }
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 && indexPath.row == 2 {
+        if indexPath.section == 0 && indexPath.row == sIndex + 1 {
         
             var cellD = tableView.dequeueReusableCell(withIdentifier: "reDatePicker")
 //            if cellD == nil {
@@ -127,15 +131,17 @@ class C1: UITableViewController {
        print(dateFormater.string(from: choseDate))
     }
     
-    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
-        if indexPath.section == 0 && indexPath.row == 2 {
-            let newIndexPath = IndexPath(row: 0, section: indexPath.section)
-            return super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
-        } else {
-            return super.tableView(tableView, indentationLevelForRowAt: indexPath)
-            //indexPath.row
-        }
-    }
+//    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
+//        if indexPath.section == 0 && indexPath.row == sIndex + 1 {
+//            let newIndexPath = IndexPath(row: 0, section: indexPath.section)
+//            print("newIndexPath->\(newIndexPath)")
+//            return 3//super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
+//        } else {
+//            let i = super.tableView(tableView, indentationLevelForRowAt: indexPath)
+//            print("i->\(i)")
+//            return 2//super.tableView(tableView, indentationLevelForRowAt: indexPath)
+//        }
+//    }
     
     
 //    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
