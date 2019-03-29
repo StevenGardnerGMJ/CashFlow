@@ -57,23 +57,16 @@ class C1: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 && datePickerVisible {
-            return 3
+            return 3//arrC1.count
         } else {
-            return arrC1.count//super.tableView(tableView, numberOfRowsInSection: section)
+            return 2//super.tableView(tableView, numberOfRowsInSection: section)
         }
        
     }
-    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
-        if indexPath.section == 0 && indexPath.row == 2 {
-            let newIndexPath = IndexPath(row: 0, section: indexPath.section)
-            return super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
-        } else {
-            return super.tableView(tableView, indentationLevelForRowAt: indexPath)
-            //indexPath.row
-        }
-    }
+    
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 && indexPath.row == 1 {
             if !datePickerVisible {
                 self.showDatePicker()
@@ -89,22 +82,30 @@ class C1: UITableViewController {
                                   with: .automatic)
     }
     func hideDatePicker() {
+      if datePickerVisible {
         datePickerVisible = false
         let indexPathDatePicker = IndexPath(row: 2, section: 0)
         self.tableView.deleteRows(at: [indexPathDatePicker],
                                   with: .fade)
+        }
         
     }
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 1 {
-            let cellD = tableView.dequeueReusableCell(withIdentifier: "reDatePicker")
+        if indexPath.section == 0 && indexPath.row == 2 {
+        
+            var cellD = tableView.dequeueReusableCell(withIdentifier: "reDatePicker")
+//            if cellD == nil {
+            cellD = UITableViewCell(style: .default, reuseIdentifier: "reDatePicker")
+            cellD?.selectionStyle = .none
             let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 216))
             datePicker.tag = 100
             datePicker.locale = Locale(identifier: "zh_CN")
+            datePicker.datePickerMode = .date
             cellD?.contentView.addSubview(datePicker)
             datePicker.addTarget(self, action:#selector(dateChanged(_:)),
                                  for: .valueChanged)
+//            }
             return cellD!
         }else {
             var cell = tableView.dequeueReusableCell(withIdentifier: reuseID)!
@@ -116,58 +117,74 @@ class C1: UITableViewController {
         }
     }
     @objc func dateChanged(_ dateChanged:UIDatePicker) -> Void {
-        let formatter = DateFormatter()
-        //日期样式
-        formatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
-        print(formatter.dateFormat)
-    }
-    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        print("leadingSwipeActions")
-        let action = UIContextualAction(style: .normal, title: "Mark") { (action, view, handler) in
-            self.updateMarkState(indexP:indexPath)
-            handler(true)
-        }
-        action.backgroundColor = UIColor.green
-        
-        if markState(for: indexPath) {
-            action.title = "Unmark"
-            action.backgroundColor = UIColor.green
-        }
-        
-        let configuration = UISwipeActionsConfiguration(actions: [action])
-        return configuration
-    }
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        print("trailingSwipeActions")
-        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handler) in
-            self.removeItem(at: indexPath)
-            handler(true)
-        }
-        
-        let configuration = UISwipeActionsConfiguration(actions: [action])
-        return configuration
-        
-    }
-    func  updateMarkState(indexP: IndexPath) {
-//        defaultArr.append("\(indexP.row)")
-        defaultArr.insert("\(indexP.row)", at: indexP.row)
-        tableView.reloadData()
+//        let formatter = DateFormatter()
+//        //日期样式
+//        formatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
+//        print(formatter.dateFormat)
+        let choseDate = dateChanged.date
+        let dateFormater = DateFormatter.init()
+            dateFormater.dateFormat = "YYYY-MM-dd HH-mm-ss"
+       print(dateFormater.string(from: choseDate))
     }
     
-    func removeItem(at: IndexPath) {
-        print("删除")
-        defaultArr.remove(at: at.row)
-        tableView.reloadData()
+    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
+        if indexPath.section == 0 && indexPath.row == 2 {
+            let newIndexPath = IndexPath(row: 0, section: indexPath.section)
+            return super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
+        } else {
+            return super.tableView(tableView, indentationLevelForRowAt: indexPath)
+            //indexPath.row
+        }
     }
-    func markState(for: IndexPath) -> Bool {
-        return true
-    }
-    @objc func choseDate(datePicker:UIDatePicker) {
-        let choseDate = datePicker.date
-        let dateFormater = DateFormatter.init()
-        dateFormater.dateFormat = "YYYY-MM-dd HH-mm-ss"
-        print(dateFormater.string(from: choseDate))
-    }
+    
+    
+//    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        print("leadingSwipeActions")
+//        let action = UIContextualAction(style: .normal, title: "Mark") { (action, view, handler) in
+//            self.updateMarkState(indexP:indexPath)
+//            handler(true)
+//        }
+//        action.backgroundColor = UIColor.green
+//
+//        if markState(for: indexPath) {
+//            action.title = "Unmark"
+//            action.backgroundColor = UIColor.green
+//        }
+//
+//        let configuration = UISwipeActionsConfiguration(actions: [action])
+//        return configuration
+//    }
+//    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        print("trailingSwipeActions")
+//        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handler) in
+//            self.removeItem(at: indexPath)
+//            handler(true)
+//        }
+//
+//        let configuration = UISwipeActionsConfiguration(actions: [action])
+//        return configuration
+//
+//    }
+//    func  updateMarkState(indexP: IndexPath) {
+////        defaultArr.append("\(indexP.row)")
+//        defaultArr.insert("\(indexP.row)", at: indexP.row)
+//        tableView.reloadData()
+//    }
+    
+//    func removeItem(at: IndexPath) {
+//        print("删除")
+//        defaultArr.remove(at: at.row)
+//        tableView.reloadData()
+//    }
+//    func markState(for: IndexPath) -> Bool {
+//        return true
+//    }
+//    @objc func choseDate(datePicker:UIDatePicker) {
+//        let choseDate = datePicker.date
+//        let dateFormater = DateFormatter.init()
+//        dateFormater.dateFormat = "YYYY-MM-dd HH-mm-ss"
+//        print(dateFormater.string(from: choseDate))
+//    }
     
     /*
     // Override to support conditional editing of the table view.
