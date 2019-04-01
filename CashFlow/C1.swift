@@ -14,7 +14,7 @@ class C1: UITableViewController {
     var arrC1   = Array<String>()
     var datePickerVisible:Bool = false
     var sIndex = 1
-    var defaultArr = ["张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券5w"]
+    var defaultArr = ["张三总送来53度飞天茅台一箱美元教育金券1","张三总送来53度飞天茅台一箱美元教育金券2","张三总送来53度飞天茅台一箱美元教育金券3","张三总送来53度飞天茅台一箱美元教育金券4","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券6","张三总送来53度飞天茅台一箱美元教育金券7","张三总送来53度飞天茅台一箱美元教育金券8"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +28,7 @@ class C1: UITableViewController {
 
     @objc func addRelations() {
         print("----添加时间----")
+        
 //        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 160))
 //        datePicker.center = self.view.center
 //        datePicker.backgroundColor = .white
@@ -44,11 +45,9 @@ class C1: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 && indexPath.row == sIndex + 1 {
-            return 216
-        } else {
-            return 64//super.tableView(tableView, heightForRowAt: indexPath)
-        }
+       
+      return 64
+        
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -57,46 +56,40 @@ class C1: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 && datePickerVisible {
-            return sIndex + 2//arrC1.count
-        } else {
-            return sIndex + 1//super.tableView(tableView, numberOfRowsInSection: section)
-        }
+        return defaultArr.count
        
     }
     
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
-        sIndex = indexPath.row
-        tableView.reloadData()
+//        showDatePicker(inP: indexPath)
+        hideDatePicker(inP: indexPath)
+    }
+    
+    func showDatePicker(inP:IndexPath) {
+       let rowNum =  inP.row + 1
+       defaultArr.insert("众亲平身", at: rowNum)
+       let inPs = [inP]
+       self.tableView.insertRows(at: inPs , with: .automatic)
         
-        if indexPath.section == 0 && indexPath.row == sIndex {
-            if !datePickerVisible {
-                self.showDatePicker()
-            } else {
-                self.hideDatePicker()
-            }
-        }
+       let inSec =  IndexSet(arrayLiteral: 0)
+       tableView.reloadSections( inSec , with: .automatic)
     }
-    func showDatePicker() {
-        datePickerVisible = true
-        let indexPathDatePicker = IndexPath(row: sIndex + 1, section: 0)
-        self.tableView.insertRows(at: [indexPathDatePicker],
-                                  with: .automatic)
-    }
-    func hideDatePicker() {
-      if datePickerVisible {
-        datePickerVisible = false
-        let indexPathDatePicker = IndexPath(row: sIndex + 1, section: 0)
-        self.tableView.deleteRows(at: [indexPathDatePicker],
-                                  with: .fade)
+    
+    func hideDatePicker(inP:IndexPath) {
+        if inP.row <= 1 || inP.row > defaultArr.count {
+            print("超过删除范围")
         }
+    let rowNum = inP.row + 1
+    defaultArr.remove(at: rowNum)
+    let indexPathDatePicker = IndexPath(row: rowNum , section: 0)
+    self.tableView.deleteRows(at: [indexPathDatePicker], with: .fade)
+    
         
     }
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 && indexPath.row == sIndex + 1 {
+        if datePickerVisible && indexPath.row == sIndex + 1 {
         
             var cellD = tableView.dequeueReusableCell(withIdentifier: "reDatePicker")
 //            if cellD == nil {
@@ -114,7 +107,7 @@ class C1: UITableViewController {
         }else {
             var cell = tableView.dequeueReusableCell(withIdentifier: reuseID)!
             cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: reuseID)
-            cell.textLabel?.text = arrC1[indexPath.row]
+            cell.textLabel?.text = defaultArr[indexPath.row]
             cell.detailTextLabel?.text = "2019-03-25"
             return cell
 //            return super.tableView(tableView, cellForRowAt: indexPath)
