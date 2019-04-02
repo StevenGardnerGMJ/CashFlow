@@ -45,9 +45,11 @@ class C1: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       
-      return 64
-        
+        if datePickerVisible && indexPath.row == sIndex + 1 {
+            return 216
+        } else {
+           return 64
+        }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -62,11 +64,18 @@ class C1: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
-//        showDatePicker(inP: indexPath)
-        hideDatePicker(inP: indexPath)
+        if datePickerVisible == false {
+            showDatePicker(inP: indexPath)
+        } else {
+            hideDatePicker(inP: indexPath)
+        }
+//
+//
     }
     
     func showDatePicker(inP:IndexPath) {
+       datePickerVisible = true
+       sIndex = inP.row
        let rowNum =  inP.row + 1
        defaultArr.insert("众亲平身", at: rowNum)
        let inPs = [inP]
@@ -77,14 +86,15 @@ class C1: UITableViewController {
     }
     
     func hideDatePicker(inP:IndexPath) {
-        if inP.row <= 1 || inP.row > defaultArr.count {
+        datePickerVisible = false
+        if defaultArr.count == 1 || inP.row >= defaultArr.count - 1 {
             print("超过删除范围")
-        }
+        } else {
     let rowNum = inP.row + 1
     defaultArr.remove(at: rowNum)
     let indexPathDatePicker = IndexPath(row: rowNum , section: 0)
     self.tableView.deleteRows(at: [indexPathDatePicker], with: .fade)
-    
+        }
         
     }
   
