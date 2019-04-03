@@ -14,7 +14,7 @@ class C1: UITableViewController {
     var arrC1   = Array<String>()
     var datePickerVisible:Bool = false
     var sIndex = 1
-    var defaultArr = ["张三总送来53度飞天茅台一箱美元教育金券1","张三总送来53度飞天茅台一箱美元教育金券2","张三总送来53度飞天茅台一箱美元教育金券3","张三总送来53度飞天茅台一箱美元教育金券4","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券6","张三总送来53度飞天茅台一箱美元教育金券7","张三总送来53度飞天茅台一箱美元教育金券8"]
+    var defaultArr = ["张三总送来53度飞天茅台一箱美元教育金券1","张三总送来53度飞天茅台一箱美元教育金券2ABCDEFG","张三总送来53度飞天茅台一箱美元教育金券3","张三总送来53度飞天茅台一箱美元教育金券4","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券6","张三总送来53度飞天茅台一箱美元教育金券7","张三总送来53度飞天茅台一箱美元教育金券8"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,13 +64,12 @@ class C1: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
-        if datePickerVisible == false {
-            showDatePicker(inP: indexPath)
-        } else {
+        if datePickerVisible == true {
+//            showDatePicker(inP: indexPath)
+//        } else {
             hideDatePicker(inP: indexPath)
         }
-//
-//
+
     }
     
     func showDatePicker(inP:IndexPath) {
@@ -112,6 +111,7 @@ class C1: UITableViewController {
             cellD?.contentView.addSubview(datePicker)
             datePicker.addTarget(self, action:#selector(dateChanged(_:)),
                                  for: .valueChanged)
+            
 //            }
             return cellD!
         }else {
@@ -133,6 +133,31 @@ class C1: UITableViewController {
             dateFormater.dateFormat = "YYYY-MM-dd HH-mm-ss"
        print(dateFormater.string(from: choseDate))
     }
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleAction = UITableViewRowAction(style: .destructive, title: "清除") { (action, indexpath) in
+            print("清除")
+            self.defaultArr.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        let editAction = UITableViewRowAction(style: .default, title: "编辑") { (action, indexpath) in
+            print("时间")
+            self.showDatePicker(inP: indexPath)
+        }
+        let moreAction = UITableViewRowAction(style: .normal, title: "更多") { (action, indexpath) in
+            print("更多")
+            
+        }
+        editAction.backgroundColor = UIColor.gray
+        if datePickerVisible == true {
+            return []
+        } else {
+            return [moreAction, editAction, deleAction]
+        }
+       
+    }
+    
+    
+    
     
 //    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
 //        if indexPath.section == 0 && indexPath.row == sIndex + 1 {
@@ -232,12 +257,7 @@ class C1: UITableViewController {
 
     /*
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
+     
     */
 
 }
