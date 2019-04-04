@@ -198,7 +198,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         alterC.addAction(sureBtn)
         
 //        DispatchQueue.main.async {
-            self.present(alterC, animated: true, completion: nil)
+       self.present(alterC, animated: true, completion: nil)
 
         
     }

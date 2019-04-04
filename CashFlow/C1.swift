@@ -28,27 +28,39 @@ class C1: UITableViewController {
 
     @objc func addRelations() {
         print("----添加时间----")
-        
-//        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 160))
-//        datePicker.center = self.view.center
-//        datePicker.backgroundColor = .white
-//        datePicker.locale = Locale(identifier:"zh_CN")
-//        datePicker.timeZone = NSTimeZone.system
-//        datePicker.layer.borderWidth = 2
-//        datePicker.layer.masksToBounds = true
-//        datePicker.layer.borderColor = UIColor.lightGray.cgColor
-//        datePicker.datePickerMode = .date
-//        datePicker.addTarget(self, action: #selector(choseDate), for: .valueChanged)
-//        self.view.addSubview(datePicker)
-    
+        let alterControl = UIAlertController(title: "添加人情往来", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+        alterControl.addTextField { (tF) in
+            tF.placeholder = "输入事件"
+        }
+        let sureAction = UIAlertAction(title: "确定", style: .default) { (action) in
+            let tfStr = alterControl.textFields?.last?.text
+            guard tfStr != nil  else {
+                return
+            }
+            let date = TimeInterval()
+            datetimeToString(dateTime: date)
+            self.defaultArr.append("\(tfStr ?? "请填")")
+            self.tableView.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
+            
+        }
+        alterControl.addAction(sureAction)
+        alterControl.addAction(cancelAction)
+        self.present(alterControl, animated: true, completion: nil)
     }
+    
     // MARK: - Table view data source
+    
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 64 //预估高度
+    }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if datePickerVisible && indexPath.row == sIndex + 1 {
             return 216
         } else {
-           return 64
+           return UITableViewAutomaticDimension
         }
     }
 
@@ -118,6 +130,7 @@ class C1: UITableViewController {
             var cell = tableView.dequeueReusableCell(withIdentifier: reuseID)!
             cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: reuseID)
             cell.textLabel?.text = defaultArr[indexPath.row]
+            cell.textLabel?.numberOfLines = 2
             cell.detailTextLabel?.text = "2019-03-25"
             return cell
 //            return super.tableView(tableView, cellForRowAt: indexPath)
@@ -133,18 +146,28 @@ class C1: UITableViewController {
             dateFormater.dateFormat = "YYYY-MM-dd HH-mm-ss"
        print(dateFormater.string(from: choseDate))
     }
+    func datetimeToString(dateTime:TimeInterval) -> String {
+        let date = Date()
+        let dateFormater = DateFormatter()
+        dateFormater.dateFormat  = "YYYY-MM-dd"
+        let str = dateFormater.string(from: date)
+        print(str)
+        return str
+    }
+    
+    
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleAction = UITableViewRowAction(style: .destructive, title: "清除") { (action, indexpath) in
             print("清除")
             self.defaultArr.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .fade)
         }
-        let editAction = UITableViewRowAction(style: .default, title: "编辑") { (action, indexpath) in
-            print("时间")
+        let editAction = UITableViewRowAction(style: .default, title: "日期") { (action, indexpath) in
+            print("日期")
             self.showDatePicker(inP: indexPath)
         }
-        let moreAction = UITableViewRowAction(style: .normal, title: "更多") { (action, indexpath) in
-            print("更多")
+        let moreAction = UITableViewRowAction(style: .normal, title: "事件") { (action, indexpath) in
+            print("事件")
             
         }
         editAction.backgroundColor = UIColor.gray
@@ -257,7 +280,17 @@ class C1: UITableViewController {
 
     /*
     // MARK: - Navigation
-     
+     //        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 160))
+     //        datePicker.center = self.view.center
+     //        datePicker.backgroundColor = .white
+     //        datePicker.locale = Locale(identifier:"zh_CN")
+     //        datePicker.timeZone = NSTimeZone.system
+     //        datePicker.layer.borderWidth = 2
+     //        datePicker.layer.masksToBounds = true
+     //        datePicker.layer.borderColor = UIColor.lightGray.cgColor
+     //        datePicker.datePickerMode = .date
+     //        datePicker.addTarget(self, action: #selector(choseDate), for: .valueChanged)
+     //        self.view.addSubview(datePicker)
     */
 
 }
