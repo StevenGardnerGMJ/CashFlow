@@ -13,6 +13,7 @@ class C1: UITableViewController {
     let reuseID = "cellC1"
     var dateArr   = Array<String>()
     var datePickerVisible:Bool = false
+    var sDate = "1970-01-01"
     var sIndex = 1
     var defaultArr = ["张三总送来53度飞天茅台一箱美元教育金券1","张三总送来53度飞天茅台一箱美元教育金券2ABCDEFG","张三总送来53度飞天茅台一箱美元教育金券3","张三总送来53度飞天茅台一箱美元教育金券4","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券6","张三总送来53度飞天茅台一箱美元教育金券7","张三总送来53度飞天茅台一箱美元教育金券8"]
 
@@ -78,8 +79,6 @@ class C1: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         if datePickerVisible == true {
-//            showDatePicker(inP: indexPath)
-//        } else {
             hideDatePicker(inP: indexPath)
         }
 
@@ -99,15 +98,17 @@ class C1: UITableViewController {
     }
     
     func hideDatePicker(inP:IndexPath) {
-        datePickerVisible = false
-        if defaultArr.count == 1 || inP.row >= defaultArr.count - 1 {
+    datePickerVisible = false
+    if defaultArr.count == 1 || inP.row >= defaultArr.count - 1 {
             print("超过删除范围")
         } else {
     let rowNum = inP.row + 1
     defaultArr.remove(at: rowNum)
     dateArr.remove(at: rowNum)
+    dateArr[inP.row] = sDate
     let indexPathDatePicker = IndexPath(row: rowNum , section: 0)
     self.tableView.deleteRows(at: [indexPathDatePicker], with: .fade)
+    self.tableView.reloadData()
         }
         
     }
@@ -126,8 +127,6 @@ class C1: UITableViewController {
             cellD?.contentView.addSubview(datePicker)
             datePicker.addTarget(self, action:#selector(dateChanged(_:)),
                                  for: .valueChanged)
-            
-//            }
             return cellD!
         }else {
             var cell = tableView.dequeueReusableCell(withIdentifier: reuseID)!
@@ -136,7 +135,7 @@ class C1: UITableViewController {
             cell.detailTextLabel?.text = dateArr[indexPath.row]
             cell.textLabel?.numberOfLines = 2
             return cell
-//            return super.tableView(tableView, cellForRowAt: indexPath)
+
         }
     }
     @objc func dateChanged(_ dateChanged:UIDatePicker) -> Void {
@@ -146,7 +145,7 @@ class C1: UITableViewController {
 //        print(formatter.dateFormat)
         let choseDate = dateChanged.date
         let dateStr = datetimeToString(date: choseDate)
-       print(dateStr)
+        sDate = dateStr
     }
     func datetimeToString(date:Date) -> String {
         let dateFormater = DateFormatter()
@@ -224,17 +223,8 @@ class C1: UITableViewController {
 //        return configuration
 //
 //    }
-//    func  updateMarkState(indexP: IndexPath) {
-////        defaultArr.append("\(indexP.row)")
-//        defaultArr.insert("\(indexP.row)", at: indexP.row)
-//        tableView.reloadData()
-//    }
-    
-//    func removeItem(at: IndexPath) {
-//        print("删除")
-//        defaultArr.remove(at: at.row)
-//        tableView.reloadData()
-//    }
+
+
 //    func markState(for: IndexPath) -> Bool {
 //        return true
 //    }
