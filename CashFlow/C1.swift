@@ -40,6 +40,7 @@ class C1: UITableViewController {
             }
             let nowDate = Date()
             let  nowStr = self.datetimeToString(date: nowDate)
+            sIndex = 修改哪一个？
             self.defaultArr.append("\(tfStr ?? "请填")")
             self.dateArr.append(nowStr)
             self.tableView.reloadData()
