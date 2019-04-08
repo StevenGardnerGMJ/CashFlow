@@ -11,14 +11,14 @@ import UIKit
 class C1: UITableViewController {
     
     let reuseID = "cellC1"
-    var arrC1   = Array<String>()
+    var dateArr   = Array<String>()
     var datePickerVisible:Bool = false
     var sIndex = 1
     var defaultArr = ["张三总送来53度飞天茅台一箱美元教育金券1","张三总送来53度飞天茅台一箱美元教育金券2ABCDEFG","张三总送来53度飞天茅台一箱美元教育金券3","张三总送来53度飞天茅台一箱美元教育金券4","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券6","张三总送来53度飞天茅台一箱美元教育金券7","张三总送来53度飞天茅台一箱美元教育金券8"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        arrC1 = defaultArr
+        dateArr = ["2019-03-18","2019-03-18","2019-03-18","2019-03-18","2019-03-18","2019-03-18","2019-03-18","2019-03-18"]
         self.navigationController?.title = "C1"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "增加"), style: .plain, target: self, action: #selector(addRelations))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseID)
@@ -37,9 +37,10 @@ class C1: UITableViewController {
             guard tfStr != nil  else {
                 return
             }
-            let date = TimeInterval()
-            datetimeToString(dateTime: date)
+            let nowDate = Date()
+            let  nowStr = self.datetimeToString(date: nowDate)
             self.defaultArr.append("\(tfStr ?? "请填")")
+            self.dateArr.append(nowStr)
             self.tableView.reloadData()
         }
         let cancelAction = UIAlertAction(title: "取消", style: .cancel) { (action) in
@@ -89,6 +90,7 @@ class C1: UITableViewController {
        sIndex = inP.row
        let rowNum =  inP.row + 1
        defaultArr.insert("众亲平身", at: rowNum)
+       dateArr.insert("1970-01-01", at: rowNum)
        let inPs = [inP]
        self.tableView.insertRows(at: inPs , with: .automatic)
         
@@ -103,6 +105,7 @@ class C1: UITableViewController {
         } else {
     let rowNum = inP.row + 1
     defaultArr.remove(at: rowNum)
+    dateArr.remove(at: rowNum)
     let indexPathDatePicker = IndexPath(row: rowNum , section: 0)
     self.tableView.deleteRows(at: [indexPathDatePicker], with: .fade)
         }
@@ -130,8 +133,8 @@ class C1: UITableViewController {
             var cell = tableView.dequeueReusableCell(withIdentifier: reuseID)!
             cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: reuseID)
             cell.textLabel?.text = defaultArr[indexPath.row]
+            cell.detailTextLabel?.text = dateArr[indexPath.row]
             cell.textLabel?.numberOfLines = 2
-            cell.detailTextLabel?.text = "2019-03-25"
             return cell
 //            return super.tableView(tableView, cellForRowAt: indexPath)
         }
@@ -142,12 +145,10 @@ class C1: UITableViewController {
 //        formatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
 //        print(formatter.dateFormat)
         let choseDate = dateChanged.date
-        let dateFormater = DateFormatter.init()
-            dateFormater.dateFormat = "YYYY-MM-dd HH-mm-ss"
-       print(dateFormater.string(from: choseDate))
+        let dateStr = datetimeToString(date: choseDate)
+       print(dateStr)
     }
-    func datetimeToString(dateTime:TimeInterval) -> String {
-        let date = Date()
+    func datetimeToString(date:Date) -> String {
         let dateFormater = DateFormatter()
         dateFormater.dateFormat  = "YYYY-MM-dd"
         let str = dateFormater.string(from: date)
@@ -160,6 +161,7 @@ class C1: UITableViewController {
         let deleAction = UITableViewRowAction(style: .destructive, title: "清除") { (action, indexpath) in
             print("清除")
             self.defaultArr.remove(at: indexPath.row)
+            self.dateArr.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .fade)
         }
         let editAction = UITableViewRowAction(style: .default, title: "日期") { (action, indexpath) in
