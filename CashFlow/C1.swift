@@ -30,6 +30,7 @@ class C1: UITableViewController {
     @objc func addRelations() {
         print("----添加时间----")
         let alterControl = UIAlertController(title: "添加人情往来", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+        
         alterControl.addTextField { (tF) in
             tF.placeholder = "输入事件"
         }
@@ -38,9 +39,9 @@ class C1: UITableViewController {
             guard tfStr != nil  else {
                 return
             }
+            // 添加当前日期
             let nowDate = Date()
             let  nowStr = self.datetimeToString(date: nowDate)
-            sIndex = 修改哪一个？
             self.defaultArr.append("\(tfStr ?? "请填")")
             self.dateArr.append(nowStr)
             self.tableView.reloadData()
@@ -51,6 +52,20 @@ class C1: UITableViewController {
         alterControl.addAction(sureAction)
         alterControl.addAction(cancelAction)
         self.present(alterControl, animated: true, completion: nil)
+    }
+    func changeRelations(inP:IndexPath) {
+        let alterC = UIAlertController(title: "修改人情往来", message: nil, preferredStyle: .alert)
+        alterC.addTextField { (textField) in
+            textField.text = self.defaultArr[inP.row]
+        }
+        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let sureBtn = UIAlertAction(title: "确定", style: .default) { (action) in
+            self.defaultArr[inP.row] =  alterC.textFields?.last!.text ?? "-- --"
+            self.tableView.reloadData()
+        }
+        alterC.addAction(sureBtn)
+        alterC.addAction(cancel)
+        self.present(alterC, animated: true, completion: nil)
     }
     
     // MARK: - Table view data source
@@ -134,7 +149,7 @@ class C1: UITableViewController {
             cell = UITableViewCell.init(style: .subtitle, reuseIdentifier: reuseID)
             cell.textLabel?.text = defaultArr[indexPath.row]
             cell.detailTextLabel?.text = dateArr[indexPath.row]
-            cell.textLabel?.numberOfLines = 2
+            cell.textLabel?.numberOfLines = 0
             return cell
 
         }
@@ -170,7 +185,7 @@ class C1: UITableViewController {
         }
         let moreAction = UITableViewRowAction(style: .normal, title: "事件") { (action, indexpath) in
             print("事件")
-            
+            self.changeRelations(inP: indexPath)
         }
         editAction.backgroundColor = UIColor.gray
         if datePickerVisible == true {
