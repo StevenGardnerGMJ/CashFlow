@@ -190,10 +190,10 @@ func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
 
 // 得到信息
 func getClass(modelname:String) { // -> Array<Float>
-    print("getClass")
+    print("getClass\(modelname)")
     let context = getContext()
     var arr = Array<Float>()
-    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Amodel")
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: modelname)
     
     let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result : NSAsynchronousFetchResult!) in
    
