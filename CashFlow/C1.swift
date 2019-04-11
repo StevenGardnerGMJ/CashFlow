@@ -27,6 +27,8 @@ class C1: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseID)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reDatePicker")
         
+  
+        
     }
 
     // MARK: - Table view data source
@@ -204,22 +206,36 @@ class C1: UITableViewController {
     // MARK: - save  data
     
     func readCoreDate_C1() {
-      getClass(modelname: "Cmodel")
+        getClass(modelname: "C1model") { (data) in
+            let arr = data as! [C1model]
+            if arr.count > 0 {
+                for c1 in arr {
+                    self.defaultArr.append(c1.relations ?? "")
+                    self.dateArr.append(c1.dates ?? "")
+                }
+                self.tableView.reloadData()
+            } else {
+                print("warning：数据为空")
+            }
+        }
+        
     }
     
     func saveDate_C1() {
-        
+        if self.defaultArr.count > 0 {
+            var i = 0
+            for t in defaultArr {
+                let arr = [t,dateArr[i]]
+                insertClass(arrays: arr, keyArr: ["relations","dates"], modelname: "C1model")
+                i = i + 1
+            }
+            
+        }
     }
     
     func update_C1() {
         
     }
-    
-    
-    
-    
-    
-    
     
     
 //    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {

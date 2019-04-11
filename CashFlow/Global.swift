@@ -155,7 +155,7 @@ func deleteClass() -> Void {
     }
 }
 
-// 插入信息
+// 插入信息 保存
 func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
     let context = getContext()
     let Entity = NSEntityDescription.entity(forEntityName: modelname, in: context)
@@ -188,22 +188,18 @@ func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
     }
 }
 
-// 得到信息
-func getClass(modelname:String,smodel:NSManagedObject) -> Array<Any> { // -> Array<Float>
+// 得到信息 读取
+func getClass(modelname:String,completionHandler:@escaping(_ data:Array<Any>)->())  {
     print("getClass\(modelname)")
     let context = getContext()
-//    var arr = Array<Float>()
+    var arr = Array<Any>()
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: modelname)
     
     let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result : NSAsynchronousFetchResult!) in
    
-//        let fetchObject = result.finalResult  // as! [Amodel] arr数据
-        return result
-        //for  c in fetchObject {
-//            arr.append(c.value) // BLock内延迟处理
-//            print("\(c.status ?? "")--\(c.value)--\(c.myinfo ?? "")")
-//        }
-        
+        let fetchObject = result.finalResult  // as! [Amodel] arr数据
+        arr = fetchObject!
+        completionHandler(arr) // 回调
     }
     // 执行异步请求调用execute
     do {

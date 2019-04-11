@@ -17,8 +17,8 @@
         <attribute name="income" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="outcome" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
-    <entity name="C1relations" representedClassName="C1relations" syncable="YES" codeGenerationType="class">
-        <attribute name="dates" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+    <entity name="C1model" representedClassName="C1model" syncable="YES" codeGenerationType="class">
+        <attribute name="dates" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="relations" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Cassets" representedClassName="Cassets" syncable="YES" codeGenerationType="class">
@@ -46,7 +46,7 @@
         <element name="Amodel" positionX="-63" positionY="-18" width="128" height="90"/>
         <element name="Cassets" positionX="9" positionY="72" width="128" height="75"/>
         <element name="Bmodel" positionX="-18" positionY="27" width="128" height="75"/>
-        <element name="C1relations" positionX="27" positionY="90" width="128" height="75"/>
+        <element name="C1model" positionX="27" positionY="90" width="128" height="75"/>
         <element name="Cmodel" positionX="18" positionY="63" width="128" height="90"/>
         <element name="Bincome" positionX="-9" positionY="27" width="128" height="75"/>
         <element name="CLiabilities" positionX="18" positionY="81" width="128" height="75"/>
