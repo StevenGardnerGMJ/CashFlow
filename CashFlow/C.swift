@@ -20,6 +20,21 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let relatDate = Array<Date>()// 日期
     
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
+        let tableC = UITableView(frame: self.view.frame, style: .grouped)
+        tableC.delegate = self
+        tableC.dataSource = self
+        self.view.addSubview(tableC)
+        tableC.register(UITableViewCell.self, forCellReuseIdentifier: "cellC")
+        tableC.register(headerAView.self, forHeaderFooterViewReuseIdentifier: "headerA")
+        tableC.register(headerCView.self, forHeaderFooterViewReuseIdentifier: "headerC")
+    }
+    
+    // MARK:UI Table View Delegate
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 2 {
             let c1VC = C1.init()
@@ -29,7 +44,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         }
     }
     
-   //
+   // MARK： UI Table View Data  Source
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 64 
     }
@@ -95,18 +110,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
 
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        let tableC = UITableView(frame: self.view.frame, style: .grouped)
-        tableC.delegate = self
-        tableC.dataSource = self
-        self.view.addSubview(tableC)
-        tableC.register(UITableViewCell.self, forCellReuseIdentifier: "cellC")
-        tableC.register(headerAView.self, forHeaderFooterViewReuseIdentifier: "headerA")
-        tableC.register(headerCView.self, forHeaderFooterViewReuseIdentifier: "headerC")
-    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -147,6 +151,18 @@ class headerCView: UITableViewHeaderFooterView {
         contentBtn.layer.borderColor = UIColor.gray.cgColor
         contentBtn.layer.borderWidth = 1
     }
+    
+    // MARK: 数据操作
+    
+    func saveData_C(){
+        
+    }
+    func readData_C(){
+        
+    }
+    
+    
+    
     
 }
 

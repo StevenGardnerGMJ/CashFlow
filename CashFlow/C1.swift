@@ -15,7 +15,7 @@ class C1: UITableViewController {
     var datePickerVisible:Bool = false
     var sDate = "1970-01-01"
     var sIndex = 1
-    var defaultArr = Array<String>() //["添加一个新的人情往来事项"]
+    var defaultArr = Array<String>() // ["添加一个新的人情往来事项"]
     var dateArr    = Array<String>() // ["1970-01-01"]
     var tempArr    = Array<String>() // 判断是否相同temp
     //"张三总送来53度飞天茅台一箱美元教育金券2ABCDEFG","张三总送来53度飞天茅台一箱美元教育金券3","张三总送来53度飞天茅台一箱美元教育金券4","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券6","张三总送来53度飞天茅台一箱美元教育金券7","张三总送来53度飞天茅台一箱美元教育金券8"]
@@ -31,7 +31,6 @@ class C1: UITableViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         readCoreDate_C1()
-        
     }
     override func viewWillDisappear(_ animated: Bool) {
         saveDate_C1()
