@@ -135,14 +135,14 @@ func modifyClass() {
     }
 }
 //MARK:    删除班级信息
-func deleteClass() -> Void {
+func deleteClass(modelname:String) -> Void {
    let app = UIApplication.shared.delegate as! AppDelegate
    let context = getContext()
-    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Amodel")
+    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: modelname)
     let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result:NSAsynchronousFetchResult) in
-        let fetchObject = result.finalResult! as! [Amodel]
-        for c in fetchObject{
-            context.delete(c)
+        let fetchObject = result.finalResult!
+        for c in fetchObject {
+            context.delete(c as! NSManagedObject)
         }
         app.saveContext()
     }

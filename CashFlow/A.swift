@@ -92,7 +92,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func saveAdata() {
-        deleteClass()
+        deleteClass(modelname: enteryName)
         var i = 0
         for key in arrA {
             let arrs = [key,arrAnumber[i],arrMyInfo[i]] as [Any]

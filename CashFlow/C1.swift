@@ -11,26 +11,32 @@ import UIKit
 class C1: UITableViewController {
     
     let reuseID = "cellC1"
-   
+    
     var datePickerVisible:Bool = false
     var sDate = "1970-01-01"
     var sIndex = 1
     var defaultArr = Array<String>() //["添加一个新的人情往来事项"]
     var dateArr    = Array<String>() // ["1970-01-01"]
+    var tempArr    = Array<String>() // 判断是否相同temp
     //"张三总送来53度飞天茅台一箱美元教育金券2ABCDEFG","张三总送来53度飞天茅台一箱美元教育金券3","张三总送来53度飞天茅台一箱美元教育金券4","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券6","张三总送来53度飞天茅台一箱美元教育金券7","张三总送来53度飞天茅台一箱美元教育金券8"]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-//        self.navigationController?.title = "C1"
+        
+        //        self.navigationController?.title = "C1"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "增加"), style: .plain, target: self, action: #selector(addRelations))
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseID)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "reDatePicker")
         
-  
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        readCoreDate_C1()
         
     }
-
+    override func viewWillDisappear(_ animated: Bool) {
+        saveDate_C1()
+    }
+    
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -41,18 +47,18 @@ class C1: UITableViewController {
         if datePickerVisible && indexPath.row == sIndex + 1 {
             return 216
         } else {
-           return UITableViewAutomaticDimension
+            return UITableViewAutomaticDimension
         }
     }
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return defaultArr.count
-       
+        
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -62,7 +68,7 @@ class C1: UITableViewController {
         }
     }
     
-   // MARK: - Table view delegate
+    // MARK: - Table view delegate
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if datePickerVisible && indexPath.row == sIndex + 1 {
             
@@ -157,39 +163,39 @@ class C1: UITableViewController {
     
     
     func showDatePicker(inP:IndexPath) {
-       datePickerVisible = true
-       sIndex = inP.row
-    // datePicker 临时存储用数据
-       let rowNum =  inP.row + 1
-       defaultArr.insert("众亲平身", at: rowNum)
-       dateArr.insert("1970-01-01", at: rowNum)
-       let inPs = [inP]
-       self.tableView.insertRows(at: inPs , with: .automatic)
+        datePickerVisible = true
+        sIndex = inP.row
+        // datePicker 临时存储用数据
+        let rowNum =  inP.row + 1
+        defaultArr.insert("众亲平身", at: rowNum)
+        dateArr.insert("1970-01-01", at: rowNum)
+        let inPs = [inP]
+        self.tableView.insertRows(at: inPs , with: .automatic)
         
-       let inSec =  IndexSet(arrayLiteral: 0)
-       tableView.reloadSections( inSec , with: .automatic)
+        let inSec =  IndexSet(arrayLiteral: 0)
+        tableView.reloadSections( inSec , with: .automatic)
     }
     
     func hideDatePicker(inP:IndexPath) {
-    datePickerVisible = false
-    if defaultArr.count == 1 || inP.row >= defaultArr.count - 1 {
+        datePickerVisible = false
+        if defaultArr.count == 1 || inP.row >= defaultArr.count - 1 {
             print("超过删除范围")
         } else {
-    let rowNum = inP.row + 1
-    defaultArr.remove(at: rowNum)
-    dateArr.remove(at: rowNum)
-    dateArr[inP.row] = sDate
-    let indexPathDatePicker = IndexPath(row: rowNum , section: 0)
-    self.tableView.deleteRows(at: [indexPathDatePicker], with: .fade)
-    self.tableView.reloadData()
+            let rowNum = inP.row + 1
+            defaultArr.remove(at: rowNum)
+            dateArr.remove(at: rowNum)
+            dateArr[inP.row] = sDate
+            let indexPathDatePicker = IndexPath(row: rowNum , section: 0)
+            self.tableView.deleteRows(at: [indexPathDatePicker], with: .fade)
+            self.tableView.reloadData()
         }
         
     }
-  
+    
     @objc func dateChanged(_ dateChanged:UIDatePicker) -> Void {
-//        let formatter = DateFormatter()
-//        //日期样式
-//        formatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
+        //        let formatter = DateFormatter()
+        //        //日期样式
+        //        formatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
         let choseDate = dateChanged.date
         let dateStr = datetimeToString(date: choseDate)
         sDate = dateStr // 临时存储日期
@@ -213,6 +219,7 @@ class C1: UITableViewController {
                     self.defaultArr.append(c1.relations ?? "")
                     self.dateArr.append(c1.dates ?? "")
                 }
+                self.tempArr = self.defaultArr
                 self.tableView.reloadData()
             } else {
                 print("warning：数据为空")
@@ -222,14 +229,17 @@ class C1: UITableViewController {
     }
     
     func saveDate_C1() {
+        
         if self.defaultArr.count > 0 {
+            deleteClass(modelname: "C1model")
             var i = 0
             for t in defaultArr {
                 let arr = [t,dateArr[i]]
                 insertClass(arrays: arr, keyArr: ["relations","dates"], modelname: "C1model")
                 i = i + 1
             }
-            
+        } else {
+            deleteClass(modelname: "C1model")
         }
     }
     
@@ -238,84 +248,84 @@ class C1: UITableViewController {
     }
     
     
-//    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
-//        if indexPath.section == 0 && indexPath.row == sIndex + 1 {
-//            let newIndexPath = IndexPath(row: 0, section: indexPath.section)
-//            print("newIndexPath->\(newIndexPath)")
-//            return 3//super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
-//        } else {
-//            let i = super.tableView(tableView, indentationLevelForRowAt: indexPath)
-//            print("i->\(i)")
-//            return 2//super.tableView(tableView, indentationLevelForRowAt: indexPath)
-//        }
-//    }
+    //    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
+    //        if indexPath.section == 0 && indexPath.row == sIndex + 1 {
+    //            let newIndexPath = IndexPath(row: 0, section: indexPath.section)
+    //            print("newIndexPath->\(newIndexPath)")
+    //            return 3//super.tableView(tableView, indentationLevelForRowAt: newIndexPath)
+    //        } else {
+    //            let i = super.tableView(tableView, indentationLevelForRowAt: indexPath)
+    //            print("i->\(i)")
+    //            return 2//super.tableView(tableView, indentationLevelForRowAt: indexPath)
+    //        }
+    //    }
     
     // 左滑 操作
-//    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        print("leadingSwipeActions")
-//        let action = UIContextualAction(style: .normal, title: "Mark") { (action, view, handler) in
-//            self.updateMarkState(indexP:indexPath)
-//            handler(true)
-//        }
-//        action.backgroundColor = UIColor.green
-//
-//        if markState(for: indexPath) {
-//            action.title = "Unmark"
-//            action.backgroundColor = UIColor.green
-//        }
-//
-//        let configuration = UISwipeActionsConfiguration(actions: [action])
-//        return configuration
-//    }
+    //    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    //        print("leadingSwipeActions")
+    //        let action = UIContextualAction(style: .normal, title: "Mark") { (action, view, handler) in
+    //            self.updateMarkState(indexP:indexPath)
+    //            handler(true)
+    //        }
+    //        action.backgroundColor = UIColor.green
+    //
+    //        if markState(for: indexPath) {
+    //            action.title = "Unmark"
+    //            action.backgroundColor = UIColor.green
+    //        }
+    //
+    //        let configuration = UISwipeActionsConfiguration(actions: [action])
+    //        return configuration
+    //    }
     // 右滑动操作
-//    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        print("trailingSwipeActions")
-//        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handler) in
-//            self.removeItem(at: indexPath)
-//            handler(true)
-//        }
-//
-//        let configuration = UISwipeActionsConfiguration(actions: [action])
-//        return configuration
-//
-//    }
-
-
+    //    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    //        print("trailingSwipeActions")
+    //        let action = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handler) in
+    //            self.removeItem(at: indexPath)
+    //            handler(true)
+    //        }
+    //
+    //        let configuration = UISwipeActionsConfiguration(actions: [action])
+    //        return configuration
+    //
+    //    }
+    
+    
     /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
+     // Override to support conditional editing of the table view.
+     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the specified item to be editable.
+     return true
+     }
+     */
+    
     /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
+     // Override to support editing the table view.
+     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+     if editingStyle == .delete {
+     // Delete the row from the data source
+     tableView.deleteRows(at: [indexPath], with: .fade)
+     } else if editingStyle == .insert {
+     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+     }
+     }
+     */
+    
     /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
+     // Override to support rearranging the table view.
+     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+     
+     }
+     */
+    
     /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+     // Override to support conditional rearranging of the table view.
+     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+     // Return false if you do not want the item to be re-orderable.
+     return true
+     }
+     */
+    
     /*
      // let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 300, height: 160))
      //        datePicker.center = self.view.center
@@ -328,6 +338,6 @@ class C1: UITableViewController {
      //        datePicker.datePickerMode = .date
      //        datePicker.addTarget(self, action: #selector(choseDate), for: .valueChanged)
      //        self.view.addSubview(datePicker)
-    */
-
+     */
+    
 }
