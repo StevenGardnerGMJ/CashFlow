@@ -134,6 +134,7 @@ func modifyClass() {
         print("error")
     }
 }
+
 //MARK:    删除班级信息
 func deleteClass(modelname:String) -> Void {
    let app = UIApplication.shared.delegate as! AppDelegate
@@ -147,12 +148,37 @@ func deleteClass(modelname:String) -> Void {
         app.saveContext()
     }
     
-    
     do {
         try context.execute(asyncFetchRequest)
     } catch  {
         print("error")
     }
+}
+
+func addCoreDataClass(arrs:Array<Any>,keyArr:Array<String>,mName:String){
+    let context = getContext()
+    let Entity = NSEntityDescription.entity(forEntityName: mName, in: context)
+    
+    let classEntity = NSManagedObject(entity: Entity!, insertInto: context)
+    
+    var i = 0
+    for key in keyArr {
+        let arr = arrs[i] as! Array<Any>
+        for value in arr {
+           classEntity.setValue(value, forKey: key)
+        }
+        i = i + 1
+    }
+    
+    do {
+        try context.save()
+    } catch  {
+        let nserror = error as NSError
+        fatalError("错误:\(nserror),\(nserror.userInfo)")
+    }
+    
+    
+    
 }
 
 // 插入信息 保存

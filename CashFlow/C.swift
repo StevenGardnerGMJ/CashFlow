@@ -13,11 +13,22 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let arrTotal = ["总资产","总负债","总人情"]
     /// 资产
     let assets = ["总资产","股票","基金","银行存款","银行存单","房地产","公寓","商铺","企业投资","其他C"]
+    var assetsValue = Array<Float>()
     /// 负债
     let liabilities = ["总贷款","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他C"]
+    var liabiValue = Array<Float>()
     // 人情往来 relations
-    let relations = ["李四总送来五十大寿礼金6万","张三总送来53度飞天茅台一箱美元教育金券5w"]
+    let relations = [3]
     let relatDate = Array<Date>()// 日期
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        readData_C()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        saveData_C()
+    }
     
 
     override func viewDidLoad() {
@@ -31,6 +42,11 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableC.register(UITableViewCell.self, forCellReuseIdentifier: "cellC")
         tableC.register(headerAView.self, forHeaderFooterViewReuseIdentifier: "headerA")
         tableC.register(headerCView.self, forHeaderFooterViewReuseIdentifier: "headerC")
+        
+        for key in assets {
+            assetsValue.append(1000)
+        }
+        
     }
     
     // MARK:UI Table View Delegate
@@ -117,7 +133,32 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         // Dispose of any resources that can be recreated.
     }
     
+    
+      // MARK: 数据操作
+
+    func saveData_C(){
+        print("CM")
+        if assetsValue.count > 0  {
+            addCoreDataClass(arrs: [self.assets,self.assetsValue], keyArr: ["keyname","value"], mName: "Cassets")
+        }
+    
+        
+    }
+    func readData_C(){
+        getClass(modelname: "Cassets") { (data) in
+            let arr = data as! [Cassets]
+            for c in arr {
+                print(c.keyname ?? "", c.value)
+            }
+        }
+    }
+   
+    
+    
 }
+
+
+/// MARK: --- 自定义View
 
 class headerCView: UITableViewHeaderFooterView {
     let imageV = UIImageView()
@@ -151,18 +192,6 @@ class headerCView: UITableViewHeaderFooterView {
         contentBtn.layer.borderColor = UIColor.gray.cgColor
         contentBtn.layer.borderWidth = 1
     }
-    
-    // MARK: 数据操作
-    
-    func saveData_C(){
-        
-    }
-    func readData_C(){
-        
-    }
-    
-    
-    
     
 }
 
