@@ -27,6 +27,8 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        deleteClass(modelname: "Cassets")
+        deleteClass(modelname: <#T##String#>)
         saveData_C()
     }
     
@@ -43,8 +45,11 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableC.register(headerAView.self, forHeaderFooterViewReuseIdentifier: "headerA")
         tableC.register(headerCView.self, forHeaderFooterViewReuseIdentifier: "headerC")
         
-        for key in assets {
+        for _ in assets {
             assetsValue.append(1000)
+        }
+        for _ in liabilities {
+            liabiValue.append(999)
         }
         
     }
@@ -140,6 +145,9 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         print("CM")
         if assetsValue.count > 0  {
             addCoreDataClass(arrs: [self.assets,self.assetsValue], keyArr: ["keyname","value"], mName: "Cassets")
+        }
+        if liabiValue.count > 0 {
+            addCoreDataClass(arrs: [liabilities,liabiValue], keyArr:["keyname","value"], mName: "CLiabilities")
         }
     
         

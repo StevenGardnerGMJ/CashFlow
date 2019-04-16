@@ -156,29 +156,38 @@ func deleteClass(modelname:String) -> Void {
 }
 
 func addCoreDataClass(arrs:Array<Any>,keyArr:Array<String>,mName:String){
-    let context = getContext()
-    let Entity = NSEntityDescription.entity(forEntityName: mName, in: context)
     
-    let classEntity = NSManagedObject(entity: Entity!, insertInto: context)
+    
+    
+    var unArr = Array<Any>()
+    let oArr = arrs[0] as! Array<Any> // 设定次数
     
     var i = 0
-    for key in keyArr {
-        let arr = arrs[i] as! Array<Any>
-        for value in arr {
-           classEntity.setValue(value, forKey: key)
+    for _ in oArr {
+        
+        let context = getContext()
+        let Entity = NSEntityDescription.entity(forEntityName: mName, in: context)
+        let classEntity = NSManagedObject(entity: Entity!, insertInto: context)
+        
+        var tempArr = Array<Any>()
+        for t in 0..<arrs.count { // 2种
+            let tArr = arrs[t] as! Array<Any> // A1-1 A2-1
+            let value = tArr[i]
+            let key   = keyArr[t]
+            tempArr.append(value)           // A2-1 A2-2
+            classEntity.setValue(value, forKey: key)
         }
+        unArr.append(tempArr) //10 次
+        
+        do {
+            try context.save()
+        } catch  {
+            let nserror = error as NSError
+            fatalError("错误:\(nserror),\(nserror.userInfo)")
+        }
+        
         i = i + 1
     }
-    
-    do {
-        try context.save()
-    } catch  {
-        let nserror = error as NSError
-        fatalError("错误:\(nserror),\(nserror.userInfo)")
-    }
-    
-    
-    
 }
 
 // 插入信息 保存
@@ -188,8 +197,7 @@ func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
     
     let classEntity = NSManagedObject(entity: Entity!, insertInto: context)
     
-//    classEntity.setValue(arrays[0], forKey: keyArr[0])
-//    classEntity.setValue(arrays[1], forKey: keyArr[1])
+
 //    classEntity.setValue(myinfo, forKey: "myinfo")
     switch keyArr.count {
     case 3:
@@ -213,6 +221,7 @@ func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
         fatalError("错误:\(nserror),\(nserror.userInfo)")
     }
 }
+
 
 // 得到信息 读取
 func getClass(modelname:String,completionHandler:@escaping(_ data:Array<Any>)->())  {
