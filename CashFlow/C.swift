@@ -159,6 +159,13 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 print(c.keyname ?? "", c.value)
             }
         }
+        
+        getClass(modelname: "CLiabilities") { (dataArr) in
+            let arr = dataArr as! [CLiabilities]
+            for c in arr {
+                print(c.keyname ?? "", c.value)
+            }
+        }
     }
    
     
