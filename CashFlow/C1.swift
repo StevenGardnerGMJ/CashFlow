@@ -34,6 +34,8 @@ class C1: UITableViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         saveDate_C1()
+        // 返回传值
+        return defaultArr.count
     }
     
     // MARK: - Table view data source

@@ -11,6 +11,8 @@ import UIKit
 class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     let arrTotal = ["总资产","总负债","总人情"]
+    var arrTotalValue = Array<Float>()
+    
     /// 资产
     let assets = ["总资产","股票","基金","银行存款","银行存单","房地产","公寓","商铺","企业投资","其他C"]
     var assetsValue = Array<Float>()
@@ -18,7 +20,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let liabilities = ["总贷款","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他C"]
     var liabiValue = Array<Float>()
     // 人情往来 relations
-    let relations = [3]
+    let relations:Float = 3
     let relatDate = Array<Date>()// 日期
     
     
@@ -28,7 +30,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     override func viewWillDisappear(_ animated: Bool) {
         deleteClass(modelname: "Cassets")
-        deleteClass(modelname: <#T##String#>)
+        deleteClass(modelname: "CLiabilities")
         saveData_C()
     }
     
@@ -51,6 +53,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         for _ in liabilities {
             liabiValue.append(999)
         }
+        arrTotalValue = [assetsValue[0],liabiValue[0], relations]
         
     }
     
@@ -142,7 +145,11 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
       // MARK: 数据操作
 
     func saveData_C(){
-        print("CM")
+        print("======CM=========")
+        if arrTotalValue.count > 0 {
+//            addCoreDataClass(arrs: [assetsValue[0], liabiValue[0], relations], keyArr:["assets","liabilities","relations"], mName: "Cmodel")
+            insertClass(arrays: arrTotalValue, keyArr: ["assets","liabilities","relations"], modelname: "Cmodel")
+        }
         if assetsValue.count > 0  {
             addCoreDataClass(arrs: [self.assets,self.assetsValue], keyArr: ["keyname","value"], mName: "Cassets")
         }
@@ -153,6 +160,14 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
     }
     func readData_C(){
+        getClass(modelname: "Cmodel") { (dataModel) in
+            let arr = dataModel as! [Cmodel]
+            for c in arr {
+                print(c.assets, c.liabilities, c.relations)
+            }
+            
+        }
+        
         getClass(modelname: "Cassets") { (data) in
             let arr = data as! [Cassets]
             for c in arr {
