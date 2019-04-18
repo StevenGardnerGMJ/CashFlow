@@ -18,7 +18,9 @@ class C1: UITableViewController {
     var defaultArr = Array<String>() // ["添加一个新的人情往来事项"]
     var dateArr    = Array<String>() // ["1970-01-01"]
     var tempArr    = Array<String>() // 判断是否相同temp
-    //"张三总送来53度飞天茅台一箱美元教育金券2ABCDEFG","张三总送来53度飞天茅台一箱美元教育金券3","张三总送来53度飞天茅台一箱美元教育金券4","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券6","张三总送来53度飞天茅台一箱美元教育金券7","张三总送来53度飞天茅台一箱美元教育金券8"]
+    typealias swiftBlock = (_ str: Int) -> Void //1.0
+    var callBack: swiftBlock?  //2.0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +36,14 @@ class C1: UITableViewController {
     }
     override func viewWillDisappear(_ animated: Bool) {
         saveDate_C1()
+        
         // 返回传值
-        return defaultArr.count
+        let b = defaultArr.count
+        if callBack != nil {
+            callBack!(b)
+        }
     }
+    
     
     // MARK: - Table view data source
     
@@ -121,6 +128,7 @@ class C1: UITableViewController {
     }
     
     @objc func addRelations() {
+        
         print("----添加时间----")
         let alterControl = UIAlertController(title: "添加人情往来", message: nil, preferredStyle: UIAlertControllerStyle.alert)
         
@@ -247,6 +255,11 @@ class C1: UITableViewController {
     func update_C1() {
         
     }
+    // 3.0+
+    func callBackBlock(_ block: @escaping swiftBlock) {
+        callBack = block
+    }
+    
     
     
     //    override func tableView(_ tableView: UITableView, indentationLevelForRowAt indexPath: IndexPath) -> Int {
@@ -260,6 +273,7 @@ class C1: UITableViewController {
     //            return 2//super.tableView(tableView, indentationLevelForRowAt: indexPath)
     //        }
     //    }
+    //"张三总送来53度飞天茅台一箱美元教育金券2ABCDEFG","张三总送来53度飞天茅台一箱美元教育金券3","张三总送来53度飞天茅台一箱美元教育金券4","张三总送来53度飞天茅台一箱美元教育金券5w","张三总送来53度飞天茅台一箱美元教育金券6","张三总送来53度飞天茅台一箱美元教育金券7","张三总送来53度飞天茅台一箱美元教育金券8"]
     
     // 左滑 操作
     //    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

@@ -20,7 +20,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let liabilities = ["总贷款","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他C"]
     var liabiValue = Array<Float>()
     // 人情往来 relations
-    let relations:Float = 3
+    var relations = Float()
     let relatDate = Array<Date>()// 日期
     
     
@@ -54,7 +54,6 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             liabiValue.append(999)
         }
         arrTotalValue = [assetsValue[0],liabiValue[0], relations]
-        
     }
     
     // MARK:UI Table View Delegate
@@ -62,6 +61,10 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 2 {
             let c1VC = C1.init()
+            c1VC.callBackBlock { (num) in
+                self.relations = Float(num)
+                tableView.reloadData()
+            }
             self.navigationController?.pushViewController(c1VC, animated: true)
         } else {
             
@@ -120,12 +123,24 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         cell?.detailTextLabel?.text = "￥10000"
         if indexPath.section == 0 {
             cell?.textLabel?.text = arrTotal[indexPath.row]
+            switch indexPath.row {
+            case 0:
+            cell?.detailTextLabel?.text = "\(assetsValue[0])"
+            case 1:
+            cell?.detailTextLabel?.text = "\(liabiValue[0])"
+            case 2:
+            cell?.detailTextLabel?.text = "\(Int(relations))"
+            default:
+            print("newRow")
+            }
         } else if indexPath.section == 1 {
             // 资产
             cell?.textLabel?.text = assets[indexPath.row]
+            cell?.detailTextLabel?.text = "\(assetsValue[indexPath.row])"
         } else {
             // 负债
             cell?.textLabel?.text =   liabilities[indexPath.row]
+            cell?.detailTextLabel?.text = "\(liabiValue[indexPath.row])"
         }
         let nameStr = cell?.textLabel?.text ?? ""
         cell?.imageView?.image = UIImage(named: nameStr)
