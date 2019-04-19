@@ -11,21 +11,25 @@ import UIKit
 class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     let arrTotal = ["总资产","总负债","总人情"]
-    var arrTotalValue = Array<Float>()
+    var arrTotalValue = Array<Any>()// 统计
     
     /// 资产
-    let assets = ["总资产","股票","基金","银行存款","银行存单","房地产","公寓","商铺","企业投资","其他C"]
+    var assets = ["总资产","股票","基金","银行存款","银行存单","房地产","公寓","商铺","企业投资","其他C"]
     var assetsValue = Array<Float>()
     /// 负债
-    let liabilities = ["总贷款","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他C"]
+    var liabilities = ["总贷款","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他C"]
     var liabiValue = Array<Float>()
     // 人情往来 relations
-    var relations = Float()
+    var relations = Int()
     let relatDate = Array<Date>()// 日期
-    
+    var isNeedReadCoreDare = true
+    var tableC = UITableView()
     
     override func viewWillAppear(_ animated: Bool) {
-        readData_C()
+        if isNeedReadCoreDare == true {
+            readData_C()
+        }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -39,7 +43,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        let tableC = UITableView(frame: self.view.frame, style: .grouped)
+        tableC = UITableView(frame: self.view.frame, style: .grouped)
         tableC.delegate = self
         tableC.dataSource = self
         self.view.addSubview(tableC)
@@ -47,13 +51,6 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableC.register(headerAView.self, forHeaderFooterViewReuseIdentifier: "headerA")
         tableC.register(headerCView.self, forHeaderFooterViewReuseIdentifier: "headerC")
         
-        for _ in assets {
-            assetsValue.append(1000)
-        }
-        for _ in liabilities {
-            liabiValue.append(999)
-        }
-        arrTotalValue = [assetsValue[0],liabiValue[0], relations]
     }
     
     // MARK:UI Table View Delegate
@@ -62,7 +59,8 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         if indexPath.section == 0 && indexPath.row == 2 {
             let c1VC = C1.init()
             c1VC.callBackBlock { (num) in
-                self.relations = Float(num)
+                self.relations = num
+                self.isNeedReadCoreDare = false
                 tableView.reloadData()
             }
             self.navigationController?.pushViewController(c1VC, animated: true)
@@ -120,7 +118,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cellC")
         cell = UITableViewCell(style: .value1, reuseIdentifier: "cellC")
         cell?.selectionStyle = .none
-        cell?.detailTextLabel?.text = "￥10000"
+
         if indexPath.section == 0 {
             cell?.textLabel?.text = arrTotal[indexPath.row]
             switch indexPath.row {
@@ -129,7 +127,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             case 1:
             cell?.detailTextLabel?.text = "\(liabiValue[0])"
             case 2:
-            cell?.detailTextLabel?.text = "\(Int(relations))"
+            cell?.detailTextLabel?.text = "\(relations)" + "次"
             default:
             print("newRow")
             }
@@ -160,8 +158,15 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
       // MARK: 数据操作
 
     func saveData_C(){
+        
         print("======CM=========")
+        
+        isNeedReadCoreDare = true
+        
+        arrTotalValue = [assetsValue[0],liabiValue[0], relations]
+        
         if arrTotalValue.count > 0 {
+            deleteClass(modelname: "Cmodel")
 //            addCoreDataClass(arrs: [assetsValue[0], liabiValue[0], relations], keyArr:["assets","liabilities","relations"], mName: "Cmodel")
             insertClass(arrays: arrTotalValue, keyArr: ["assets","liabilities","relations"], modelname: "Cmodel")
         }
@@ -177,24 +182,56 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func readData_C(){
         getClass(modelname: "Cmodel") { (dataModel) in
             let arr = dataModel as! [Cmodel]
-            for c in arr {
-                print(c.assets, c.liabilities, c.relations)
-            }
+            if arr.count > 0 {
+                for c in arr {
+                    print(c.assets, c.liabilities, c.relations)
+                    let de = Decimal(c.relations)
+                    print(de)
+                    self.relations = Int(c.relations)
+                }
+                self.tableC.reloadData()
+            } else {self.isNoValue(t_f: true)}
             
         }
         
         getClass(modelname: "Cassets") { (data) in
             let arr = data as! [Cassets]
-            for c in arr {
-                print(c.keyname ?? "", c.value)
+            if arr.count > 0 {
+                for c in arr {
+                    print(c.keyname ?? "", c.value)
+                    self.assets.append(c.keyname ?? "")
+                    self.assetsValue.append(c.value)
+                }
+                self.tableC.reloadData()
+            } else {
+               self.isNoValue(t_f: true)
             }
+         
         }
         
         getClass(modelname: "CLiabilities") { (dataArr) in
+            
             let arr = dataArr as! [CLiabilities]
-            for c in arr {
-                print(c.keyname ?? "", c.value)
+            if arr.count > 0 {
+                for c in arr {
+                    print(c.keyname ?? "", c.value)
+                }
+                self.tableC.reloadData()
+            } else {
+                self.isNoValue(t_f: true)
             }
+            
+        }
+    }
+    
+    func isNoValue(t_f:Bool) {
+        if t_f == true {
+                for _ in assets {
+                    assetsValue.append(0)
+                }
+                for _ in liabilities {
+                    liabiValue.append(0)
+                }
         }
     }
    
