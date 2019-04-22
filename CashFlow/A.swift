@@ -27,7 +27,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var tableVC = UITableView()
     
     override func viewWillDisappear(_ animated: Bool) {
-        print("saveAdata")
+        print("====Savedata_A======")
         saveAdata()
     }
     
