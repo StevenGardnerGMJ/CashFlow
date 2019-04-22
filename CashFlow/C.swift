@@ -10,6 +10,11 @@ import UIKit
 
 class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
+    let mName_C = "Cmodel"
+    let mName_Ca = "Cassets"
+    let mName_Cl = "CLiabilities"
+    
+    /// 总
     let arrTotal = ["总资产","总负债","总人情"]
     var arrTotalValue = Array<Any>()// 统计
     
@@ -17,7 +22,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var assets = ["总资产","股票","基金","银行存款","银行存单","房地产","公寓","商铺","企业投资","其他C"]
     var assetsValue = Array<Float>()
     /// 负债
-    var liabilities = ["总贷款","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他C"]
+    var liabilities = ["总负债","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他C"]
     var liabiValue = Array<Float>()
     // 人情往来 relations
     var relations = Int()
@@ -25,23 +30,25 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var isNeedReadCoreDare = true
     var tableC = UITableView()
     
+    var tSaveData = 0
+    
     override func viewWillAppear(_ animated: Bool) {
-        if isNeedReadCoreDare == true {
-            readData_C()
-        }
+//        if isNeedReadCoreDare == true {
+//            readData_C()
+//        }
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        deleteClass(modelname: "Cassets")
-        deleteClass(modelname: "CLiabilities")
         saveData_C()
     }
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if assetsValue.count == 0 || liabiValue.count == 0 {
+            isNoValue(t_f: true)
+        }
         // Do any additional setup after loading the view.
         tableC = UITableView(frame: self.view.frame, style: .grouped)
         tableC.delegate = self
@@ -158,43 +165,32 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
       // MARK: 数据操作
 
     func saveData_C(){
-        
-        print("======CM=========")
+        tSaveData = tSaveData + 1
+        print("======SaveData_C \(tSaveData)=========")
         
         isNeedReadCoreDare = true
         
-        arrTotalValue = [assetsValue[0],liabiValue[0], relations]
-        
-        if arrTotalValue.count > 0 {
-            deleteClass(modelname: "Cmodel")
-//            addCoreDataClass(arrs: [assetsValue[0], liabiValue[0], relations], keyArr:["assets","liabilities","relations"], mName: "Cmodel")
-            insertClass(arrays: arrTotalValue, keyArr: ["assets","liabilities","relations"], modelname: "Cmodel")
-        }
         if assetsValue.count > 0  {
-            addCoreDataClass(arrs: [self.assets,self.assetsValue], keyArr: ["keyname","value"], mName: "Cassets")
+            deleteClass(modelname: mName_Ca)
+            addCoreDataClass(arrs: [self.assets,self.assetsValue], keyArr: ["keyname","value"], mName: mName_Ca)
         }
+        
         if liabiValue.count > 0 {
-            addCoreDataClass(arrs: [liabilities,liabiValue], keyArr:["keyname","value"], mName: "CLiabilities")
+            deleteClass(modelname: mName_Cl)
+//            addCoreDataClass(arrs: [liabilities,liabiValue], keyArr:["keyname","value"], mName: mName_Cl)
+        }
+        
+        arrTotalValue = [assetsValue[0],liabiValue[0], relations]
+        if arrTotalValue.count > 0 {
+            deleteClass(modelname: mName_C)
+//            insertClass(arrays: arrTotalValue, keyArr: ["assets","liabilities","relations"], modelname: mName_C)
         }
     
         
     }
     func readData_C(){
-        getClass(modelname: "Cmodel") { (dataModel) in
-            let arr = dataModel as! [Cmodel]
-            if arr.count > 0 {
-                for c in arr {
-                    print(c.assets, c.liabilities, c.relations)
-                    let de = Decimal(c.relations)
-                    print(de)
-                    self.relations = Int(c.relations)
-                }
-                self.tableC.reloadData()
-            } else {self.isNoValue(t_f: true)}
-            
-        }
-        
-        getClass(modelname: "Cassets") { (data) in
+      
+        getClass(modelname: mName_Ca) { (data) in
             let arr = data as! [Cassets]
             if arr.count > 0 {
                 for c in arr {
@@ -203,25 +199,36 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
                     self.assetsValue.append(c.value)
                 }
                 self.tableC.reloadData()
-            } else {
-               self.isNoValue(t_f: true)
             }
          
         }
         
-        getClass(modelname: "CLiabilities") { (dataArr) in
+        getClass(modelname: mName_Cl) { (dataArr) in
             
             let arr = dataArr as! [CLiabilities]
             if arr.count > 0 {
                 for c in arr {
-                    print(c.keyname ?? "", c.value)
+                    self.liabilities.append(c.keyname ?? "")
+                    self.liabiValue.append(c.value)
                 }
                 self.tableC.reloadData()
-            } else {
-                self.isNoValue(t_f: true)
+            }
+        }
+        
+        getClass(modelname: mName_C) { (dataModel) in
+            let arr = dataModel as! [Cmodel]
+            if arr.count > 0 {
+                for c in arr {
+                    print(c.assets, c.liabilities, c.relations)
+                    let de = Decimal(c.relations)
+                    print(de)
+                    self.relations = Int(c.relations)// 仅需
+                }
+                self.tableC.reloadData()
             }
             
         }
+        
     }
     
     func isNoValue(t_f:Bool) {
