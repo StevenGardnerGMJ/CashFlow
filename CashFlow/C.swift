@@ -79,8 +79,8 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             self.tableC.deleteRows(at: [indexPath], with: .fade)
             
         }
-        let editAction = UITableViewRowAction(style: .default, title: "日期") { (action, indexpath) in
-            print("数值")
+        let editAction = UITableViewRowAction(style: .default, title: "数值") { (action, indexpath) in
+           
             self.changeValue(inP: indexPath)
         }
         editAction.backgroundColor = UIColor.gray
