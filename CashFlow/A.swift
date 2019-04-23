@@ -15,8 +15,8 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let attributeName = ["status","value","myinfo"]
     let enteryName    = "Amodel"
     let arrA = ["职业","小孩","工资","持有现金","月收现金","自由进度"]// 主动收入，被动收入
-    var arrAnumber = Array<Float>()
-    var arrMyInfo  = Array<String>()
+    var arrAnumber = Array<Float>() // 数值
+    var arrMyInfo  = Array<String>()// 个人信息
     
     let arrDefault = ["职业","E-mail","生活目标","常驻地","电话","昵称"]
     

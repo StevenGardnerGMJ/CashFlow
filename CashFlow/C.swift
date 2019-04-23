@@ -33,9 +33,9 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var tSaveData = 0
     
     override func viewWillAppear(_ animated: Bool) {
-//        if isNeedReadCoreDare == true {
-//            readData_C()
-//        }
+        if isNeedReadCoreDare == true {
+            readData_C()
+        }
         
     }
     
@@ -61,6 +61,66 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     // MARK:UI Table View Delegate
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleAction = UITableViewRowAction(style: .destructive, title: "清除") { (action, indexpath) in
+            print("清除")
+            switch indexPath.section {
+            case 1 :
+                self.assets.remove(at: indexPath.row)
+                self.assetsValue.remove(at: indexPath.row)
+                
+            case 2 :
+                self.liabilities.remove(at: indexPath.row)
+                self.liabiValue.remove(at: indexPath.row)
+                
+            default:
+                print("总计")
+            }
+            self.tableC.deleteRows(at: [indexPath], with: .fade)
+            
+        }
+        let editAction = UITableViewRowAction(style: .default, title: "日期") { (action, indexpath) in
+            print("数值")
+            self.changeValue(inP: indexPath)
+        }
+        editAction.backgroundColor = UIColor.gray
+        // 禁用 editActionsForRowAt
+        if indexPath.section == 0 {
+           return []
+        } else {
+           return [editAction, deleAction]
+        }
+       
+        
+        
+    }
+    
+    func changeValue(inP:IndexPath) {
+        let alterC = UIAlertController(title: "修改人情往来", message: nil, preferredStyle: .alert)
+        alterC.addTextField { (textField) in
+            textField.text = "\(self.assetsValue[inP.row])"
+        }
+        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let sureBtn = UIAlertAction(title: "确定", style: .default) { (action) in
+            // Str -> Float
+            let value = alterC.textFields?.last!.text ?? "0"
+            let valueToNum = Float(value)
+
+            switch inP.section {
+            case 1 :
+                self.assetsValue[inP.row] = valueToNum!
+            case 2 :
+                self.liabiValue[inP.row] = valueToNum!
+            default:
+                print("总计")
+            }
+            self.tableC.reloadData()  
+        }
+        alterC.addAction(sureBtn)
+        alterC.addAction(cancel)
+        self.present(alterC, animated: true, completion: nil)
+    }
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 2 {
@@ -177,13 +237,13 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         if liabiValue.count > 0 {
             deleteClass(modelname: mName_Cl)
-//            addCoreDataClass(arrs: [liabilities,liabiValue], keyArr:["keyname","value"], mName: mName_Cl)
+            addCoreDataClass(arrs: [liabilities,liabiValue], keyArr:["keyname","value"], mName: mName_Cl)
         }
         
         arrTotalValue = [assetsValue[0],liabiValue[0], relations]
         if arrTotalValue.count > 0 {
             deleteClass(modelname: mName_C)
-//            insertClass(arrays: arrTotalValue, keyArr: ["assets","liabilities","relations"], modelname: mName_C)
+            insertClass(arrays: arrTotalValue, keyArr: ["assets","liabilities","relations"], modelname: mName_C)
         }
     
         
@@ -193,6 +253,8 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         getClass(modelname: mName_Ca) { (data) in
             let arr = data as! [Cassets]
             if arr.count > 0 {
+                self.assets = Array<String>()
+                self.assetsValue = Array<Float>()
                 for c in arr {
                     print(c.keyname ?? "", c.value)
                     self.assets.append(c.keyname ?? "")
@@ -207,6 +269,8 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             
             let arr = dataArr as! [CLiabilities]
             if arr.count > 0 {
+                self.liabilities = Array<String>()
+                self.liabiValue  = Array<Float>()
                 for c in arr {
                     self.liabilities.append(c.keyname ?? "")
                     self.liabiValue.append(c.value)

@@ -119,6 +119,7 @@ class C1: UITableViewController {
             self.changeRelations(inP: indexPath)
         }
         editAction.backgroundColor = UIColor.gray
+        // 禁用 editActionsForRowAt
         if datePickerVisible == true {
             return []
         } else {
