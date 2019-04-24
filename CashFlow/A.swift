@@ -133,10 +133,12 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let detailtext = arrMyInfo[0]
             cellA.detailTextLabel?.text = "\(detailtext)"
         case 5:
+            // 百分数 %显示
             let number = NSNumber(value: arrAnumber[indexPath.row])
             let percent = NumberFormatter.localizedString(from: number, number: .percent)
             cellA.detailTextLabel?.text = percent
         default:
+            // 保留两位小数---财务标准显示
             let number = NSNumber(value: arrAnumber[indexPath.row])
             let detailtext = NumberFormatter.localizedString(from: number, number: .currencyAccounting)
             cellA.detailTextLabel?.text = "\(detailtext)"
@@ -189,6 +191,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
             if row == 0 {
                 self.arrMyInfo[0] = textStr
                 textStr = "0.01" } //0号位职业
+            // String 转 Float
             let str_double:Double = Double(textStr)!
             let value = Float(str_double)
             self.arrAnumber[row] = value

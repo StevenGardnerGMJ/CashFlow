@@ -62,8 +62,8 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     // MARK:UI Table View Delegate
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleAction = UITableViewRowAction(style: .destructive, title: "清除") { (action, indexpath) in
-            print("清除")
+        let deleAction = UITableViewRowAction(style: .destructive, title: "删除") { (action, indexpath) in
+          
             switch indexPath.section {
             case 1 :
                 self.assets.remove(at: indexPath.row)
@@ -79,38 +79,60 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             self.tableC.deleteRows(at: [indexPath], with: .fade)
             
         }
+        let cleanAction = UITableViewRowAction(style: .normal, title: "清零") { (action, indexpath) in
+            print("清零值数据")
+        }
         let editAction = UITableViewRowAction(style: .default, title: "数值") { (action, indexpath) in
-           
-            self.changeValue(inP: indexPath)
+            let cell = self.tableC.cellForRow(at: indexPath)
+            let str = cell?.detailTextLabel?.text ?? ""
+            self.changeValue(inP: indexPath, text: str)
         }
         editAction.backgroundColor = UIColor.gray
         // 禁用 editActionsForRowAt
-        if indexPath.section == 0 {
-           return []
-        } else {
-           return [editAction, deleAction]
+        switch indexPath.section {
+        case 0:
+            return []
+        case 1:
+            if indexPath.row < 10 {
+                return [editAction]
+            } else {
+                return [editAction, deleAction]
+            }
+        case 2:
+            if indexPath.row < 9 {
+                return [editAction]
+            } else {
+                return [editAction, deleAction]
+            }
+        default:
+            //
+            return [editAction, cleanAction, deleAction]
         }
-       
         
-        
+
     }
     
-    func changeValue(inP:IndexPath) {
+    func changeValue(inP:IndexPath, text:String) {
         let alterC = UIAlertController(title: "修改人情往来", message: nil, preferredStyle: .alert)
         alterC.addTextField { (textField) in
-            textField.text = "\(self.assetsValue[inP.row])"
+        
+            var valueStr = String()
+            text == "0.0" ? (valueStr = "") : (valueStr = "\(text)")
+            textField.text = valueStr
+            textField.keyboardType = .decimalPad
         }
         let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         let sureBtn = UIAlertAction(title: "确定", style: .default) { (action) in
             // Str -> Float
             let value = alterC.textFields?.last!.text ?? "0"
-            let valueToNum = Float(value)
+            let double_str = Double(value)
+            let valueToNum = Float(double_str ?? 0)
 
             switch inP.section {
             case 1 :
-                self.assetsValue[inP.row] = valueToNum!
+                self.assetsValue[inP.row] = valueToNum
             case 2 :
-                self.liabiValue[inP.row] = valueToNum!
+                self.liabiValue[inP.row]  = valueToNum
             default:
                 print("总计")
             }
@@ -190,9 +212,9 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             cell?.textLabel?.text = arrTotal[indexPath.row]
             switch indexPath.row {
             case 0:
-            cell?.detailTextLabel?.text = "\(assetsValue[0])"
+            cell?.detailTextLabel?.text = currencyAccounting(num: assetsValue[0])//"\(assetsValue[0])"
             case 1:
-            cell?.detailTextLabel?.text = "\(liabiValue[0])"
+            cell?.detailTextLabel?.text = currencyAccounting(num: liabiValue[0])//"\(liabiValue[0])"
             case 2:
             cell?.detailTextLabel?.text = "\(relations)" + "次"
             default:
@@ -201,18 +223,24 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         } else if indexPath.section == 1 {
             // 资产
             cell?.textLabel?.text = assets[indexPath.row]
-            cell?.detailTextLabel?.text = "\(assetsValue[indexPath.row])"
+            let number = assetsValue[indexPath.row]
+            cell?.detailTextLabel?.text = currencyAccounting(num: number)
         } else {
             // 负债
             cell?.textLabel?.text =   liabilities[indexPath.row]
-            cell?.detailTextLabel?.text = "\(liabiValue[indexPath.row])"
+            let number = liabiValue[indexPath.row]
+            cell?.detailTextLabel?.text = currencyAccounting(num: number)
         }
         let nameStr = cell?.textLabel?.text ?? ""
         cell?.imageView?.image = UIImage(named: nameStr)
         return cell!
     }
-    
-
+    /// 财务标准显示---货币以会计形式:例子 ￥1000.23
+    func currencyAccounting(num:Float) -> String {
+        let number = NSNumber(value: num)
+        let strNum = NumberFormatter.localizedString(from: number, number: .currencyAccounting)
+        return strNum
+    }
     
     
 
@@ -225,7 +253,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
       // MARK: 数据操作
 
     func saveData_C(){
-        tSaveData = tSaveData + 1
+        tSaveData = tSaveData + 1 // var 计数器
         print("======SaveData_C \(tSaveData)=========")
         
         isNeedReadCoreDare = true
