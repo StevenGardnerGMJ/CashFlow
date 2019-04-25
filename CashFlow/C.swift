@@ -20,17 +20,15 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     /// 资产
     var assets = ["总资产","股票","基金","银行存款","银行存单","房地产","公寓","商铺","企业投资","其他C"]
-    var assetsValue = Array<Float>()
+    var assetsValue = Array<Double>()
     /// 负债
     var liabilities = ["总负债","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他C"]
-    var liabiValue = Array<Float>()
+    var liabiValue = Array<Double>()
     // 人情往来 relations
     var relations = Int()
     let relatDate = Array<Date>()// 日期
     var isNeedReadCoreDare = true
     var tableC = UITableView()
-    
-    var tSaveData = 0
     
     override func viewWillAppear(_ animated: Bool) {
         if isNeedReadCoreDare == true {
@@ -116,23 +114,21 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         let alterC = UIAlertController(title: "修改人情往来", message: nil, preferredStyle: .alert)
         alterC.addTextField { (textField) in
         
-            var valueStr = String()
-            text == "0.0" ? (valueStr = "") : (valueStr = "\(text)")
-            textField.text = valueStr
+//            var valueStr = String()
+//            text == "0.0" ? (valueStr = "") : (valueStr = "\(text)")
+//            textField.text = valueStr
             textField.keyboardType = .decimalPad
         }
         let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         let sureBtn = UIAlertAction(title: "确定", style: .default) { (action) in
-            // Str -> Float
+            // Str -> Double
             let value = alterC.textFields?.last!.text ?? "0"
-            let double_str = Double(value)
-            let valueToNum = Float(double_str ?? 0)
-
+            let double = Double(value) ?? 0
             switch inP.section {
             case 1 :
-                self.assetsValue[inP.row] = valueToNum
+                self.assetsValue[inP.row] = double
             case 2 :
-                self.liabiValue[inP.row]  = valueToNum
+                self.liabiValue[inP.row]  = double
             default:
                 print("总计")
             }
@@ -188,8 +184,13 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             } else {
                 headView.titleL.text = "负债列表"
             }
+            headView.contentBtn.addTarget(self, action:#selector(newAssetsLib:), for: .touchUpInside)
             return headView
         }
+    }
+    
+    @objc func newAssetsLib(inP:Int){
+        print("增加资产负债")
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -236,7 +237,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         return cell!
     }
     /// 财务标准显示---货币以会计形式:例子 ￥1000.23
-    func currencyAccounting(num:Float) -> String {
+    func currencyAccounting(num:Double) -> String {
         let number = NSNumber(value: num)
         let strNum = NumberFormatter.localizedString(from: number, number: .currencyAccounting)
         return strNum
@@ -253,8 +254,8 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
       // MARK: 数据操作
 
     func saveData_C(){
-        tSaveData = tSaveData + 1 // var 计数器
-        print("======SaveData_C \(tSaveData)=========")
+        
+        print("======SaveData_C =========")
         
         isNeedReadCoreDare = true
         
@@ -282,7 +283,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let arr = data as! [Cassets]
             if arr.count > 0 {
                 self.assets = Array<String>()
-                self.assetsValue = Array<Float>()
+                self.assetsValue = Array<Double>()
                 for c in arr {
                     print(c.keyname ?? "", c.value)
                     self.assets.append(c.keyname ?? "")
@@ -298,7 +299,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let arr = dataArr as! [CLiabilities]
             if arr.count > 0 {
                 self.liabilities = Array<String>()
-                self.liabiValue  = Array<Float>()
+                self.liabiValue  = Array<Double>()
                 for c in arr {
                     self.liabilities.append(c.keyname ?? "")
                     self.liabiValue.append(c.value)
@@ -375,9 +376,6 @@ class headerCView: UITableViewHeaderFooterView {
     }
     
 }
-
-
-
 
 
 
