@@ -111,7 +111,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func changeValue(inP:IndexPath, text:String) {
-        let alterC = UIAlertController(title: "修改人情往来", message: nil, preferredStyle: .alert)
+        let alterC = UIAlertController(title: "修改该项金额值", message: nil, preferredStyle: .alert)
         alterC.addTextField { (textField) in
         
 //            var valueStr = String()
@@ -181,16 +181,40 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let headView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerC") as! headerCView
             if section == 1 {
                 headView.titleL.text = "资产列表"
+                headView.contentBtn.tag = 1
             } else {
                 headView.titleL.text = "负债列表"
+                headView.contentBtn.tag = 2
             }
-            headView.contentBtn.addTarget(self, action:#selector(newAssetsLib:), for: .touchUpInside)
+            headView.contentBtn.addTarget(self, action:#selector(newAssetsLib), for: .touchUpInside)
+            
             return headView
         }
     }
     
-    @objc func newAssetsLib(inP:Int){
-        print("增加资产负债")
+    @objc func newAssetsLib(inP:UIButton){
+        print("增加资产负债 \(inP.tag)")
+        switch inP.tag  {
+        case 1:
+            assets.append("新添加资产项")
+            assetsValue.append(0.0)
+            case 2:
+            liabilities.append("新添加负债项")
+            liabiValue.append(0.0)
+        default:
+            print("其他")
+        }
+        self.tableC.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let titleAction = UIContextualAction(style: .normal, title: "名称") { (action, view, handeler) in
+            print("修改资产项目名称")
+            handeler(true)
+        }
+        titleAction.backgroundColor = .lightGray
+        let config = UISwipeActionsConfiguration(actions: [titleAction])
+        return  config
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
