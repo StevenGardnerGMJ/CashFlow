@@ -85,7 +85,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let str = cell?.detailTextLabel?.text ?? ""
             self.changeValue(inP: indexPath, text: str)
         }
-        editAction.backgroundColor = UIColor.gray
+        editAction.backgroundColor = UIColor.orange
         // 禁用 editActionsForRowAt
         switch indexPath.section {
         case 0:
@@ -194,28 +194,81 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     @objc func newAssetsLib(inP:UIButton){
         print("增加资产负债 \(inP.tag)")
+        var row = 0
         switch inP.tag  {
         case 1:
             assets.append("新添加资产项")
             assetsValue.append(0.0)
-            case 2:
+            row = assets.count - 1
+        case 2:
             liabilities.append("新添加负债项")
             liabiValue.append(0.0)
+            row = liabilities.count - 1
         default:
             print("其他")
         }
-        self.tableC.reloadData()
+        let indexset = IndexSet(integer: inP.tag)
+        self.tableC.reloadSections(indexset, with: .automatic)
+        // 滚动到新增位置 bottom
+        let position = IndexPath(row: row, section: inP.tag)
+        self.tableC.scrollToRow(at: position, at: .middle, animated: true)
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let titleAction = UIContextualAction(style: .normal, title: "名称") { (action, view, handeler) in
             print("修改资产项目名称")
+         
+            let oldname = tableView.cellForRow(at: indexPath)?.textLabel?.text
+            
+            self.changeName(inP:indexPath, oldName: oldname ?? "")
             handeler(true)
         }
-        titleAction.backgroundColor = .lightGray
-        let config = UISwipeActionsConfiguration(actions: [titleAction])
+        titleAction.backgroundColor = .init(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1.0)
+        //.init(red: 0/255.0, green: 122/255.0, blue: 255/255.0, alpha: 1.0)
+        var config = UISwipeActionsConfiguration(actions: [titleAction])
+        // 禁用 leadingSwipeActions
+        switch indexPath.section {
+        case 0:
+            config = UISwipeActionsConfiguration(actions: [])
+        case 1:
+            if indexPath.row < 10 {
+                config = UISwipeActionsConfiguration(actions: [])
+            }
+        case 2:
+            if indexPath.row < 9 {
+                config = UISwipeActionsConfiguration(actions: [])
+            }
+        default:
+            print("禁用 leadingSwipeActions")
+        }
         return  config
     }
+    
+    func changeName(inP:IndexPath, oldName:String) {
+        let alter = UIAlertController(title: "修改项目类型名", message: nil, preferredStyle: .alert)
+        alter.addTextField { (textfied) in
+            textfied.text = oldName
+        }
+        let sureAction = UIAlertAction(title: "确定", style: .default) { (action) in
+            switch inP.section {
+            case 1 :
+                self.assets[inP.row] = alter.textFields?.last?.text ?? "-----"
+            case 2 :
+                self.liabilities[inP.row] = alter.textFields?.last?.text ?? "-----"
+            default:
+                print("总计")
+            }
+            self.tableC.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        
+        alter.addAction(cancelAction)
+        alter.addAction(sureAction)
+        self.present(alter, animated: true, completion: nil)
+        
+    }
+    
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
@@ -237,9 +290,9 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             cell?.textLabel?.text = arrTotal[indexPath.row]
             switch indexPath.row {
             case 0:
-            cell?.detailTextLabel?.text = currencyAccounting(num: assetsValue[0])//"\(assetsValue[0])"
+            cell?.detailTextLabel?.text = currencyAccounting(num: assetsValue[0])
             case 1:
-            cell?.detailTextLabel?.text = currencyAccounting(num: liabiValue[0])//"\(liabiValue[0])"
+            cell?.detailTextLabel?.text = currencyAccounting(num: liabiValue[0])
             case 2:
             cell?.detailTextLabel?.text = "\(relations)" + "次"
             default:
