@@ -207,6 +207,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         default:
             print("其他")
         }
+        // 刷新位置信息
         let indexset = IndexSet(integer: inP.tag)
         self.tableC.reloadSections(indexset, with: .automatic)
         // 滚动到新增位置 bottom
