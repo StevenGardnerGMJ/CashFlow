@@ -225,7 +225,7 @@ func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
 
 // 得到信息 读取
 func getClass(modelname:String,completionHandler:@escaping(_ data:Array<Any>)->())  {
-    print("getClass\(modelname)")
+//    print("getClass\(modelname)")
     let context = getContext()
     var arr = Array<Any>()
     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: modelname)

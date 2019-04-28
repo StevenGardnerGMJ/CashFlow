@@ -35,9 +35,15 @@ class C1: UITableViewController {
         readCoreDate_C1()
     }
     override func viewWillDisappear(_ animated: Bool) {
+        // back后删除日期cell
+        if datePickerVisible == true {
+            let inp = IndexPath(row: sIndex, section: 0)
+            hideDatePicker(inP: inp)
+        }
+        // 保存
         saveDate_C1()
         
-        // 返回传值
+        // 反传值 -> C
         let b = defaultArr.count
         if callBack != nil {
             callBack!(b)
@@ -188,7 +194,7 @@ class C1: UITableViewController {
     }
     
     func hideDatePicker(inP:IndexPath) {
-        
+        // 若点击非持有cell
         guard inP.row == sIndex else {
             print("//点击非弹出日期cell 返回")
             return
@@ -228,9 +234,12 @@ class C1: UITableViewController {
     // MARK: - save  data
     
     func readCoreDate_C1() {
+        print("=====readCoreDate_C1===")
         getClass(modelname: "C1model") { (data) in
             let arr = data as! [C1model]
             if arr.count > 0 {
+                self.defaultArr = Array<String>()
+                self.dateArr    = Array<String>()
                 for c1 in arr {
                     self.defaultArr.append(c1.relations ?? "")
                     self.dateArr.append(c1.dates ?? "")
@@ -245,7 +254,7 @@ class C1: UITableViewController {
     }
     
     func saveDate_C1() {
-        
+        print("saveDate_C1()")
         if self.defaultArr.count > 0 {
             deleteClass(modelname: "C1model")
             var i = 0
