@@ -14,7 +14,7 @@ class C1: UITableViewController {
     
     var datePickerVisible:Bool = false
     var sDate = "1970-01-01"
-    var sIndex = 1
+    var sIndex = 1 // 当前选择cell后弹出s日期cell
     var defaultArr = Array<String>() // ["添加一个新的人情往来事项"]
     var dateArr    = Array<String>() // ["1970-01-01"]
     var tempArr    = Array<String>() // 判断是否相同temp
@@ -72,6 +72,7 @@ class C1: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         if datePickerVisible == true {
+            
             hideDatePicker(inP: indexPath)
         }
     }
@@ -187,6 +188,11 @@ class C1: UITableViewController {
     }
     
     func hideDatePicker(inP:IndexPath) {
+        
+        guard inP.row == sIndex else {
+            print("//点击非弹出日期cell 返回")
+            return
+        }
         datePickerVisible = false
         if defaultArr.count == 1 || inP.row >= defaultArr.count - 1 {
             print("超过删除范围")
