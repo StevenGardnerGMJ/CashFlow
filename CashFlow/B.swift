@@ -84,7 +84,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cellR")
         cell = UITableViewCell(style: .value1, reuseIdentifier: "cellR")
-        cell?.detailTextLabel?.text = "￥2000"
+        cell?.detailTextLabel?.text = "￥0.00"
         switch indexPath.section{
         case 0:
             cell?.textLabel?.text  = total[indexPath.row]

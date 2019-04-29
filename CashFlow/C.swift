@@ -41,7 +41,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         saveData_C()
     }
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if assetsValue.count == 0 || liabiValue.count == 0 {
@@ -59,9 +59,40 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     // MARK:UI Table View Delegate
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let titleAction = UIContextualAction(style: .normal, title: "名称") { (action, view, handeler) in
+            print("修改资产项目名称")
+            
+            let oldname = tableView.cellForRow(at: indexPath)?.textLabel?.text
+            
+            self.changeName(inP:indexPath, oldName: oldname ?? "")
+            handeler(true)
+        }
+        titleAction.backgroundColor = .init(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1.0)
+        //.init(red: 0/255.0, green: 122/255.0, blue: 255/255.0, alpha: 1.0)
+        var config = UISwipeActionsConfiguration(actions: [titleAction])
+        // 禁用 leadingSwipeActions
+        switch indexPath.section {
+        case 0:
+            config = UISwipeActionsConfiguration(actions: [])
+        case 1:
+            if indexPath.row < 10 {
+                config = UISwipeActionsConfiguration(actions: [])
+            }
+        case 2:
+            if indexPath.row < 9 {
+                config = UISwipeActionsConfiguration(actions: [])
+            }
+        default:
+            print("禁用 leadingSwipeActions")
+        }
+        return  config
+    }
+    
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleAction = UITableViewRowAction(style: .destructive, title: "删除") { (action, indexpath) in
-          
+            
             switch indexPath.section {
             case 1 :
                 self.assets.remove(at: indexPath.row)
@@ -107,38 +138,8 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             return [editAction, cleanAction, deleAction]
         }
         
-
-    }
-    
-    func changeValue(inP:IndexPath, text:String) {
-        let alterC = UIAlertController(title: "修改该项金额值", message: nil, preferredStyle: .alert)
-        alterC.addTextField { (textField) in
         
-//            var valueStr = String()
-//            text == "0.0" ? (valueStr = "") : (valueStr = "\(text)")
-//            textField.text = valueStr
-            textField.keyboardType = .decimalPad
-        }
-        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-        let sureBtn = UIAlertAction(title: "确定", style: .default) { (action) in
-            // Str -> Double
-            let value = alterC.textFields?.last!.text ?? "0"
-            let double = Double(value) ?? 0
-            switch inP.section {
-            case 1 :
-                self.assetsValue[inP.row] = double
-            case 2 :
-                self.liabiValue[inP.row]  = double
-            default:
-                print("总计")
-            }
-            self.tableC.reloadData()  
-        }
-        alterC.addAction(sureBtn)
-        alterC.addAction(cancel)
-        self.present(alterC, animated: true, completion: nil)
     }
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 && indexPath.row == 2 {
@@ -154,9 +155,8 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         }
     }
     
-   // MARK： UI Table View Data  Source
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 64 
+        return 64
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -165,6 +165,19 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         } else {
             return 40
         }
+    }
+    
+    // MARK： UI Table View Data  Source
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 3
+        } else if section == 1 {
+            return assets.count
+        } else {
+            return liabilities.count
+        }
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -192,6 +205,77 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         }
     }
     
+    
+    
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "cellC")
+        cell = UITableViewCell(style: .value1, reuseIdentifier: "cellC")
+        cell?.selectionStyle = .none
+        
+        if indexPath.section == 0 {
+            cell?.textLabel?.text = arrTotal[indexPath.row]
+            switch indexPath.row {
+            case 0:
+                cell?.detailTextLabel?.text = currencyAccounting(num: assetsValue[0])
+            case 1:
+                cell?.detailTextLabel?.text = currencyAccounting(num: liabiValue[0])
+            case 2:
+                cell?.detailTextLabel?.text = "\(relations)" + "次"
+            default:
+                print("newRow")
+            }
+        } else if indexPath.section == 1 {
+            // 资产
+            cell?.textLabel?.text = assets[indexPath.row]
+            let number = assetsValue[indexPath.row]
+            cell?.detailTextLabel?.text = currencyAccounting(num: number)
+        } else {
+            // 负债
+            cell?.textLabel?.text =   liabilities[indexPath.row]
+            let number = liabiValue[indexPath.row]
+            cell?.detailTextLabel?.text = currencyAccounting(num: number)
+        }
+        let nameStr = cell?.textLabel?.text ?? ""
+        cell?.imageView?.image = UIImage(named: nameStr)
+        return cell!
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func changeValue(inP:IndexPath, text:String) {
+        let alterC = UIAlertController(title: "修改该项金额值", message: nil, preferredStyle: .alert)
+        alterC.addTextField { (textField) in
+            
+            //            var valueStr = String()
+            //            text == "0.0" ? (valueStr = "") : (valueStr = "\(text)")
+            //            textField.text = valueStr
+            textField.keyboardType = .decimalPad
+        }
+        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let sureBtn = UIAlertAction(title: "确定", style: .default) { (action) in
+            // Str -> Double
+            let value = alterC.textFields?.last!.text ?? "0"
+            let double = Double(value) ?? 0
+            switch inP.section {
+            case 1 :
+                self.assetsValue[inP.row] = double
+            case 2 :
+                self.liabiValue[inP.row]  = double
+            default:
+                print("总计")
+            }
+            self.tableC.reloadData()
+        }
+        alterC.addAction(sureBtn)
+        alterC.addAction(cancel)
+        self.present(alterC, animated: true, completion: nil)
+    }
+    
     @objc func newAssetsLib(inP:UIButton){
         print("增加资产负债 \(inP.tag)")
         var row = 0
@@ -215,40 +299,11 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         self.tableC.scrollToRow(at: position, at: .middle, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let titleAction = UIContextualAction(style: .normal, title: "名称") { (action, view, handeler) in
-            print("修改资产项目名称")
-         
-            let oldname = tableView.cellForRow(at: indexPath)?.textLabel?.text
-            
-            self.changeName(inP:indexPath, oldName: oldname ?? "")
-            handeler(true)
-        }
-        titleAction.backgroundColor = .init(red: 76/255.0, green: 217/255.0, blue: 100/255.0, alpha: 1.0)
-        //.init(red: 0/255.0, green: 122/255.0, blue: 255/255.0, alpha: 1.0)
-        var config = UISwipeActionsConfiguration(actions: [titleAction])
-        // 禁用 leadingSwipeActions
-        switch indexPath.section {
-        case 0:
-            config = UISwipeActionsConfiguration(actions: [])
-        case 1:
-            if indexPath.row < 10 {
-                config = UISwipeActionsConfiguration(actions: [])
-            }
-        case 2:
-            if indexPath.row < 9 {
-                config = UISwipeActionsConfiguration(actions: [])
-            }
-        default:
-            print("禁用 leadingSwipeActions")
-        }
-        return  config
-    }
     
     func changeName(inP:IndexPath, oldName:String) {
         let alter = UIAlertController(title: "修改项目类型名", message: nil, preferredStyle: .alert)
         alter.addTextField { (textfied) in
-            textfied.text = oldName
+            //            textfied.text = oldName
         }
         let sureAction = UIAlertAction(title: "确定", style: .default) { (action) in
             switch inP.section {
@@ -270,50 +325,6 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 3
-        } else if section == 1 {
-            return assets.count
-        } else {
-            return liabilities.count
-        }
-        
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "cellC")
-        cell = UITableViewCell(style: .value1, reuseIdentifier: "cellC")
-        cell?.selectionStyle = .none
-
-        if indexPath.section == 0 {
-            cell?.textLabel?.text = arrTotal[indexPath.row]
-            switch indexPath.row {
-            case 0:
-            cell?.detailTextLabel?.text = currencyAccounting(num: assetsValue[0])
-            case 1:
-            cell?.detailTextLabel?.text = currencyAccounting(num: liabiValue[0])
-            case 2:
-            cell?.detailTextLabel?.text = "\(relations)" + "次"
-            default:
-            print("newRow")
-            }
-        } else if indexPath.section == 1 {
-            // 资产
-            cell?.textLabel?.text = assets[indexPath.row]
-            let number = assetsValue[indexPath.row]
-            cell?.detailTextLabel?.text = currencyAccounting(num: number)
-        } else {
-            // 负债
-            cell?.textLabel?.text =   liabilities[indexPath.row]
-            let number = liabiValue[indexPath.row]
-            cell?.detailTextLabel?.text = currencyAccounting(num: number)
-        }
-        let nameStr = cell?.textLabel?.text ?? ""
-        cell?.imageView?.image = UIImage(named: nameStr)
-        return cell!
-    }
     /// 财务标准显示---货币以会计形式:例子 ￥1000.23
     func currencyAccounting(num:Double) -> String {
         let number = NSNumber(value: num)
@@ -322,41 +333,13 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     
-      // MARK: 数据操作
-
-    func saveData_C(){
-        
-        print("======SaveData_C =========")
-        
-        isNeedReadCoreDare = true
-        
-        if assetsValue.count > 0  {
-            deleteClass(modelname: mName_Ca)
-            addCoreDataClass(arrs: [self.assets,self.assetsValue], keyArr: ["keyname","value"], mName: mName_Ca)
-        }
-        
-        if liabiValue.count > 0 {
-            deleteClass(modelname: mName_Cl)
-            addCoreDataClass(arrs: [liabilities,liabiValue], keyArr:["keyname","value"], mName: mName_Cl)
-        }
-        
-        arrTotalValue = [assetsValue[0],liabiValue[0], relations]
-        if arrTotalValue.count > 0 {
-            deleteClass(modelname: mName_C)
-            insertClass(arrays: arrTotalValue, keyArr: ["assets","liabilities","relations"], modelname: mName_C)
-        }
     
-        
-    }
+    /// MARK: 数据操作
+  
     func readData_C(){
-      
+        
         getClass(modelname: mName_Ca) { (data) in
             let arr = data as! [Cassets]
             if arr.count > 0 {
@@ -369,7 +352,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 }
                 self.tableC.reloadData()
             }
-         
+            
         }
         
         getClass(modelname: mName_Cl) { (dataArr) in
@@ -402,17 +385,40 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
     }
     
-    func isNoValue(t_f:Bool) {
-        if t_f == true {
-                for _ in assets {
-                    assetsValue.append(0)
-                }
-                for _ in liabilities {
-                    liabiValue.append(0)
-                }
+    func saveData_C(){
+        
+        print("======SaveData_C =========")
+        
+        isNeedReadCoreDare = true
+        
+        if assetsValue.count > 0  {
+            deleteClass(modelname: mName_Ca)
+            addCoreDataClass(arrs: [self.assets,self.assetsValue], keyArr: ["keyname","value"], mName: mName_Ca)
+        }
+        
+        if liabiValue.count > 0 {
+            deleteClass(modelname: mName_Cl)
+            addCoreDataClass(arrs: [liabilities,liabiValue], keyArr:["keyname","value"], mName: mName_Cl)
+        }
+        
+        arrTotalValue = [assetsValue[0],liabiValue[0], relations]
+        if arrTotalValue.count > 0 {
+            deleteClass(modelname: mName_C)
+            insertClass(arrays: arrTotalValue, keyArr: ["assets","liabilities","relations"], modelname: mName_C)
         }
     }
-   
+    
+    func isNoValue(t_f:Bool) {
+        if t_f == true {
+            for _ in assets {
+                assetsValue.append(0)
+            }
+            for _ in liabilities {
+                liabiValue.append(0)
+            }
+        }
+    }
+    
     
     
 }

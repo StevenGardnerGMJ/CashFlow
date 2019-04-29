@@ -241,8 +241,9 @@ class headerAView: UITableViewHeaderFooterView {
     override func layoutSubviews() {
         super.layoutSubviews()
         imagV.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: self.contentView.frame.height)
-        titleLab.frame = CGRect(x: self.bounds.width*1/4, y: 0.75*imagV.frame.size.height, width: self.frame.width/2, height: 40)
+        titleLab.frame = CGRect(x: 20, y: 0.75*imagV.frame.size.height, width: self.frame.width, height: 40)
         titleLab.textAlignment = .center
+        titleLab.font = UIFont.systemFont(ofSize: 24)
         
     }
     
