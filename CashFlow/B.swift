@@ -5,7 +5,7 @@
 //  Created by David on 2019/1/17.
 //  Copyright © 2019年 葛茂菁. All rights reserved.
 //
-//  三方库模仿Mail.app的SwipeCellKit
+//  参考：三方库模仿Mail.app的SwipeCellKit
 
 import UIKit
 
@@ -18,7 +18,14 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let expenditure = ["总支出","税金","房贷","车贷","教育贷款","信用卡","维修费","医疗支出","花呗类","意外支出","小孩支出","银行贷款支出","取暖","物业","停车","加油","其他支出"]
     var incomeArr = Array<Double>()
     var expendArr = Array<Double>()
+    var totalArr  = Array<Double>()
     
+    override func viewWillAppear(_ animated: Bool) {
+        readData()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        saveData()
+    }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -92,13 +99,13 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         case 0:
             cell?.textLabel?.text  = total[indexPath.row]
             cell?.imageView?.image = UIImage(named: "\(total[indexPath.row])")
-            
+            detailValue = currencyAccounting(num: totalArr[indexPath.row])
         case 1:
-             cell?.textLabel?.text = income[indexPath.row]
+            cell?.textLabel?.text  = income[indexPath.row]
             cell?.imageView?.image = UIImage(named: "\(income[indexPath.row])")
             detailValue = currencyAccounting(num: incomeArr[indexPath.row])
         case 2:
-             cell?.textLabel?.text = expenditure[indexPath.row]
+            cell?.textLabel?.text  = expenditure[indexPath.row]
             cell?.imageView?.image = UIImage(named: "\(expenditure[indexPath.row])")
             detailValue = currencyAccounting(num: expendArr[indexPath.row])
         default:
@@ -115,6 +122,14 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if expendArr.count == 0 || incomeArr.count == 0 {
+            for _ in expenditure {
+                expendArr.append(0.0)
+            }
+            for _ in income {
+                incomeArr.append(0.0)
+            }
+        }
         tableV = UITableView(frame: self.view.frame, style: .grouped)
         tableV.delegate = self
         tableV.dataSource = self
@@ -150,13 +165,50 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         return arrBack
     }
     
-    func saveData() {
-        print("保存数据")
-    }
-    
     func readData() {
+//        getClass(modelname: "Bmodel") { (dataArr) in
+//            let arr = dataArr as! [Bmodel]
+//            for c in arr {
+//                self.totalArr.append(c.income)
+//                self.totalArr.append(c.outcome)
+//            }
+//        }
+        getClass(modelname: "Bincome") { (dataArr) in
+            let arr = dataArr as! [Bincome]
+            if arr.count > 0 {
+            for c in arr {
+                self.incomeArr.append(c.value)
+            }
+                self.tableV.reloadData()
+            }
+        }
+        getClass(modelname: "Bexpend") { (dataArr) in
+            let arr = dataArr as! [Bexpend]
+            if arr.count > 0 {
+            for c in arr {
+                self.expendArr.append(c.value)
+            }
+                self.tableV.reloadData()
+        }
+        }
         
     }
+    
+    func saveData() {
+        print("保存数据")
+//        insertClass(arrays: <#T##Array<Any>#>, keyArr: <#T##Array<String>#>, modelname: "Bincome")
+        if incomeArr.count > 0 {
+            deleteClass(modelname: "Bincome")
+            addCoreDataClass(arrs: incomeArr, keyArr: income, mName: "Bincome")
+        }
+        if expendArr.count > 0 {
+            deleteClass(modelname: "Bexpend")
+            addCoreDataClass(arrs: expendArr, keyArr: expenditure, mName: "Bexpend")
+        }
+        
+    }
+    
+    
     
 
 }

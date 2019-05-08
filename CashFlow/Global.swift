@@ -157,8 +157,6 @@ func deleteClass(modelname:String) -> Void {
 
 func addCoreDataClass(arrs:Array<Any>,keyArr:Array<String>,mName:String){
     
-    
-    
     var unArr = Array<Any>()
     let oArr = arrs[0] as! Array<Any> // 设定次数
     
@@ -211,6 +209,7 @@ func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
         classEntity.setValue(arrays[1], forKey: keyArr[1])
     default:
         print("插入信息")
+        classEntity.setValue(arrays[0], forKey: keyArr[0])
     }
     
     
