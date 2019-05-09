@@ -155,6 +155,7 @@ func deleteClass(modelname:String) -> Void {
     }
 }
 
+///  arrs: 变量1,变量2...   keyArr: "keyName"数据库名称
 func addCoreDataClass(arrs:Array<Any>,keyArr:Array<String>,mName:String){
     
     var unArr = Array<Any>()
@@ -188,7 +189,7 @@ func addCoreDataClass(arrs:Array<Any>,keyArr:Array<String>,mName:String){
     }
 }
 
-// 插入信息 保存
+// 插入信息   arraya: 变量数组    keyArr: 数据库名称
 func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
     let context = getContext()
     let Entity = NSEntityDescription.entity(forEntityName: modelname, in: context)

@@ -42,7 +42,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
             print("更多")
         }
         editAction.backgroundColor = UIColor.gray
-        return [editAction, moreAction, deleAction]
+        return [editAction]
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -122,12 +122,14 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if expendArr.count == 0 || incomeArr.count == 0 {
-            for _ in expenditure {
-                expendArr.append(0.0)
-            }
+        if incomeArr.count == 0 || expendArr.count == 0 {
             for _ in income {
                 incomeArr.append(0.0)
+                totalArr.append(incomeArr[0])
+            }
+            for _ in expenditure {
+                expendArr.append(0.0)
+                totalArr.append(expendArr[0])
             }
         }
         tableV = UITableView(frame: self.view.frame, style: .grouped)
@@ -140,7 +142,19 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func showAlter() {
-        print("编辑弹窗")
+        let altetCon = UIAlertController(title: "", message: nil, preferredStyle: .alert)
+        altetCon.addTextField { (textf) in
+            <#code#>
+        }
+        let sureAction = UIAlertAction(title: "确定", style: .default) { (action) in
+            <#code#>
+        }
+        let cancel = UIAlertAction(title: "取消", style: .cancel) { (action) in
+            <#code#>
+        }
+        altetCon.addAction(cancel)
+        altetCon.addAction(sureAction)
+        self.present(altetCon, animated: true, completion: nil)
     }
     
     // 会计计数
@@ -195,15 +209,15 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func saveData() {
-        print("保存数据")
+        print("保存数据===== B =====")
 //        insertClass(arrays: <#T##Array<Any>#>, keyArr: <#T##Array<String>#>, modelname: "Bincome")
         if incomeArr.count > 0 {
             deleteClass(modelname: "Bincome")
-            addCoreDataClass(arrs: incomeArr, keyArr: income, mName: "Bincome")
+            addCoreDataClass(arrs: [incomeArr], keyArr: ["value"], mName: "Bincome")
         }
         if expendArr.count > 0 {
             deleteClass(modelname: "Bexpend")
-            addCoreDataClass(arrs: expendArr, keyArr: expenditure, mName: "Bexpend")
+            addCoreDataClass(arrs: [expendArr], keyArr: ["value"], mName: "Bexpend")
         }
         
     }
