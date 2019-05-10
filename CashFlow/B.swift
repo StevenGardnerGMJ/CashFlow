@@ -24,7 +24,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         readData()
     }
     override func viewWillDisappear(_ animated: Bool) {
-        saveData()
+        saveData() // 耗时操作
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -35,14 +35,20 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
             print("A清除")
         }
         let editAction = UITableViewRowAction(style: .default, title: "编辑") { (action, indexpath) in
-            self.showAlter()
-            print("编辑")
+            print("编辑=====\(indexPath.section),\(indexPath.row)")
+            self.showAlter(indexP: indexPath)
+            
         }
         let moreAction = UITableViewRowAction(style: .normal, title: "更多") { (action, indexpath) in
             print("更多")
         }
-        editAction.backgroundColor = UIColor.gray
-        return [editAction]
+        editAction.backgroundColor = UIColor.init(red: 255/255.0, green: 204/255.0, blue: 0/255.0, alpha: 1.0)
+        if indexPath.section == 0 {
+            return []
+        } else {
+            return [editAction]
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -141,17 +147,29 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         view.addSubview(tableV)
     }
     
-    func showAlter() {
-        let altetCon = UIAlertController(title: "", message: nil, preferredStyle: .alert)
+    func showAlter(indexP:IndexPath) {
+        let altetCon = UIAlertController(title: "修改项目的数值", message: nil, preferredStyle: .alert)
         altetCon.addTextField { (textf) in
-            <#code#>
-        }
-        let sureAction = UIAlertAction(title: "确定", style: .default) { (action) in
-            <#code#>
+            textf.keyboardType = .decimalPad
         }
         let cancel = UIAlertAction(title: "取消", style: .cancel) { (action) in
-            <#code#>
         }
+        let sureAction = UIAlertAction(title: "确定", style: .default) { (action) in
+            let strValue = altetCon.textFields?.last?.text ?? "0.0"
+            let doubleValue = Double(strValue) ?? 0
+            switch indexP.section {
+            case 1:
+                self.incomeArr[indexP.row] = doubleValue
+            case 2:
+                self.expendArr[indexP.row] = doubleValue
+            default:
+                print("第0号统计section")
+            }
+            self.totalArr[0] = self.incomeArr[0]
+            self.totalArr[1] = self.expendArr[0]
+            self.tableV.reloadData()
+        }
+        
         altetCon.addAction(cancel)
         altetCon.addAction(sureAction)
         self.present(altetCon, animated: true, completion: nil)
@@ -210,7 +228,6 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     func saveData() {
         print("保存数据===== B =====")
-//        insertClass(arrays: <#T##Array<Any>#>, keyArr: <#T##Array<String>#>, modelname: "Bincome")
         if incomeArr.count > 0 {
             deleteClass(modelname: "Bincome")
             addCoreDataClass(arrs: [incomeArr], keyArr: ["value"], mName: "Bincome")
@@ -222,9 +239,6 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
     }
     
-    
-    
-
 }
 
 
