@@ -208,6 +208,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         getClass(modelname: "Bincome") { (dataArr) in
             let arr = dataArr as! [Bincome]
             if arr.count > 0 {
+                self.incomeArr = Array<Double>()
             for c in arr {
                 self.incomeArr.append(c.value)
             }
@@ -217,6 +218,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         getClass(modelname: "Bexpend") { (dataArr) in
             let arr = dataArr as! [Bexpend]
             if arr.count > 0 {
+                self.expendArr = Array<Double>()
             for c in arr {
                 self.expendArr.append(c.value)
             }

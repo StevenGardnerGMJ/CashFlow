@@ -170,6 +170,7 @@ func addCoreDataClass(arrs:Array<Any>,keyArr:Array<String>,mName:String){
         
         var tempArr = Array<Any>()
         for t in 0..<arrs.count { // 2种
+            print("t = \(t), i = \(i)")
             let tArr = arrs[t] as! Array<Any> // A1-1 A2-1
             let value = tArr[i]
             let key   = keyArr[t]
