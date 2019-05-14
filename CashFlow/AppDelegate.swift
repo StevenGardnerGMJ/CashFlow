@@ -30,9 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        saveData(name: "applicationDidEnterBackground")
-        let c_a = A()
-        A.saveAdata(<#T##A#>)
+        saveData(name: "=====applicationDidEnterBackground")
+       // 通知 协议 BLock
+       NotificationCenter.default.post(name: NSNotification.Name("isTest"), object: self, userInfo: ["post":"NewTest"])
         
         
     }

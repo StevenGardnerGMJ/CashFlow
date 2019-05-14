@@ -31,8 +31,20 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         saveAdata()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        getData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if arrAnumber.count != arrA.count {
+                    for _ in arrA {
+                        arrAnumber.append(Float(1.00))// default
+                        arrMyInfo.append("苹果公司现任CEO")
+                    }
+                }
+
 
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
@@ -45,19 +57,17 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableVC.register(headerAView.self, forHeaderFooterViewReuseIdentifier: "headerRUID")
         tableVC.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
 
-        getData()
+        NotificationCenter.default.addObserver(self, selector: #selector(notication), name: NSNotification.Name(rawValue:"isTest"), object: nil)
+    }
+    @objc func  notication() {
+        print("=== NotificationCenter_A0---------")
+//        saveAdata()
     }
     
     func getData() {
         
         getClassA(modelname: "Amodel")
-        if arrAnumber.count != arrA.count {
-            for _ in arrA {
-                arrAnumber.append(Float(1.00))// default
-                arrMyInfo.append("苹果公司现任CEO")
-            }
-        }
-        self.tableVC.reloadData()
+        
     }
     
     func getClassA(modelname:String) { // -> Array<Float>
@@ -213,16 +223,12 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    deinit {
+        /// 移除通知
+        NotificationCenter.default.removeObserver(self)
     }
-    */
+    
+
 
 }
 
