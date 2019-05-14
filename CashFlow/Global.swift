@@ -159,9 +159,9 @@ func deleteClass(modelname:String) -> Void {
 func addCoreDataClass(arrs:Array<Any>,keyArr:Array<String>,mName:String){
     
     var unArr = Array<Any>()
-    let oArr = arrs[0] as! Array<Any> // 设定次数
+    let oArr = arrs[0] as! Array<Any> // 设定次数 要存数据
     
-    var i = 0
+    var i = 0 // 数据
     for _ in oArr {
         
         let context = getContext()
@@ -169,12 +169,12 @@ func addCoreDataClass(arrs:Array<Any>,keyArr:Array<String>,mName:String){
         let classEntity = NSManagedObject(entity: Entity!, insertInto: context)
         
         var tempArr = Array<Any>()
-        for t in 0..<arrs.count { // 2种
-            print("t = \(t), i = \(i)")
-            let tArr = arrs[t] as! Array<Any> // A1-1 A2-1
-            let value = tArr[i]
-            let key   = keyArr[t]
-            tempArr.append(value)           // A2-1 A2-2
+        for t in 0..<arrs.count { // 2种变量类型
+            print("i = \(i)，t = \(t) ")
+            let vArr = arrs[t] as! Array<Any> // [A1-1 A2-1] 分离数据数组
+            let value = vArr[i]
+            let key   = keyArr[t]  // 变量数据库名称
+            tempArr.append(value)  // A2-1 A2-2 A3-1 A3-2 。。。
             classEntity.setValue(value, forKey: key)
         }
         unArr.append(tempArr) //10 次

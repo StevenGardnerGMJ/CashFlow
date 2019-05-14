@@ -230,6 +230,7 @@ class headerAView: UITableViewHeaderFooterView {
     
     let imagV = UIImageView()
     let titleLab  = UILabel()
+    let stateBtn  = UIButton()
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -244,7 +245,8 @@ class headerAView: UITableViewHeaderFooterView {
         titleLab.frame = CGRect(x: 20, y: 0.75*imagV.frame.size.height, width: self.frame.width, height: 40)
         titleLab.textAlignment = .center
         titleLab.font = UIFont.systemFont(ofSize: 24)
-        
+        stateBtn.frame = titleLab.frame
+        stateBtn.backgroundColor = UIColor.clear
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -128,7 +128,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        if incomeArr.count == 0 || expendArr.count == 0 {
+        if incomeArr.count == 0 || expendArr.count == 0 ||  incomeArr.count != income.count {
             for _ in income {
                 incomeArr.append(0.0)
                 totalArr.append(incomeArr[0])
@@ -208,7 +208,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         getClass(modelname: "Bincome") { (dataArr) in
             let arr = dataArr as! [Bincome]
             if arr.count > 0 {
-                self.incomeArr = Array<Double>()
+            self.incomeArr = Array<Double>()
             for c in arr {
                 self.incomeArr.append(c.value)
             }
@@ -218,7 +218,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         getClass(modelname: "Bexpend") { (dataArr) in
             let arr = dataArr as! [Bexpend]
             if arr.count > 0 {
-                self.expendArr = Array<Double>()
+            self.expendArr = Array<Double>()
             for c in arr {
                 self.expendArr.append(c.value)
             }
