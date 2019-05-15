@@ -122,7 +122,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         let topRowAction = UITableViewRowAction(style: .normal, title: "重要") { (action, indexPath) in
             print("C重要")
         }
-        editRowAction.backgroundColor   = UIColor.orange
+        editRowAction.backgroundColor = UIColor.orange
         return [editRowAction]
     }
     
@@ -136,6 +136,8 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         }
         let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         let sureAction = UIAlertAction(title: "确定", style: .default) { (action) in
+            /// 空数据要不要处理 昵称h还是Email
+            self.arrMyInfo = Array<String>()
             for textF in alterS.textFields! {
                 self.arrMyInfo.append(textF.text ?? "0.0")
             }
