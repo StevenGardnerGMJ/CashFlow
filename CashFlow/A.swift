@@ -15,10 +15,11 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let attributeName = ["status","value","myinfo"]
     let enteryName    = "Amodel"
     let arrA = ["职业","小孩","工资","持有现金","月收现金","自由进度"]// 主动收入，被动收入
+    let personArr = ["职业","E-mail","生活目标","常驻地","电话","昵称"]// headerViewBtn个人信息
     var arrAnumber = Array<Float>() // 数值
     var arrMyInfo  = Array<String>()// 个人信息
     
-    let arrDefault = ["职业","E-mail","生活目标","常驻地","电话","昵称"]
+    
     
     var myStateDic = Dictionary<String, Float>()
     var dic = Dictionary<String, String>()
@@ -39,13 +40,12 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         super.viewDidLoad()
         
         if arrAnumber.count != arrA.count {
-                    for _ in arrA {
-                        arrAnumber.append(Float(1.00))// default
-                        arrMyInfo.append("苹果公司现任CEO")
-                    }
-                }
-
-
+            for _ in arrA {
+                arrAnumber.append(Float(1.00))// default
+                arrMyInfo.append("苹果公司现任CEO")
+            }
+        }
+        
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
         
@@ -59,59 +59,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
         NotificationCenter.default.addObserver(self, selector: #selector(notication), name: NSNotification.Name(rawValue:"isTest"), object: nil)
     }
-    @objc func  notication() {
-        print("=== NotificationCenter_A0---------")
-//        saveAdata()
-    }
-    
-    func getData() {
-        
-        getClassA(modelname: "Amodel")
-        
-    }
-    
-    func getClassA(modelname:String) { // -> Array<Float>
-        print("getClass")
-        let context = getContext()
-        var arr = Array<Float>()
-        var arr2 = Array<String>()
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Amodel")
-        
-        let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result : NSAsynchronousFetchResult!) in
-            
-            let fetchObject = result.finalResult as! [Amodel] // arr数据
-            for  c in fetchObject {
-                arr.append(c.value) // BLock内延迟处理
-                arr2.append(c.myinfo ?? "")
-                print("\(c.status ?? "")--\(c.value)--\(c.myinfo ?? "")")
-            }
-            guard arr.count == 0, arr2.count == 0 else {
-                self.arrAnumber = arr
-                self.arrMyInfo  = arr2
-                return
-            }
-            self.tableVC.reloadData()
-        }
-        // 执行异步请求调用execute
-        do {
-            try context.execute(asyncFetchRequest)
-        } catch  {
-            print("error")
-        }
-        
-    }
-    
-    func saveAdata() {
-        deleteClass(modelname: enteryName)
-        var i = 0
-        for key in arrA {
-            let arrs = [key,arrAnumber[i],arrMyInfo[i]] as [Any]
-            insertClass(arrays: arrs, keyArr: attributeName, modelname: enteryName)
-            i = i + 1
-        }
-    }
-    
-    
+   
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return default_row_H //64
@@ -126,6 +74,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerRUID") as! headerAView
         header.imagV.image = UIImage(named: "现金流headerV")
         header.titleLab.text = arrMyInfo[1]
+        header.stateBtn.addTarget(self, action: #selector(showAlterSheet), for: .touchUpInside)
         return header
         
     }
@@ -173,14 +122,29 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         let topRowAction = UITableViewRowAction(style: .normal, title: "重要") { (action, indexPath) in
             print("C重要")
         }
-        editRowAction.backgroundColor   = UIColor.gray
-       
-        return [deleteRowAction,editRowAction,topRowAction]
-    }
-    func destructive() {
-    
+        editRowAction.backgroundColor   = UIColor.orange
+        return [editRowAction]
     }
     
+    
+    @objc func showAlterSheet() {
+      let alterS = UIAlertController(title: "用户识别信息", message: nil, preferredStyle: .alert)
+        for str in personArr {
+            alterS.addTextField { (textf) in
+                textf.placeholder = str
+            }
+        }
+        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        let sureAction = UIAlertAction(title: "确定", style: .default) { (action) in
+            for textF in alterS.textFields! {
+                self.arrMyInfo.append(textF.text ?? "0.0")
+            }
+            self.tableVC.reloadData()
+        }
+        alterS.addAction(cancel)
+        alterS.addAction(sureAction)
+        self.present(alterS, animated: true, completion: nil)
+    }
     
     
     func showView(title:String,row:Int) {
@@ -189,7 +153,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         alterC.addTextField { (textF:UITextField) in
             textF.placeholder = "请输入要修改的值"
             if row == 0 {
-                textF.keyboardType =  .default
+                textF.keyboardType = .default
             } else {
                 textF.keyboardType = .decimalPad
             }
@@ -205,7 +169,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let str_double:Double = Double(textStr)!
             let value = Float(str_double)
             self.arrAnumber[row] = value
-           self.tableVC.reloadData()
+            self.tableVC.reloadData()
         })
         alterC.addAction(cancelBtn)
         alterC.addAction(sureBtn)
@@ -213,10 +177,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
 //        DispatchQueue.main.async {
        self.present(alterC, animated: true, completion: nil)
 
-        
     }
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -227,6 +188,61 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         /// 移除通知
         NotificationCenter.default.removeObserver(self)
     }
+    
+    @objc func  notication() {
+        print("=== NotificationCenter_A0---------")
+        saveAdata()
+    }
+    
+    func getData() {
+        
+        getClassA(modelname: "Amodel")
+        
+    }
+    
+    func getClassA(modelname:String) { // -> Array<Float>
+        print("getClass")
+        let context = getContext()
+        var arr = Array<Float>()
+        var arr2 = Array<String>()
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Amodel")
+        
+        let asyncFetchRequest = NSAsynchronousFetchRequest(fetchRequest: fetchRequest) { (result : NSAsynchronousFetchResult!) in
+            
+            let fetchObject = result.finalResult as! [Amodel] // arr数据
+            for  c in fetchObject {
+                arr.append(c.value) // BLock内延迟处理
+                arr2.append(c.myinfo ?? "")
+                print("\(c.status ?? "")--\(c.value)--\(c.myinfo ?? "")")
+            }
+            guard arr.count == 0, arr2.count == 0 else {
+                self.arrAnumber = arr
+                self.arrMyInfo  = arr2
+                return self.tableVC.reloadData()
+            }
+            
+        }
+        // 执行异步请求调用execute
+        do {
+            try context.execute(asyncFetchRequest)
+        } catch  {
+            print("error")
+        }
+        
+    }
+    
+    func saveAdata() {
+        deleteClass(modelname: enteryName)
+        var i = 0
+        print("\(arrAnumber)")
+        for key in arrA {
+            let arrs = [key,arrAnumber[i],arrMyInfo[i]] as [Any]
+            insertClass(arrays: arrs, keyArr: attributeName, modelname: enteryName)
+            i = i + 1
+        }
+    }
+    
+    
     
 
 
@@ -243,6 +259,7 @@ class headerAView: UITableViewHeaderFooterView {
         contentView.backgroundColor = UIColor.gray
         contentView.addSubview(imagV)
         contentView.addSubview(titleLab)
+        contentView.addSubview(stateBtn)
     }
     
     override func layoutSubviews() {
