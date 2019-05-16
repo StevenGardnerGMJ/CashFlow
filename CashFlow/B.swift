@@ -37,7 +37,6 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         let editAction = UITableViewRowAction(style: .default, title: "编辑") { (action, indexpath) in
             print("编辑=====\(indexPath.section),\(indexPath.row)")
             self.showAlter(indexP: indexPath)
-            
         }
         let moreAction = UITableViewRowAction(style: .normal, title: "更多") { (action, indexpath) in
             print("更多")

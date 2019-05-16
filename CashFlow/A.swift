@@ -19,8 +19,6 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var arrAnumber = Array<Float>() // 数值
     var arrMyInfo  = Array<String>()// 个人信息
     
-    
-    
     var myStateDic = Dictionary<String, Float>()
     var dic = Dictionary<String, String>()
     let headRUID:String = "headerRUID"
@@ -73,7 +71,22 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerRUID") as! headerAView
         header.imagV.image = UIImage(named: "现金流headerV")
-        header.titleLab.text = arrMyInfo[1]
+        
+        for str in arrMyInfo {
+            
+        }
+        
+        
+        
+        if arrMyInfo[5] != "" {
+            header.titleLab.text = arrMyInfo[5]
+        } else if arrMyInfo[1] != "" {
+            header.titleLab.text = arrMyInfo[1]
+        } else {
+            header.titleLab.text = "苹果公司未来CEO"
+        }
+        
+        
         header.stateBtn.addTarget(self, action: #selector(showAlterSheet), for: .touchUpInside)
         return header
         
@@ -137,9 +150,14 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         let sureAction = UIAlertAction(title: "确定", style: .default) { (action) in
             /// 空数据要不要处理 昵称h还是Email
-            self.arrMyInfo = Array<String>()
+            var i = 0
             for textF in alterS.textFields! {
-                self.arrMyInfo.append(textF.text ?? "0.0")
+                if textF.text == "" {
+                    print("未填写空值")
+                } else {
+                    self.arrMyInfo[i] =  textF.text ?? ""
+                }
+                i = i + 1
             }
             self.tableVC.reloadData()
         }
