@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		28FE67E5228ECE6D002FF3EA /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FE67E1228ECE68002FF3EA /* GoogleAppMeasurement.framework */; };
+		28FE67E6228ECE6D002FF3EA /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FE67E2228ECE68002FF3EA /* GoogleUtilities.framework */; };
+		28FE67E7228ECE6D002FF3EA /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FE67E3228ECE6C002FF3EA /* GoogleMobileAds.framework */; };
+		28FE67E8228ECE6D002FF3EA /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FE67E4228ECE6D002FF3EA /* nanopb.framework */; };
 		631E9E4F21F7028900E3B47C /* CFtabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E9E4E21F7028900E3B47C /* CFtabBarViewController.swift */; };
 		634CC07A2248598E0026B295 /* C1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634CC0792248598E0026B295 /* C1.swift */; };
 		6355076E2201A95B00437CDB /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6355076D2201A95B00437CDB /* Global.swift */; };
@@ -22,6 +26,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		28FE67E1228ECE68002FF3EA /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
+		28FE67E2228ECE68002FF3EA /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
+		28FE67E3228ECE6C002FF3EA /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
+		28FE67E4228ECE6D002FF3EA /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = nanopb.framework; sourceTree = "<group>"; };
 		631E9E4E21F7028900E3B47C /* CFtabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFtabBarViewController.swift; sourceTree = "<group>"; };
 		634CC0792248598E0026B295 /* C1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C1.swift; sourceTree = "<group>"; };
 		6355076D2201A95B00437CDB /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
@@ -43,12 +51,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				28FE67E7228ECE6D002FF3EA /* GoogleMobileAds.framework in Frameworks */,
+				28FE67E6228ECE6D002FF3EA /* GoogleUtilities.framework in Frameworks */,
+				28FE67E8228ECE6D002FF3EA /* nanopb.framework in Frameworks */,
+				28FE67E5228ECE6D002FF3EA /* GoogleAppMeasurement.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		28FE67E0228ECE2A002FF3EA /* AdMob */ = {
+			isa = PBXGroup;
+			children = (
+				28FE67E1228ECE68002FF3EA /* GoogleAppMeasurement.framework */,
+				28FE67E3228ECE6C002FF3EA /* GoogleMobileAds.framework */,
+				28FE67E2228ECE68002FF3EA /* GoogleUtilities.framework */,
+				28FE67E4228ECE6D002FF3EA /* nanopb.framework */,
+			);
+			path = AdMob;
+			sourceTree = "<group>";
+		};
 		6389D2A421E882E80026818D = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +91,7 @@
 		6389D2AF21E882E80026818D /* CashFlow */ = {
 			isa = PBXGroup;
 			children = (
+				28FE67E0228ECE2A002FF3EA /* AdMob */,
 				6389D2B021E882E80026818D /* AppDelegate.swift */,
 				635EE0BF22363DF2001F00E8 /* CashFlowModel.xcdatamodeld */,
 				631E9E4E21F7028900E3B47C /* CFtabBarViewController.swift */,
@@ -312,11 +336,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 38355BY3GF;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/CashFlow/AdMob",
+				);
 				INFOPLIST_FILE = CashFlow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = gemaojing.CashFlow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -330,11 +359,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 38355BY3GF;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/CashFlow/AdMob",
+				);
 				INFOPLIST_FILE = CashFlow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = gemaojing.CashFlow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

@@ -8,9 +8,9 @@
 
 import UIKit
 import CoreData
+import GoogleMobileAds
 
-
-class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstitialDelegate {
     
     let attributeName = ["status","value","myinfo"]
     let enteryName    = "Amodel"
@@ -21,8 +21,9 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     var dic = Dictionary<String, String>()
     let headRUID:String = "headerRUID"
-    
     var tableVC = UITableView()
+    var interstitial: GADInterstitial!// Admob 1
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         print("====Savedata_A======")
@@ -35,6 +36,11 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // AdMob 2 //青蛙广告页A ca-app-pub-9319054953457119/9902763490
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        interstitial.delegate = self // Admob
+        let request = GADRequest()
+        interstitial.load(request)
         
         if arrAnumber.count != arrA.count {
             for _ in arrA {
@@ -81,6 +87,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         
         header.stateBtn.addTarget(self, action: #selector(showAlterSheet), for: .touchUpInside)
+        header.statisticsBtn.addTarget(self, action: #selector(showStatistics), for: .touchUpInside)
         return header
         
     }
@@ -130,6 +137,22 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         }
         editRowAction.backgroundColor = UIColor.orange
         return [editRowAction]
+    }
+    // AdMob
+    func createAndLoadInterstitial() -> GADInterstitial {
+        let interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        interstitial.delegate = self
+        interstitial.load(GADRequest())
+        return interstitial
+    }
+    
+    @objc func showStatistics() {
+        
+        if interstitial.isReady {
+            interstitial.present(fromRootViewController: self)
+        } else {
+            print("Ad wasn't ready")
+        }
     }
     
     
@@ -185,10 +208,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         })
         alterC.addAction(cancelBtn)
         alterC.addAction(sureBtn)
-        
-//        DispatchQueue.main.async {
-       self.present(alterC, animated: true, completion: nil)
-
+        self.present(alterC, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -253,6 +273,41 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
             i = i + 1
         }
     }
+    
+    /// MARK: --- AdMob GADInterstitialDelegate 监听 ----------
+    
+    /// Tells the delegate an ad request succeeded.
+    func interstitialDidReceiveAd(_ ad: GADInterstitial) {
+        print("interstitialDidReceiveAd")
+    }
+    
+    /// Tells the delegate an ad request failed.
+    func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
+        print("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
+    }
+    
+    /// Tells the delegate that an interstitial will be presented.
+    func interstitialWillPresentScreen(_ ad: GADInterstitial) {
+        print("interstitialWillPresentScreen")
+    }
+
+    /// Tells the delegate the interstitial is to be animated off the screen.
+    func interstitialWillDismissScreen(_ ad: GADInterstitial) {
+        print("interstitialWillDismissScreen")
+    }
+    
+    /// Tells the delegate the interstitial had been animated off the screen.
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+        interstitial = createAndLoadInterstitial()
+    }
+
+    
+    /// Tells the delegate that a user click will open another app
+    /// (such as the App Store), backgrounding the current app.
+    func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
+        print("interstitialWillLeaveApplication")
+    }
+    
 
 }
 
@@ -263,6 +318,7 @@ class headerAView: UITableViewHeaderFooterView {
     let imagV = UIImageView()
     let titleLab  = UILabel()
     let stateBtn  = UIButton()
+    let statisticsBtn = UIButton()
     
     
 //    var myString = "I AM KIRIT MODI"
@@ -274,11 +330,13 @@ class headerAView: UITableViewHeaderFooterView {
         contentView.addSubview(imagV)
         contentView.addSubview(titleLab)
         contentView.addSubview(stateBtn)
+        contentView.addSubview(statisticsBtn)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         imagV.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: self.contentView.frame.height)
+        statisticsBtn.frame = CGRect(x: self.contentView.frame.width - 50, y: 10, width: 40, height: 30)
         titleLab.frame = CGRect(x: 20, y: 0.75*imagV.frame.size.height, width: self.frame.width, height: 40)
         titleLab.textAlignment = .center
         titleLab.font = UIFont.systemFont(ofSize: 24)
@@ -289,6 +347,7 @@ class headerAView: UITableViewHeaderFooterView {
 
         stateBtn.frame = titleLab.frame
         stateBtn.backgroundColor = UIColor.clear
+        statisticsBtn.backgroundColor = UIColor.red
     }
     
     required init?(coder aDecoder: NSCoder) {

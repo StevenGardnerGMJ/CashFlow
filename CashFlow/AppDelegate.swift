@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import iAd
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tabbarVC = CFtabBarViewController()
         let navControler = UINavigationController.init(rootViewController: tabbarVC)
         window?.rootViewController = navControler
+        
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
         return true
     }
 
