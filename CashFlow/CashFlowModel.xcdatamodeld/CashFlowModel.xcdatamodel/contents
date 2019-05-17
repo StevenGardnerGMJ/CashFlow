@@ -3,7 +3,7 @@
     <entity name="Amodel" representedClassName="Amodel" syncable="YES" codeGenerationType="class">
         <attribute name="myinfo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <entity name="Bexpend" representedClassName="Bexpend" syncable="YES" codeGenerationType="class">
         <attribute name="keyname" optional="YES" attributeType="String" syncable="YES"/>

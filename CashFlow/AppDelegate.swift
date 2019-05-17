@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import iAd
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -46,7 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        saveData(name: "applicationWillTerminate")
+        saveData(name: "========applicationWillTerminate==========")
+        // 通知 协议 BLock
+        NotificationCenter.default.post(name: NSNotification.Name("isTest"), object: self, userInfo: ["post":"NewTest"])
+        
+        
     }
     // MARK: - Core Data stack
     lazy var persistentContainer: NSPersistentContainer = {

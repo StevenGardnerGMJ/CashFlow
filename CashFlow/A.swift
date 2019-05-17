@@ -16,10 +16,9 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let enteryName    = "Amodel"
     let arrA = ["职业","小孩","工资","持有现金","月收现金","自由进度"]// 主动收入，被动收入
     let personArr = ["职业","E-mail","生活目标","常驻地","电话","昵称"]// headerViewBtn个人信息
-    var arrAnumber = Array<Float>() // 数值
+    var arrAnumber = Array<Double>() // 数值
     var arrMyInfo  = Array<String>()// 个人信息
     
-    var myStateDic = Dictionary<String, Float>()
     var dic = Dictionary<String, String>()
     let headRUID:String = "headerRUID"
     
@@ -39,7 +38,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         if arrAnumber.count != arrA.count {
             for _ in arrA {
-                arrAnumber.append(Float(1.00))// default
+                arrAnumber.append(0.00)// default
                 arrMyInfo.append("苹果公司现任CEO")
             }
         }
@@ -71,13 +70,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerRUID") as! headerAView
         header.imagV.image = UIImage(named: "现金流headerV")
-        
-        for str in arrMyInfo {
-            
-        }
-        
-        
-        
+        // 昵称 --- 邮箱 ---
         if arrMyInfo[5] != "" {
             header.titleLab.text = arrMyInfo[5]
         } else if arrMyInfo[1] != "" {
@@ -187,8 +180,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 textStr = "0.01" } //0号位职业
             // String 转 Float
             let str_double:Double = Double(textStr)!
-            let value = Float(str_double)
-            self.arrAnumber[row] = value
+            self.arrAnumber[row] = str_double
             self.tableVC.reloadData()
         })
         alterC.addAction(cancelBtn)
@@ -223,7 +215,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func getClassA(modelname:String) { // -> Array<Float>
         print("getClass")
         let context = getContext()
-        var arr = Array<Float>()
+        var arr = Array<Double>()
         var arr2 = Array<String>()
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Amodel")
         
@@ -261,18 +253,20 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
             i = i + 1
         }
     }
-    
-    
-    
-
 
 }
+
+
 
 class headerAView: UITableViewHeaderFooterView {
     
     let imagV = UIImageView()
     let titleLab  = UILabel()
     let stateBtn  = UIButton()
+    
+    
+//    var myString = "I AM KIRIT MODI"
+//    var myMutableString = NSMutableAttributedString()
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -288,6 +282,11 @@ class headerAView: UITableViewHeaderFooterView {
         titleLab.frame = CGRect(x: 20, y: 0.75*imagV.frame.size.height, width: self.frame.width, height: 40)
         titleLab.textAlignment = .center
         titleLab.font = UIFont.systemFont(ofSize: 24)
+        
+//        myMutableString = NSMutableAttributedString(string: titleLab.text ?? "CEOOOOOOO", attributes: [NSAttributedStringKey.font:UIFont(name: "Georgia", size: 18.0)!])
+//        myMutableString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.red, range: NSRange(location:2,length:4))
+//        titleLab.attributedText = myMutableString
+
         stateBtn.frame = titleLab.frame
         stateBtn.backgroundColor = UIColor.clear
     }
