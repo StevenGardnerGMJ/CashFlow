@@ -298,7 +298,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     
     /// Tells the delegate the interstitial had been animated off the screen.
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-        interstitial = createAndLoadInterstitial()
+//        interstitial = createAndLoadInterstitial()
     }
 
     
@@ -347,7 +347,8 @@ class headerAView: UITableViewHeaderFooterView {
 
         stateBtn.frame = titleLab.frame
         stateBtn.backgroundColor = UIColor.clear
-        statisticsBtn.backgroundColor = UIColor.red
+        statisticsBtn.backgroundColor = UIColor.clear
+        statisticsBtn.setImage(UIImage(named: "统计"), for: .normal)
     }
     
     required init?(coder aDecoder: NSCoder) {
