@@ -15,6 +15,7 @@ class CFchartVC: UIViewController {
 
         //饼状统计数据
     // A 雷达  B饼状  C 饼状
+        // pie chart 表 
     }
     
 
