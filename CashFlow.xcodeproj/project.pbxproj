@@ -24,6 +24,7 @@
 		6389D2C621F086FA0026818D /* B.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389D2C521F086FA0026818D /* B.swift */; };
 		6389D2C821F087080026818D /* C.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389D2C721F087080026818D /* C.swift */; };
 		63946BF42292B0ED001FFB23 /* CFchartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63946BF32292B0ED001FFB23 /* CFchartVC.swift */; };
+		63F0FD242294F24E0007AB10 /* PieCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F0FD232294F24E0007AB10 /* PieCharts.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		6389D2C521F086FA0026818D /* B.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = B.swift; sourceTree = "<group>"; };
 		6389D2C721F087080026818D /* C.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C.swift; sourceTree = "<group>"; };
 		63946BF32292B0ED001FFB23 /* CFchartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFchartVC.swift; sourceTree = "<group>"; };
+		63F0FD232294F24E0007AB10 /* PieCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PieCharts.framework; path = Carthage/Build/iOS/PieCharts.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63F0FD242294F24E0007AB10 /* PieCharts.framework in Frameworks */,
 				28FE67E7228ECE6D002FF3EA /* GoogleMobileAds.framework in Frameworks */,
 				28FE67E6228ECE6D002FF3EA /* GoogleUtilities.framework in Frameworks */,
 				28FE67E8228ECE6D002FF3EA /* nanopb.framework in Frameworks */,
@@ -79,6 +82,7 @@
 			children = (
 				6389D2AF21E882E80026818D /* CashFlow */,
 				6389D2AE21E882E80026818D /* Products */,
+				63F0FD222294F24D0007AB10 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +116,14 @@
 			path = CashFlow;
 			sourceTree = "<group>";
 		};
+		63F0FD222294F24D0007AB10 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				63F0FD232294F24E0007AB10 /* PieCharts.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -122,6 +134,7 @@
 				6389D2A921E882E80026818D /* Sources */,
 				6389D2AA21E882E80026818D /* Frameworks */,
 				6389D2AB21E882E80026818D /* Resources */,
+				63F0FD212294F15A0007AB10 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -177,6 +190,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		63F0FD212294F15A0007AB10 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/PieCharts.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/Carthage copy-frameworks\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6389D2A921E882E80026818D /* Sources */ = {
@@ -343,6 +377,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CashFlow/AdMob",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = CashFlow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -366,6 +401,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/CashFlow/AdMob",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = CashFlow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

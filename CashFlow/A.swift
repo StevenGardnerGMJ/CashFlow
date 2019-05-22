@@ -152,6 +152,8 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
             interstitial.present(fromRootViewController: self)
         } else {
             print("Ad wasn't ready")
+            let chartVC = CFchartVC()
+            self.navigationController?.pushViewController(chartVC, animated: true)
         }
     }
     
@@ -252,7 +254,6 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
                 self.arrMyInfo  = arr2
                 return self.tableVC.reloadData()
             }
-            
         }
         // 执行异步请求调用execute
         do {
