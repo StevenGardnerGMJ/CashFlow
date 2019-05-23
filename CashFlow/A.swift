@@ -153,6 +153,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
         } else {
             print("Ad wasn't ready")
             let chartVC = CFchartVC()
+            chartVC.valueN =  Array(arrAnumber[1...4])
             self.navigationController?.pushViewController(chartVC, animated: true)
         }
     }

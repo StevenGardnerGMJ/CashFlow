@@ -88,3 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+/*省钱无用，赚钱才是王道，资产负债，利润现金，投资才能财务自由*/
+/*记账 理财 现金流*/
+
+

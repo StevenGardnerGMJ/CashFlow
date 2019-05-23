@@ -11,9 +11,15 @@ import PieCharts
 
 class CFchartVC: UIViewController,PieChartDelegate {
     var chartView = PieChart() //饼状统计数据
+    let titleN = Array<String>()
+    var valueN:Array<Double>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if valueN.count != 4 {
+            valueN = [1,2,3,4]
+        }
         
         self.view.backgroundColor = .white
         chartView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300)
@@ -41,13 +47,13 @@ class CFchartVC: UIViewController,PieChartDelegate {
         let alpha: CGFloat = 0.5
         
         return [
-            PieSliceModel(value: 12.1, color: UIColor.yellow.withAlphaComponent(alpha)),
-            PieSliceModel(value: 31, color: UIColor.blue.withAlphaComponent(alpha)),
-            PieSliceModel(value: 11, color: UIColor.green.withAlphaComponent(alpha)),
-            PieSliceModel(value: 14, color: UIColor.cyan.withAlphaComponent(alpha)),
-            PieSliceModel(value: 12, color: UIColor.red.withAlphaComponent(alpha)),
-            PieSliceModel(value: 11.5, color: UIColor.magenta.withAlphaComponent(alpha)),
-            PieSliceModel(value: 10.5, color: UIColor.orange.withAlphaComponent(alpha))
+            PieSliceModel(value: valueN[0], color: UIColor.yellow.withAlphaComponent(alpha)),
+            PieSliceModel(value: valueN[1], color: UIColor.blue.withAlphaComponent(alpha)),
+            PieSliceModel(value: valueN[2], color: UIColor.green.withAlphaComponent(alpha)),
+            PieSliceModel(value: valueN[3], color: UIColor.cyan.withAlphaComponent(alpha)),
+//            PieSliceModel(value: 12, color: UIColor.red.withAlphaComponent(alpha)),
+//            PieSliceModel(value: 11.5, color: UIColor.magenta.withAlphaComponent(alpha)),
+//            PieSliceModel(value: 10.5, color: UIColor.orange.withAlphaComponent(alpha))
         ]
     }
     
@@ -93,39 +99,39 @@ class CFchartVC: UIViewController,PieChartDelegate {
             view.frame = CGRect(x: 30, y: 0, width: 40, height: 40)
             container.addSubview(view)
             
-            if slice.data.id == 3 || slice.data.id == 0 {
+//            if slice.data.id == 3 || slice.data.id == 0 {
                 let specialTextLabel = UILabel()
                 specialTextLabel.textAlignment = .center
-                if slice.data.id == 0 {
-                    specialTextLabel.text = "views"
-                    specialTextLabel.font = UIFont.boldSystemFont(ofSize: 18)
-                } else if slice.data.id == 3 {
-                    specialTextLabel.textColor = UIColor.blue
-                    specialTextLabel.text = "饼状统计"
-                }
+//                if slice.data.id == 0 {
+//                    specialTextLabel.text = "小孩"
+////                  specialTextLabel.font = UIFont.boldSystemFont(ofSize: 18)
+//                } else if slice.data.id == 1 {
+//                    specialTextLabel.textColor = UIColor.black
+//                    specialTextLabel.text = "工资"
+//                }
                 specialTextLabel.sizeToFit()
                 specialTextLabel.frame = CGRect(x: 0, y: 40, width: 100, height: 20)
                 container.addSubview(specialTextLabel)
                 container.frame.size = CGSize(width: 100, height: 60)
-            }
+//            }
             
             
             // src of images: www.freepik.com, http://www.flaticon.com/authors/madebyoliver
             let imageName: String? = {
                 switch slice.data.id {
-                case 0: return "fish"
-                case 1: return "grapes"
-                case 2: return "doughnut"
-                case 3: return "water"
-                case 4: return "chicken"
-                case 5: return "beet"
-                case 6: return "cheese"
+                case 0: return "小孩"
+                case 1: return "工资"
+                case 2: return "持有现金"
+                case 3: return "月收现金"
+                //case 4: return "chicken"
+                //case 5: return "beet"
+                //case 6: return "cheese"
                 default: return nil
                 }
             }()
             
             view.image = imageName.flatMap{UIImage(named: $0)}
-            
+            specialTextLabel.text = imageName.flatMap{ $0 }
             return container
         }
     }

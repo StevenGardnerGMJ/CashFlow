@@ -73,7 +73,7 @@ public struct TKRadarChartConfig {
         return TKRadarChartConfig(radius: 80,
                                   minValue: 0,
                                   maxValue: 5,
-                                  borderWidth: 1,
+                                  borderWidth: 1,// 线的粗细
                                   lindWidth: 1,
                                   showPoint: false,
                                   showBorder: false,
