@@ -79,6 +79,14 @@
 			path = AdMob;
 			sourceTree = "<group>";
 		};
+		6363EF5522963882006C0A9C /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				280CCF3E22957FD2000039E0 /* TKRadarChart.swift */,
+			);
+			path = Chart;
+			sourceTree = "<group>";
+		};
 		6389D2A421E882E80026818D = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +107,7 @@
 		6389D2AF21E882E80026818D /* CashFlow */ = {
 			isa = PBXGroup;
 			children = (
+				6363EF5522963882006C0A9C /* Chart */,
 				28FE67E0228ECE2A002FF3EA /* AdMob */,
 				6389D2B021E882E80026818D /* AppDelegate.swift */,
 				635EE0BF22363DF2001F00E8 /* CashFlowModel.xcdatamodeld */,
@@ -109,7 +118,6 @@
 				6389D2C721F087080026818D /* C.swift */,
 				634CC0792248598E0026B295 /* C1.swift */,
 				63946BF32292B0ED001FFB23 /* CFchartVC.swift */,
-				280CCF3E22957FD2000039E0 /* TKRadarChart.swift */,
 				6389D2B421E882E80026818D /* Main.storyboard */,
 				6389D2B221E882E80026818D /* ViewController.swift */,
 				6389D2B721E882F10026818D /* Assets.xcassets */,
