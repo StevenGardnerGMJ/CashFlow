@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		280CCF3F22957FD2000039E0 /* TKRadarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280CCF3E22957FD2000039E0 /* TKRadarChart.swift */; };
+		28CFEEA42296DC40001A3961 /* CFRadarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CFEEA32296DC40001A3961 /* CFRadarVC.swift */; };
 		28FE67E5228ECE6D002FF3EA /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FE67E1228ECE68002FF3EA /* GoogleAppMeasurement.framework */; };
 		28FE67E6228ECE6D002FF3EA /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FE67E2228ECE68002FF3EA /* GoogleUtilities.framework */; };
 		28FE67E7228ECE6D002FF3EA /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FE67E3228ECE6C002FF3EA /* GoogleMobileAds.framework */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		280CCF3E22957FD2000039E0 /* TKRadarChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKRadarChart.swift; sourceTree = "<group>"; };
+		28CFEEA32296DC40001A3961 /* CFRadarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFRadarVC.swift; sourceTree = "<group>"; };
 		28FE67E1228ECE68002FF3EA /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
 		28FE67E2228ECE68002FF3EA /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
 		28FE67E3228ECE6C002FF3EA /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				6389D2C721F087080026818D /* C.swift */,
 				634CC0792248598E0026B295 /* C1.swift */,
 				63946BF32292B0ED001FFB23 /* CFchartVC.swift */,
+				28CFEEA32296DC40001A3961 /* CFRadarVC.swift */,
 				6389D2B421E882E80026818D /* Main.storyboard */,
 				6389D2B221E882E80026818D /* ViewController.swift */,
 				6389D2B721E882F10026818D /* Assets.xcassets */,
@@ -241,6 +244,7 @@
 				6389D2B121E882E80026818D /* AppDelegate.swift in Sources */,
 				280CCF3F22957FD2000039E0 /* TKRadarChart.swift in Sources */,
 				63946BF42292B0ED001FFB23 /* CFchartVC.swift in Sources */,
+				28CFEEA42296DC40001A3961 /* CFRadarVC.swift in Sources */,
 				631E9E4F21F7028900E3B47C /* CFtabBarViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
