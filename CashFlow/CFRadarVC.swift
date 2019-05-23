@@ -12,6 +12,7 @@ class CFRadarVC: UIViewController,TKRadarChartDataSource,TKRadarChartDelegate,UI
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
 
         let w = view.bounds.width
         let chart = TKRadarChart(frame: CGRect(x: 0, y: 0, width: w, height: w))

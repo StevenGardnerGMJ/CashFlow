@@ -8,7 +8,7 @@
 //  参考：三方库模仿Mail.app的SwipeCellKit
 
 import UIKit
-
+import GoogleMobileAds
 
 class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -19,6 +19,8 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var incomeArr = Array<Double>()
     var expendArr = Array<Double>()
     var totalArr  = Array<Double>()
+    
+    var interstitial: GADInterstitial!// Admob 1
     
     override func viewWillAppear(_ animated: Bool) {
         readData()
@@ -63,6 +65,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerB") as! headerAView
             header.imagV.image = UIImage(named: "现金流headerV")
             header.titleLab.text = "现金流量报表"
+            header.statisticsBtn.addTarget(self, action: #selector(showStatistics), for: .touchUpInside)
             return header
             
         } else {
@@ -127,6 +130,13 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        // AdMob 2 //青蛙广告页A ca-app-pub-9319054953457119/9902763490
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+//        interstitial.delegate = self // Admob
+        let request = GADRequest()
+        interstitial.load(request)
+        
         if incomeArr.count == 0 || expendArr.count == 0 ||  incomeArr.count != income.count {
             for _ in income {
                 incomeArr.append(0.0)
@@ -186,6 +196,18 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func showStatistics() {
+        
+        if interstitial.isReady {
+            interstitial.present(fromRootViewController: self)
+        } else {
+            print("Ad wasn't ready")
+            let chartVC = CFRadarVC()
+            
+            self.navigationController?.pushViewController(chartVC, animated: true)
+        }
     }
     
     func getData(arr:Array<String>) -> Array<String> {
