@@ -10,6 +10,8 @@ import UIKit
 
 class CFRadarVC: UIViewController,TKRadarChartDataSource,TKRadarChartDelegate,UITableViewDelegate {
 
+    //  总收入 总支出 总资产 总负债  持有现金  自有进度
+    let titleArr = [ "总收入" ,"总支出", "总资产", "总负债",  "持有现金", "自有进度"]
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -35,8 +37,8 @@ class CFRadarVC: UIViewController,TKRadarChartDataSource,TKRadarChartDelegate,UI
     }
     
     func titleOfRowForRadarChart(_ radarChart: TKRadarChart, row: Int) -> String {
-        //  总收入 总支出 总资产 总负责  持有现金 自有进度
-        return "NO.\(row + 1)"
+        // 标题  
+        return titleArr[row] //"NO.\(row + 1)"
     }
     func valueOfSectionForRadarChart(withRow row: Int, section: Int) -> CGFloat {
         if section == 0 {

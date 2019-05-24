@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -29,6 +30,8 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let relatDate = Array<Date>()// 日期
     var isNeedReadCoreDare = true
     var tableC = UITableView()
+     var interstitial: GADInterstitial!// Admob 1
+    
     
     override func viewWillAppear(_ animated: Bool) {
         if isNeedReadCoreDare == true {
@@ -44,6 +47,14 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // AdMob 2 //青蛙广告页A ca-app-pub-9319054953457119/9902763490
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+//        interstitial.delegate = self // Admob
+        let request = GADRequest()
+        interstitial.load(request)
+        
+        
         if assetsValue.count == 0 || liabiValue.count == 0 {
             isNoValue(t_f: true)
         }
@@ -188,6 +199,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerA") as! headerAView
             headerView.imagV.image = UIImage(named: "现金流headerV")
             headerView.titleLab.text = "资产与负债表"
+            headerView.statisticsBtn.addTarget(self, action: #selector(showStatistics), for: .touchUpInside)
             return headerView
             
         } else {
@@ -275,6 +287,19 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         alterC.addAction(cancel)
         self.present(alterC, animated: true, completion: nil)
     }
+    
+    @objc func showStatistics() {
+        
+        if interstitial.isReady {
+            interstitial.present(fromRootViewController: self)
+        } else {
+            print("Ad wasn't ready")
+            let chartVC = CFLineChartVC()
+            
+            self.navigationController?.pushViewController(chartVC, animated: true)
+        }
+    }
+    
     
     @objc func newAssetsLib(inP:UIButton){
         print("增加资产负债 \(inP.tag)")
