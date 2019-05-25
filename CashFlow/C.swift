@@ -290,14 +290,14 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     @objc func showStatistics() {
         
-        if interstitial.isReady {
-            interstitial.present(fromRootViewController: self)
-        } else {
+//        if interstitial.isReady {
+//            interstitial.present(fromRootViewController: self)
+//        } else {
             print("Ad wasn't ready")
             let chartVC = CFLineChartVC()
             
             self.navigationController?.pushViewController(chartVC, animated: true)
-        }
+//        }
     }
     
     

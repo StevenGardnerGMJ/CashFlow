@@ -23,13 +23,15 @@ class CFLineChartVC: UIViewController,LineChartDelegate {
         // Do any additional setup after loading the view.
         var views: [String: AnyObject] = [:]
         
-        label.text = "..."
+        label.text = "...nufbasb"
         label.translatesAutoresizingMaskIntoConstraints = false
+//        self.view.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = NSTextAlignment.center
         self.view.addSubview(label)
-        views["label"] = label
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[label]-|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[label]-|", options: NSLayoutFormatOptions.alignAllCenterY, metrics: nil, views: views))//V:|-380-[label]  [superView]-|@|-[label]
+//        views = ["label":label, "superV":self.view]
+//        views["label"] = label
+//        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[label]-|", options: [], metrics: nil, views: views))
+//        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[label]-1@1-[superV]", options: .alignAllCenterY, metrics: nil, views: views))//V:|-300-[label]
         
         // simple arrays
         let data: [CGFloat] = [3, 4, -2, 11, 13, 15]
@@ -39,7 +41,6 @@ class CFLineChartVC: UIViewController,LineChartDelegate {
         let xLabels: [String] = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
         
         lineChart = LineChart()
-        lineChart.center = view.center
         lineChart.animation.enabled = true
         lineChart.area = true
         lineChart.x.labels.visible = true
@@ -53,9 +54,20 @@ class CFLineChartVC: UIViewController,LineChartDelegate {
         lineChart.translatesAutoresizingMaskIntoConstraints = false
         lineChart.delegate = self
         self.view.addSubview(lineChart)
-        views["chart"] = lineChart
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[chart]-|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:[label]-[chart(==200)]", options: [], metrics: nil, views: views))
+//        lineChart.frame = CGRect(x: 0, y: 0, width: 300, height: 200)
+       
+//        lineChart.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width-20, height: 200)
+//        lineChart.center = self.view.center
+        views = ["chart":lineChart,"superV":self.view]
+//        views["chart"] = lineChart
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[chart]-|", options: [], metrics: nil, views: views))//H:|-[chart]-|
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[chart]-1@1-[superV]", options: .alignAllCenterY, metrics: nil, views: views))//V:[label]-[chart(==200)]
+//        lineChart.layoutIfNeeded()
+        let height = NSLayoutConstraint(item: lineChart, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 200)
+        lineChart.addConstraint(height)
+        
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
