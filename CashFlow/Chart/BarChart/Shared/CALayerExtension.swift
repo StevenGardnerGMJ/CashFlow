@@ -49,7 +49,7 @@ extension CALayer {
         textLayer.frame = frame
         textLayer.foregroundColor = color
         textLayer.backgroundColor = UIColor.clear.cgColor
-        textLayer.alignmentMode = CATextLayerAlignmentMode.center
+        textLayer.alignmentMode = kCAAlignmentCenter //swift4.2// CATextLayerAlignmentMode.center // swift5
         textLayer.contentsScale = UIScreen.main.scale
         textLayer.font = CTFontCreateWithName(UIFont.systemFont(ofSize: 0).fontName as CFString, 0, nil)
         textLayer.fontSize = fontSize
@@ -92,13 +92,13 @@ extension CALayer {
             layer.animate(fromValue: CGRect(x: 0, y: 0, width: oldFrame.width, height: oldFrame.height), toValue: layer.bounds, keyPath: "bounds")
         }
     }
-    
+    // 动画效果持续0.5
     func animate(fromValue: Any, toValue: Any, keyPath: String) {
         let anim = CABasicAnimation(keyPath: keyPath)
         anim.fromValue = fromValue
         anim.toValue = toValue
         anim.duration = 0.5
-        anim.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        anim.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)//CAMediaTimingFunctionName.easeInEaseOut
         self.add(anim, forKey: keyPath)
     }
 }
