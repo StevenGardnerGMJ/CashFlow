@@ -12,11 +12,19 @@ class CFBarChartVC: UIViewController {
     var basicBarChart: BasicBarChart!
     var barChart: BeautifulBarChart!
     private let numEntry = 20 // 数据数量
+    let numArr = Array<Double>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.backgroundColor = UIColor.white
         // 柱状图统计
+        basicBarChart.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height / 2.0)
+        basicBarChart.backgroundColor = UIColor.lightGray
+        
+        barChart.frame = CGRect(x: 0, y: basicBarChart.frame.size.height, width: self.view.bounds.width, height: self.view.bounds.height / 2.0)
+        barChart.backgroundColor = UIColor.white
+        self.view.addSubview(basicBarChart)
+        self.view.addSubview(barChart)
     }
     
     override func viewDidAppear(_ animated: Bool) {

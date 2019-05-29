@@ -294,8 +294,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
 //            interstitial.present(fromRootViewController: self)
 //        } else {
             print("Ad wasn't ready")
-            let chartVC = CFLineChartVC()
-            
+            let chartVC = CFBarChartVC()// CFLineChartVC()
             self.navigationController?.pushViewController(chartVC, animated: true)
 //        }
     }
