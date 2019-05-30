@@ -16,8 +16,11 @@ class CFBarChartVC: UIViewController {
     var barChart =  BeautifulBarChart()
     private let numEntry = 20 // 数据数量
     
-    let numArr = Array<Double>()
-    let nameArr = Array<String>()
+    let assetsArr   = Array<String>()
+    let assetsValue = Array<Double>()
+    
+    let liabilities = Array<String>()
+    let liabilValue = Array<Double>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
