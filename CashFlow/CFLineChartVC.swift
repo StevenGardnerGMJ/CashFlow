@@ -29,9 +29,9 @@ class CFLineChartVC: UIViewController,LineChartDelegate {
         label.textAlignment = NSTextAlignment.center
         self.view.addSubview(label)
 //        views = ["label":label, "superV":self.view]
-//        views["label"] = label
-//        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[label]-|", options: [], metrics: nil, views: views))
-//        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[label]-1@1-[superV]", options: .alignAllCenterY, metrics: nil, views: views))//V:|-300-[label]
+        views["label"] = label
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[label]-|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-300-[label]", options: .alignAllCenterY, metrics: nil, views: views))//V:|-300-[label]  [label]-1@1-[superV]
         
         // simple arrays
         let data: [CGFloat] = [3, 4, -2, 11, 13, 15]
@@ -61,7 +61,7 @@ class CFLineChartVC: UIViewController,LineChartDelegate {
         views = ["chart":lineChart,"superV":self.view]
 //        views["chart"] = lineChart
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[chart]-|", options: [], metrics: nil, views: views))//H:|-[chart]-|
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[chart]-1@1-[superV]", options: .alignAllCenterY, metrics: nil, views: views))//V:[label]-[chart(==200)]
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "[chart]-1@1-[superV]", options: .alignAllCenterY, metrics: nil, views: views))//V:[label]-[chart(==200)] 居中
 //        lineChart.layoutIfNeeded()
         let height = NSLayoutConstraint(item: lineChart, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 200)
         lineChart.addConstraint(height)
