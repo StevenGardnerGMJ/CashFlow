@@ -26,13 +26,21 @@ class CFBarChartVC: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
         // 柱状图统计
-        basicBarChart.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height / 2.0)
+//        basicBarChart.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height / 2.0)
         basicBarChart.backgroundColor = UIColor.clear
-        
-        barChart.frame = CGRect(x: 0, y: basicBarChart.frame.size.height, width: self.view.bounds.width, height: self.view.bounds.height / 2.0)
-        barChart.backgroundColor = UIColor.white
+        basicBarChart.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(basicBarChart)
+//        barChart.frame = CGRect(x: 0, y: basicBarChart.frame.size.height, width: self.view.bounds.width, height: self.view.bounds.height / 2.0)
+        
+        barChart.backgroundColor = UIColor.white
+        barChart.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(barChart)
+        
+        let views = ["basicChart":basicBarChart,"barChart":barChart]
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[basicChart]-|", options: [], metrics: nil, views: ["basicChart":basicBarChart]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[barChart]-|", options: [], metrics: nil, views: ["barChart":barChart]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[basicChart]-20-[barChart]-|", options: [], metrics: nil, views: views))
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,8 +69,8 @@ class CFBarChartVC: UIViewController {
         let colors = [#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 1, green: 0.5464518881, blue: 0.5778202487, alpha: 1), #colorLiteral(red: 0.6679978967, green: 0.4751212597, blue: 0.2586010993, alpha: 1), #colorLiteral(red: 0.08988254517, green: 0.4508849382, blue: 0.4628053904, alpha: 1), #colorLiteral(red: 0.4156908393, green: 0.1607943177, blue: 0.08235750347, alpha: 1)]//质数11
         var result: [DataEntry] = []
         for i in 0..<numEntry {
-            let value = (arc4random() % 90) + 10
-            let height: Float = Float(value) / 100.0
+            let value = (arc4random() % 900) + 100
+            let height: Float = Float(value) / 1000.0
             
             let formatter = DateFormatter()
             formatter.dateFormat = "d MMM"
