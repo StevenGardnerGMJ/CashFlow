@@ -295,6 +295,10 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
 //        } else {
             print("Ad wasn't ready")
             let chartVC = CFBarChartVC()// CFLineChartVC()
+            chartVC.assetsArr = self.assets
+            chartVC.assetsValue = self.assetsValue
+            chartVC.liabilities = self.liabilities
+            chartVC.liabilValue = self.liabiValue
             self.navigationController?.pushViewController(chartVC, animated: true)
 //        }
     }

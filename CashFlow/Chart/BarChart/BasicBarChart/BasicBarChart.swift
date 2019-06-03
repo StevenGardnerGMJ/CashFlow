@@ -18,7 +18,7 @@ class BasicBarChart: UIView {
     /// A flag to indicate whether or not to animate the bar chart when its data entries changed
     private var animated = false
     
-    /// Responsible for compute all positions and frames of all elements represent on the bar chart
+    /// Responsible for compute all positions and frames of all elements represent on the bar chart 宽度
     private let presenter = BasicBarChartPresenter(barWidth: 40, space: 20)
     
     /// An array of bar entries. Each BasicBarEntry contain information about line segments, curved line segments, positions and frames of all elements on a bar.
