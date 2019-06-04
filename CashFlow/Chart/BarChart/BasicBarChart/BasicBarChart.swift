@@ -26,7 +26,7 @@ class BasicBarChart: UIView {
         didSet {
             mainLayer.sublayers?.forEach({$0.removeFromSuperlayer()})
             
-            scrollView.contentSize = CGSize(width: presenter.computeContentWidth(), height: self.frame.size.height)
+            scrollView.contentSize = CGSize(width: presenter.computeContentWidth(), height: self.frame.size.height - 64)
             mainLayer.frame = CGRect(x: 0, y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
             
             showHorizontalLines()

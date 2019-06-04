@@ -14,7 +14,9 @@ class CFBarChartVC: UIViewController {
 
     var basicBarChart = BasicBarChart()
     var barChart =  BeautifulBarChart()
+    var timer = Timer()
     private let numEntry = 20 // 数据数量
+    
     
     var assetsArr   = Array<String>()
     var assetsValue = Array<Double>()
@@ -48,12 +50,16 @@ class CFBarChartVC: UIViewController {
         basicBarChart.updateDataEntries(dataEntries: dataEntries, animated: true)
         barChart.updateDataEntries(dataEntries: dataEntries, animated: true)
         
-        let timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) {[unowned self] (timer) in
+        self.timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) {[unowned self] (timer) in
             let dataEntries = self.generateRandomDataEntries()
             self.barChart.updateDataEntries(dataEntries: dataEntries, animated: true)
             self.basicBarChart.updateDataEntries(dataEntries: dataEntries, animated: true)
         }
         timer.fire()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.timer.invalidate() // 界面返回后停止动画效果
     }
     
     func generateEmptyDataEntries() -> [DataEntry] {
@@ -68,15 +74,15 @@ class CFBarChartVC: UIViewController {
     func generateRandomDataEntries() -> [DataEntry] {
         let colors = [#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 1, green: 0.5464518881, blue: 0.5778202487, alpha: 1), #colorLiteral(red: 0.6679978967, green: 0.4751212597, blue: 0.2586010993, alpha: 1), #colorLiteral(red: 0.08988254517, green: 0.4508849382, blue: 0.4628053904, alpha: 1), #colorLiteral(red: 0.4156908393, green: 0.1607943177, blue: 0.08235750347, alpha: 1)]//质数11
         var result: [DataEntry] = []
-        for i in 0..<numEntry {
-            let value = (arc4random() % 90) + 10
-            let height: Float = Float(value) / 100.0
-            
+        for i in 0..<assetsValue.count {
+            let value  = assetsValue[i]//(arc4random() % 90) + 10
+            let height:Float = Float(value  / assetsValue[0])
+            let title = assetsArr[i]
             let formatter = DateFormatter()
             formatter.dateFormat = "d MMM"
             var date = Date()
             date.addTimeInterval(TimeInterval(24*60*60*i))
-            result.append(DataEntry(color: colors[i % colors.count], height: height, textValue: "\(value)", title: formatter.string(from: date)))
+            result.append(DataEntry(color: colors[i % colors.count], height: height, textValue: "\(value)", title: title))//formatter.string(from: date)
         }
         return result
     }

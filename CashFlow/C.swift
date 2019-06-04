@@ -295,7 +295,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
 //        } else {
             print("Ad wasn't ready")
             let chartVC = CFBarChartVC()// CFLineChartVC()
-            chartVC.assetsArr = self.assets
+            chartVC.assetsArr   = self.assets
             chartVC.assetsValue = self.assetsValue
             chartVC.liabilities = self.liabilities
             chartVC.liabilValue = self.liabiValue
