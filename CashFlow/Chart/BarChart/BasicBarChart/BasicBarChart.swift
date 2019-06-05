@@ -27,9 +27,9 @@ class BasicBarChart: UIView {
             mainLayer.sublayers?.forEach({$0.removeFromSuperlayer()})
             
             scrollView.contentSize = CGSize(width: presenter.computeContentWidth(), height: self.frame.size.height - 64)
-            mainLayer.frame = CGRect(x: 0, y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
+            mainLayer.frame = CGRect(x: 0, y: -20, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
             
-            showHorizontalLines()
+//            showHorizontalLines()
             
             for i in 0..<barEntries.count {
                 showEntry(index: i, entry: barEntries[i], animated: animated, oldEntry: (i < oldValue.count ? oldValue[i] : nil))
@@ -84,6 +84,7 @@ class BasicBarChart: UIView {
     }
     
     private func showHorizontalLines() {
+        // 删除所有CALayer的子图层
         self.layer.sublayers?.forEach({
             if $0 is CAShapeLayer {
                 $0.removeFromSuperlayer()

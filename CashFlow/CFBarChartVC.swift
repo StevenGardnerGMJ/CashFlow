@@ -61,7 +61,7 @@ class CFBarChartVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         self.timer.invalidate() // 界面返回后停止动画效果
     }
-    
+    // 空数据初始化
     func generateEmptyDataEntries() -> [DataEntry] {
         var result: [DataEntry] = []
         Array(0..<numEntry).forEach {_ in
@@ -76,7 +76,7 @@ class CFBarChartVC: UIViewController {
         var result: [DataEntry] = []
         for i in 0..<assetsValue.count {
             let value  = assetsValue[i]//(arc4random() % 90) + 10
-            let height:Float = Float(value  / assetsValue[0])
+            let height:Float = Float(value / assetsValue[0])
             let title = assetsArr[i]
             let formatter = DateFormatter()
             formatter.dateFormat = "d MMM"

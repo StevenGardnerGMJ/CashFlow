@@ -30,7 +30,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let relatDate = Array<Date>()// 日期
     var isNeedReadCoreDare = true
     var tableC = UITableView()
-     var interstitial: GADInterstitial!// Admob 1
+    var interstitial: GADInterstitial!// Admob 1
     
     
     override func viewWillAppear(_ animated: Bool) {
