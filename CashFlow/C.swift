@@ -20,10 +20,10 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var arrTotalValue = Array<Any>()// 统计
     
     /// 资产
-    var assets = ["总资产","股票","基金","银行存款","银行存单","房地产","公寓","商铺","企业投资","其他C"]
+    var assets = ["总资产","股票","基金","银行存款","银行存单","房地产","公寓","商铺","企业投资","其他资产"]
     var assetsValue = Array<Double>()
     /// 负债
-    var liabilities = ["总负债","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他C"]
+    var liabilities = ["总负债","房贷","车贷","教育贷","信用卡","花呗类","额外负债","银行贷款","其他负债"]
     var liabiValue = Array<Double>()
     // 人情往来 relations
     var relations = Int()

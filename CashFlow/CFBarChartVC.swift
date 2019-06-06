@@ -27,8 +27,8 @@ class CFBarChartVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
+        
         // 柱状图统计
-
         basicBarChart.backgroundColor = UIColor.white
         basicBarChart.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(basicBarChart)
@@ -41,7 +41,7 @@ class CFBarChartVC: UIViewController {
         let views = ["basicChart":basicBarChart,"barChart":barChart]
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[basicChart]-|", options: [], metrics: nil, views: ["basicChart":basicBarChart]))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[barChart]-|", options: [], metrics: nil, views: ["barChart":barChart]))
-        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-64-[basicChart]-0-[barChart(==basicChart)]-|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[basicChart]-10-[barChart(==basicChart)]-|", options: [], metrics: nil, views: views))
         
     }
     
@@ -51,9 +51,10 @@ class CFBarChartVC: UIViewController {
         barChart.updateDataEntries(dataEntries: dataEntries, animated: true)
         
         self.timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) {[unowned self] (timer) in
-            let dataEntries = self.generateRandomDataEntries()
-            self.barChart.updateDataEntries(dataEntries: dataEntries, animated: true)
-            self.basicBarChart.updateDataEntries(dataEntries: dataEntries, animated: true)
+            let dataEntriesA = self.generateRandomDataEntries(valueArr: self.assetsValue, titleArr: self.assetsArr)
+              let dataEntriesB = self.generateRandomDataEntries(valueArr: self.liabilValue, titleArr: self.liabilities)
+            self.barChart.updateDataEntries(dataEntries: dataEntriesA, animated: true)
+            self.basicBarChart.updateDataEntries(dataEntries: dataEntriesB, animated: true)
         }
         timer.fire()
     }
@@ -71,13 +72,13 @@ class CFBarChartVC: UIViewController {
     }
     
     
-    func generateRandomDataEntries() -> [DataEntry] {
+    func generateRandomDataEntries(valueArr:Array<Double>,titleArr:Array<String>) -> [DataEntry] {
         let colors = [#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 1, green: 0.5464518881, blue: 0.5778202487, alpha: 1), #colorLiteral(red: 0.6679978967, green: 0.4751212597, blue: 0.2586010993, alpha: 1), #colorLiteral(red: 0.08988254517, green: 0.4508849382, blue: 0.4628053904, alpha: 1), #colorLiteral(red: 0.4156908393, green: 0.1607943177, blue: 0.08235750347, alpha: 1)]//质数11
         var result: [DataEntry] = []
-        for i in 0..<assetsValue.count {
-            let value  = assetsValue[i]//(arc4random() % 90) + 10
-            let height:Float = Float(value / assetsValue[0])
-            let title = assetsArr[i]
+        for i in 1..<valueArr.count {
+            let value  = valueArr[i]//(arc4random() % 90) + 10
+            let height:Float = Float(value / valueArr[0])//数值与总资产对比 总资产为0会崩溃
+            let title = titleArr[i]
             let formatter = DateFormatter()
             formatter.dateFormat = "d MMM"
             var date = Date()

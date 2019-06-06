@@ -26,10 +26,10 @@ class BasicBarChart: UIView {
         didSet {
             mainLayer.sublayers?.forEach({$0.removeFromSuperlayer()})
             
-            scrollView.contentSize = CGSize(width: presenter.computeContentWidth(), height: self.frame.size.height - 64)
-            mainLayer.frame = CGRect(x: 0, y: -20, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
+            scrollView.contentSize = CGSize(width: presenter.computeContentWidth(), height: self.frame.size.height)
+            mainLayer.frame = CGRect(x: 0, y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
             
-//            showHorizontalLines()
+            showHorizontalLines()
             
             for i in 0..<barEntries.count {
                 showEntry(index: i, entry: barEntries[i], animated: animated, oldEntry: (i < oldValue.count ? oldValue[i] : nil))
@@ -90,7 +90,7 @@ class BasicBarChart: UIView {
                 $0.removeFromSuperlayer()
             }
         })
-        let lines = presenter.computeHorizontalLines(viewHeight: self.frame.height)
+        let lines = presenter.computeHorizontalLines(viewHeight: self.frame.height              )
         lines.forEach { (line) in
             mainLayer.addLineLayer(lineSegment: line.segment, color: #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1).cgColor, width: line.width, isDashed: line.isDashed, animated: false, oldSegment: nil)
         }
