@@ -51,7 +51,9 @@ class CFBarChartVC: UIViewController {
         barChart.updateDataEntries(dataEntries: dataEntries, animated: true)
         
         self.timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) {[unowned self] (timer) in
+            //  资产
             let dataEntriesA = self.generateRandomDataEntries(valueArr: self.assetsValue, titleArr: self.assetsArr)
+            //  负债
               let dataEntriesB = self.generateRandomDataEntries(valueArr: self.liabilValue, titleArr: self.liabilities)
             self.barChart.updateDataEntries(dataEntries: dataEntriesA, animated: true)
             self.basicBarChart.updateDataEntries(dataEntries: dataEntriesB, animated: true)
@@ -78,6 +80,10 @@ class CFBarChartVC: UIViewController {
         for i in 1..<valueArr.count {
             let value  = valueArr[i]//(arc4random() % 90) + 10
             let height:Float = Float(value / valueArr[0])//数值与总资产对比 总资产为0会崩溃
+            if height == 0 {
+                let height =  1
+            }
+            
             let title = titleArr[i]
             let formatter = DateFormatter()
             formatter.dateFormat = "d MMM"
