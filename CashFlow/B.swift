@@ -204,7 +204,11 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
             interstitial.present(fromRootViewController: self)
         } else {
             print("Ad wasn't ready")
-            let chartVC = CFRadarVC()
+            let chartVC = CFBarChartVC()//CFRadarVC()
+            chartVC.assetsArr = self.income
+            chartVC.assetsValue = self.incomeArr
+            chartVC.liabilities = self.expenditure
+            chartVC.liabilValue = self.expendArr
             
             self.navigationController?.pushViewController(chartVC, animated: true)
         }

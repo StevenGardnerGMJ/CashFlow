@@ -79,11 +79,9 @@ class CFBarChartVC: UIViewController {
         var result: [DataEntry] = []
         for i in 1..<valueArr.count {
             let value  = valueArr[i]//(arc4random() % 90) + 10
-            let height:Float = Float(value / valueArr[0])//数值与总资产对比 总资产为0会崩溃
-            if height == 0 {
-                let height =  1
-            }
-            
+            let valveH = Float(value / valueArr[0])
+            let height:Float = valveH > 0 ? valveH:0 //数值与总资产对比 valueArr[0]总资产为0会崩溃
+           
             let title = titleArr[i]
             let formatter = DateFormatter()
             formatter.dateFormat = "d MMM"
