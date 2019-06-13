@@ -106,7 +106,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
             cellA.detailTextLabel?.text = "\(detailtext)"
         case 5:
             // 百分数 %显示
-            let number = NSNumber(value: arrAnumber[indexPath.row])
+            let number = NSNumber(value: arrAnumber[indexPath.row] / 100.0)
             let percent = NumberFormatter.localizedString(from: number, number: .percent)
             cellA.detailTextLabel?.text = percent
         default:
@@ -205,7 +205,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
                 self.arrMyInfo[0] = textStr
                 textStr = "0.01" } //0号位职业
             // String 转 Float
-            let str_double:Double = Double(textStr)!
+            let str_double:Double = Double(textStr)!// 输入多位小数点报错
             self.arrAnumber[row] = str_double
             self.tableVC.reloadData()
         })
@@ -308,6 +308,15 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     /// (such as the App Store), backgrounding the current app.
     func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
         print("interstitialWillLeaveApplication")
+    }
+    
+    - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    // 判断是否已经存在小数点
+    if ([string isEqualToString:@"."] && [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""].length == 0) {
+    textField.text = @"";
+    return NO;
+    } else if ([string isEqualToString:@"."] && [textField.text containsString:@"."]) {
+    return NO;
     }
     
 
