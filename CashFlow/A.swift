@@ -14,7 +14,8 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     
     let attributeName = ["status","value","myinfo"]
     let enteryName    = "Amodel"
-    let arrA = ["职业","小孩","工资","持有现金","月收现金","自由进度"]// 主动收入，被动收入
+    // 主动收入，被动收入 ， 资产，  负债，  健康， 支出
+    let arrA = ["职业","小孩","工资","持有现金","月收现金","自由进度"]
     let personArr = ["职业","E-mail","生活目标","常驻地","电话","昵称"]// headerViewBtn个人信息
     var arrAnumber = Array<Double>() // 数值
     var arrMyInfo  = Array<String>()// 个人信息
@@ -85,7 +86,6 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
             header.titleLab.text = "苹果公司未来CEO"
         }
         
-        
         header.stateBtn.addTarget(self, action: #selector(showAlterSheet), for: .touchUpInside)
         header.statisticsBtn.addTarget(self, action: #selector(showStatistics), for: .touchUpInside)
         return header
@@ -123,28 +123,22 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleteRowAction = UITableViewRowAction(style: .destructive, title: "清除") { (action, indexPath) in
-            print("A清除")
-        }
+//        let deleteRowAction = UITableViewRowAction(style: .destructive, title: "清除") { (action, indexPath) in
+//            print("A清除")
+//        }
         let editRowAction = UITableViewRowAction(style: .default, title: "编辑") { (action, indexPath) in
             print("B编辑")
             let cell = tableView.cellForRow(at: indexPath)
             let title = cell?.textLabel?.text
             self.showView(title: title!, row: indexPath.row)
         }
-        let topRowAction = UITableViewRowAction(style: .normal, title: "重要") { (action, indexPath) in
-            print("C重要")
-        }
+//        let topRowAction = UITableViewRowAction(style: .normal, title: "重要") { (action, indexPath) in
+//            print("C重要")
+//        }
         editRowAction.backgroundColor = UIColor.orange
         return [editRowAction]
     }
-    // AdMob
-    func createAndLoadInterstitial() -> GADInterstitial {
-        let interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-        interstitial.delegate = self
-        interstitial.load(GADRequest())
-        return interstitial
-    }
+    
     
     @objc func showStatistics() {
         
@@ -191,6 +185,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
         alterC.title = "修改\(title)"
         alterC.addTextField { (textF:UITextField) in
             textF.placeholder = "请输入要修改的值"
+//            textF.delegate = self //
             if row == 0 {
                 textF.keyboardType = .default
             } else {
@@ -204,8 +199,8 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
             if row == 0 {
                 self.arrMyInfo[0] = textStr
                 textStr = "0.01" } //0号位职业
-            // String 转 Float
-            let str_double:Double = Double(textStr)!// 输入多位小数点报错
+            // String 转 Double
+            let str_double:Double = Double(textStr) ?? 0 // inf应对超限 多位小数点问题
             self.arrAnumber[row] = str_double
             self.tableVC.reloadData()
         })
@@ -278,6 +273,15 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     
     /// MARK: --- AdMob GADInterstitialDelegate 监听 ----------
     
+    // AdMob
+    func createAndLoadInterstitial() -> GADInterstitial {
+        let interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        interstitial.delegate = self
+        interstitial.load(GADRequest())
+        return interstitial
+    }
+    
+    
     /// Tells the delegate an ad request succeeded.
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
         print("interstitialDidReceiveAd")
@@ -310,16 +314,6 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
         print("interstitialWillLeaveApplication")
     }
     
-    - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    // 判断是否已经存在小数点
-    if ([string isEqualToString:@"."] && [textField.text stringByReplacingOccurrencesOfString:@" " withString:@""].length == 0) {
-    textField.text = @"";
-    return NO;
-    } else if ([string isEqualToString:@"."] && [textField.text containsString:@"."]) {
-    return NO;
-    }
-    
-
 }
 
 
@@ -366,4 +360,23 @@ class headerAView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+
+// 禁止 textField 输入多个小数点  执行协议 UITextFieldDelegate
+//func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//    if (string == ".") && textField.text?.replacingOccurrences(of: " ", with: "").count == 0 {
+//        //  首位为空和 "."
+//        textField.text = ""
+//        return false
+//    } else if (string == ".") && (textField.text?.contains("."))! {
+//        return false
+//    } else {
+//        return true
+//    }
+//}
+
+
+
+
+
 
