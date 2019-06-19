@@ -23,7 +23,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
         
         self.view.backgroundColor = .white
         chartView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300)
-        chartView.center = self.view.center
+//        chartView.center = self.view.center
         chartView.innerRadius = 0
         chartView.outerRadius = 100
         chartView.selectedOffset = 30
@@ -33,7 +33,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
         self.view.addSubview(chartView)
         
         let views = ["chartview":chartView]
-        let consH = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[chartview]-|", options: [], metrics: nil, views: views)
+        let consH = NSLayoutConstraint.constraints(withVisualFormat: "H:|-100-[chartview]-|", options: .alignAllCenterX, metrics: nil, views: views)
         let consV = NSLayoutConstraint.constraints(withVisualFormat: "V:|-[chartview]", options: .alignAllCenterY, metrics: nil, views: views)
         self.view.addConstraints(consH)
         self.view.addConstraints(consV)
