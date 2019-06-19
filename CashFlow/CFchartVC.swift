@@ -32,6 +32,12 @@ class CFchartVC: UIViewController,PieChartDelegate {
         chartView.models = createModels()
         self.view.addSubview(chartView)
         
+        let views = ["chartview":chartView]
+        let consH = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[chartview]-|", options: [], metrics: nil, views: views)
+        let consV = NSLayoutConstraint.constraints(withVisualFormat: "V:|-[chartview]", options: .alignAllCenterY, metrics: nil, views: views)
+        self.view.addConstraints(consH)
+        self.view.addConstraints(consV)
+        
     }
     // A 雷达  B饼状  C 饼状
     
