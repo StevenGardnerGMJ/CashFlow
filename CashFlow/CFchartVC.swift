@@ -18,11 +18,11 @@ class CFchartVC: UIViewController,PieChartDelegate {
         super.viewDidLoad()
         
         if valueN.count != 4 {
-            valueN = [1,2,3,4]
+            valueN = [1,2,3,4] // 数据不全指定默认值
         }
         
         self.view.backgroundColor = .white
-        chartView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300)
+//        chartView.frame = CGRect(x: 0, y: 100, width: self.view.frame.width, height: 300)
 //        chartView.center = self.view.center
         chartView.innerRadius = 0
         chartView.outerRadius = 100
@@ -32,11 +32,14 @@ class CFchartVC: UIViewController,PieChartDelegate {
         chartView.models = createModels()
         self.view.addSubview(chartView)
         
+        chartView.translatesAutoresizingMaskIntoConstraints = false
         let views = ["chartview":chartView]
-        let consH = NSLayoutConstraint.constraints(withVisualFormat: "H:|-100-[chartview]-|", options: .alignAllCenterX, metrics: nil, views: views)
-        let consV = NSLayoutConstraint.constraints(withVisualFormat: "V:|-[chartview]", options: .alignAllCenterY, metrics: nil, views: views)
+        let consH = NSLayoutConstraint.constraints(withVisualFormat: "H:|-[chartview]-|", options: .alignAllCenterX, metrics: nil, views: views)
+        let consV = NSLayoutConstraint.constraints(withVisualFormat: "V:|-[chartview(==300)]-|", options: .alignAllCenterY, metrics: nil, views: views)
         self.view.addConstraints(consH)
         self.view.addConstraints(consV)
+        let height = NSLayoutConstraint(item: chartView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 300)
+        chartView.addConstraint(height)
         
     }
     // A 雷达  B饼状  C 饼状
