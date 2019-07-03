@@ -22,12 +22,12 @@ class CFchartVC: UIViewController,PieChartDelegate {
         }
         
         self.view.backgroundColor = .white
-        chartView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 300)
-//        chartView.center = self.view.center
+        chartView.frame = CGRect(x: 0, y: 0, width: 300 , height: 300)//self.view.frame.width
+        chartView.center = self.view.center
         chartView.innerRadius = 0
-        chartView.outerRadius = 100
+        chartView.outerRadius = 130
         chartView.selectedOffset = 30
-//        chartView.layers = [createCustomViewsLayer(), createTextLayer()]
+        chartView.layers = [createCustomViewsLayer(), createTextLayer()]
         chartView.delegate = self
         chartView.models = createModels()
         self.view.addSubview(chartView)
@@ -35,12 +35,13 @@ class CFchartVC: UIViewController,PieChartDelegate {
         chartView.translatesAutoresizingMaskIntoConstraints = false
         var views: [String: AnyObject] = [:]
             views = ["superview":self.view, "chartview":chartView]
-        let consH = NSLayoutConstraint.constraints(withVisualFormat: "H:[superview]-(==0)-[chartview(==300)]", options: .alignAllCenterY , metrics: nil, views: views)
-        let consV = NSLayoutConstraint.constraints(withVisualFormat: "V:[superview]-(==0)-[chartview(==300)]", options: .alignAllCenterX, metrics: nil, views: views)
+        let consH = NSLayoutConstraint.constraints(withVisualFormat: "H:[superview]-(0)-[chartview(==300)]", options: .alignAllCenterY , metrics: nil, views: views)
+        let consV = NSLayoutConstraint.constraints(withVisualFormat: "V:[superview]-(0)-[chartview(==300)]", options: .alignAllCenterX, metrics: nil, views: views)
         self.view.addConstraints(consH)
         self.view.addConstraints(consV)
-//        let height = NSLayoutConstraint(item: chartView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 300)
-//        chartView.addConstraint(height) [superView]-1@1-
+        
+        let height = NSLayoutConstraint(item: chartView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 300)
+        chartView.addConstraint(height) //[superView]-1@1-
         
     }
     // A 雷达  B饼状  C 饼状
@@ -78,7 +79,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
         settings.hideOnOverflow = false
         viewLayer.settings = settings
         // 注释显示
-//        viewLayer.viewGenerator = createViewGenerator()
+        viewLayer.viewGenerator = createViewGenerator()
         
         return viewLayer
     }
@@ -106,7 +107,8 @@ class CFchartVC: UIViewController,PieChartDelegate {
         return {slice, center in
             
             let container = UIView() // 载体
-//            container.frame.size = CGSize(width: 100, height: 40)
+            container.frame.size = CGSize(width: 120, height: 60)
+//            container.frame.size = CGSize(width: 100, height: 60)
             container.center = center
             
             
@@ -124,7 +126,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
             
             
             let imgv = UIImageView() // 图
-            imgv.frame = CGRect(x: 00, y: 0, width: 40, height: 40)
+            imgv.frame = CGRect(x: 30, y: 10, width: 40, height: 40)
             container.addSubview(imgv)
             
             
@@ -141,7 +143,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
             
             
             
-//            if slice.data.id == 3 || slice.data.id == 0 {
+//            if slice.data.id == 3 || slice.data.id == 0 { //特殊处理3,0号数据
                 let specialTextLabel = UILabel() // 文字
                 specialTextLabel.textAlignment = .center
 //                if slice.data.id == 0 {
@@ -152,9 +154,9 @@ class CFchartVC: UIViewController,PieChartDelegate {
 //                    specialTextLabel.text = "工资"
 //                }
                 specialTextLabel.sizeToFit()
-                specialTextLabel.frame = CGRect(x: 0, y: 00, width: 100, height: 20)
+                specialTextLabel.frame = CGRect(x: 0, y: 60, width: 100, height: 20)
                 container.addSubview(specialTextLabel)
-                container.frame.size = CGSize(width: 100, height: 60)
+                //container.frame.size = CGSize(width: 100, height: 60)
 //            }
             
             
