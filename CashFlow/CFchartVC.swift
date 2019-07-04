@@ -89,7 +89,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
         let textLayerSettings = PiePlainTextLayerSettings()
         textLayerSettings.viewRadius = 60
         textLayerSettings.hideOnOverflow = true
-        textLayerSettings.label.font = UIFont.systemFont(ofSize: 12)
+        textLayerSettings.label.font = UIFont.systemFont(ofSize: 13)
         
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 1
@@ -107,7 +107,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
         return {slice, center in
             
             let container = UIView() // 载体
-            container.frame.size = CGSize(width: 120, height: 60)
+            container.frame.size = CGSize(width: 80, height: 60)
 //            container.frame.size = CGSize(width: 100, height: 60)
             container.center = center
             
@@ -126,7 +126,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
             
             
             let imgv = UIImageView() // 图
-            imgv.frame = CGRect(x: 30, y: 10, width: 40, height: 40)
+            imgv.frame = CGRect(x: 10, y: 10, width: 40, height: 40)
             container.addSubview(imgv)
             
             
@@ -154,8 +154,8 @@ class CFchartVC: UIViewController,PieChartDelegate {
 //                    specialTextLabel.text = "工资"
 //                }
                 specialTextLabel.sizeToFit()
-                specialTextLabel.frame = CGRect(x: 0, y: 60, width: 100, height: 20)
-                container.addSubview(specialTextLabel)
+                specialTextLabel.frame = CGRect(x: 0, y: 20, width: 80, height: 30)
+//                container.addSubview(specialTextLabel)
                 //container.frame.size = CGSize(width: 100, height: 60)
 //            }
             
