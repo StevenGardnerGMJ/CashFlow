@@ -18,14 +18,14 @@ class CFchartVC: UIViewController,PieChartDelegate {
         super.viewDidLoad()
         
         if valueN.count != 4 {
-            valueN = [1,2,3,4] // 数据不全指定默认值
+            valueN = [1,2,3,4] // 数据不全时指定默认值
         }
-        
+        let charw_h = 250 //pie饼状图宽度和高度
         self.view.backgroundColor = .white
-        chartView.frame = CGRect(x: 0, y: 0, width: 300 , height: 300)//self.view.frame.width
+        chartView.frame = CGRect(x: 0, y: 0, width: charw_h , height: charw_h)
         chartView.center = self.view.center
         chartView.innerRadius = 0
-        chartView.outerRadius = 130
+        chartView.outerRadius = 108.1
         chartView.selectedOffset = 30
         chartView.layers = [createCustomViewsLayer(), createTextLayer()]
         chartView.delegate = self
@@ -34,14 +34,12 @@ class CFchartVC: UIViewController,PieChartDelegate {
         
         chartView.translatesAutoresizingMaskIntoConstraints = false
         var views: [String: AnyObject] = [:]
-            views = ["superview":self.view, "chartview":chartView]
-        let consH = NSLayoutConstraint.constraints(withVisualFormat: "H:[superview]-(0)-[chartview(==300)]", options: .alignAllCenterY , metrics: nil, views: views)
-        let consV = NSLayoutConstraint.constraints(withVisualFormat: "V:[superview]-(0)-[chartview(==300)]", options: .alignAllCenterX, metrics: nil, views: views)
+        views = ["superview":self.view, "chartview":chartView]
+        let consH = NSLayoutConstraint.constraints(withVisualFormat: "H:[superview]-(0)-[chartview(==\(charw_h))]", options: .alignAllCenterY , metrics: nil, views: views)
+        let consV = NSLayoutConstraint.constraints(withVisualFormat: "V:[superview]-(0)-[chartview(==\(charw_h))]", options: .alignAllCenterX, metrics: nil, views: views)
         self.view.addConstraints(consH)
         self.view.addConstraints(consV)
-        
-        let height = NSLayoutConstraint(item: chartView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 300)
-        chartView.addConstraint(height) //[superView]-1@1-
+    
         
     }
     // A 雷达  B饼状  C 饼状
@@ -107,57 +105,24 @@ class CFchartVC: UIViewController,PieChartDelegate {
         return {slice, center in
             
             let container = UIView() // 载体
-            container.frame.size = CGSize(width: 80, height: 60)
-//            container.frame.size = CGSize(width: 100, height: 60)
+            container.frame.size = CGSize(width: 40, height: 40)
+//            container.frame.size = CGSize(width: 200, height: 60)
             container.center = center
-            
-            
-//            container.translatesAutoresizingMaskIntoConstraints = false
-//            var views: [String: AnyObject] = [:]
-//            views = ["superv":self.view, "container":container]
-//            let consH = NSLayoutConstraint.constraints(withVisualFormat: "H:[superv]-(=30)-[container(==100)]", options: .alignAllCenterY , metrics: nil, views: views)
-//            let consV = NSLayoutConstraint.constraints(withVisualFormat: "V:[superv]-(<=1)-[container(==40)]", options: .alignAllCenterX, metrics: nil, views: views)
-//            container.addConstraints(consH)
-//            container.addConstraints(consV)
-            
-            
-            
-            
-            
+        
             
             let imgv = UIImageView() // 图
-            imgv.frame = CGRect(x: 10, y: 10, width: 40, height: 40)
+            imgv.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
             container.addSubview(imgv)
             
-            
-            
-//            imgv.translatesAutoresizingMaskIntoConstraints = false
-//
-//            views = ["container":container, "imgv":imgv]
-//            let consHi = NSLayoutConstraint.constraints(withVisualFormat: "H:[container]-(=30)-[imgv(==40)]", options: .alignAllCenterY , metrics: nil, views: views)
-//            let consVi = NSLayoutConstraint.constraints(withVisualFormat: "V:[container]-(<=1)-[imgv(==40)]", options: .alignAllCenterX, metrics: nil, views: views)
-//            container.addConstraints(consHi)
-//            container.addConstraints(consVi)
-            
-            
-            
-            
-            
+
+        
 //            if slice.data.id == 3 || slice.data.id == 0 { //特殊处理3,0号数据
-                let specialTextLabel = UILabel() // 文字
-                specialTextLabel.textAlignment = .center
-//                if slice.data.id == 0 {
-//                    specialTextLabel.text = "小孩"
-////                  specialTextLabel.font = UIFont.boldSystemFont(ofSize: 18)
-//                } else if slice.data.id == 1 {
-//                    specialTextLabel.textColor = UIColor.black
-//                    specialTextLabel.text = "工资"
-//                }
-                specialTextLabel.sizeToFit()
-                specialTextLabel.frame = CGRect(x: 0, y: 20, width: 80, height: 30)
-//                container.addSubview(specialTextLabel)
-                //container.frame.size = CGSize(width: 100, height: 60)
-//            }
+            let specialTextLabel = UILabel() // 文字
+            specialTextLabel.frame = CGRect(x: -20, y: 30, width: 80, height: 30)
+            
+            specialTextLabel.textAlignment = .justified
+//                specialTextLabel.sizeToFit()
+            container.addSubview(specialTextLabel)
             
             
             // src of images: www.freepik.com, http://www.flaticon.com/authors/madebyoliver
@@ -167,18 +132,40 @@ class CFchartVC: UIViewController,PieChartDelegate {
                 case 1: return "工资"
                 case 2: return "持有现金"
                 case 3: return "月收现金"
-                //case 4: return "chicken"
-                //case 5: return "beet"
-                //case 6: return "cheese"
                 default: return nil
                 }
             }()
             
             imgv.image = imageName.flatMap{UIImage(named: $0)}
             specialTextLabel.text = imageName.flatMap{ $0 }
+            let textstring = imageName.flatMap{ $0 }
+            let textFont = UIFont.systemFont(ofSize: 14)
+            let textMaxSize = CGSize(width: 100, height: CGFloat(MAXFLOAT))
+            let textLabelSize = self.textSize(text: textstring ?? "00", font: textFont, maxSize: textMaxSize)
+            print(textLabelSize)
+            
+            
+            
+            
             return container
         }
     }
     
+    func textSize(text : String , font : UIFont , maxSize : CGSize) -> CGSize{
+        return text.boundingRect(with: maxSize, options: [.usesLineFragmentOrigin], attributes: [NSAttributedStringKey.font : font], context: nil).size
+    }
+  
+    
     
 }
+
+
+
+
+//                if slice.data.id == 0 {
+//                    specialTextLabel.text = "小孩"
+////                  specialTextLabel.font = UIFont.boldSystemFont(ofSize: 18)
+//                } else if slice.data.id == 1 {
+//                    specialTextLabel.textColor = UIColor.black
+//                    specialTextLabel.text = "工资"
+//                }
