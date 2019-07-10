@@ -12,13 +12,15 @@ import PieCharts
 class CFchartVC: UIViewController,PieChartDelegate {
     var chartView = PieChart() //饼状统计数据
     let titleN = Array<String>()
-    var valueN:Array<Double>!
+    var valueN:Array<Double>! // A界面传入的数据
+    let valueZero = [0.0, 0.0, 0.0, 0.0]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if valueN.count != 4 {
-            valueN = [1,2,3,4] // 数据不全时指定默认值
+        if valueN.count != 4 || valueN == valueZero {
+            valueN = [1,1,2,1] // 数据不全时指定默认值
+            self.navigationController?.popViewController(animated: true)
         }
         let charw_h = 250 //pie饼状图宽度和高度
         self.view.backgroundColor = .white
