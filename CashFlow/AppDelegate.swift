@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let warning = "GAD 找不到start方法了？？ 怎么解决？"
 //        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
-
         return true
     }
 
