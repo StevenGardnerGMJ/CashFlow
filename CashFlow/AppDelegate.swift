@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navControler = UINavigationController.init(rootViewController: tabbarVC)
         window?.rootViewController = navControler
         
+        let warning = "GAD 找不到start方法了？？ 怎么解决？"
 //        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
 

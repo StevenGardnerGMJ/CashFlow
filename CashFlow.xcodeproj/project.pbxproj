@@ -501,7 +501,6 @@
 				DEVELOPMENT_TEAM = 38355BY3GF;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/CashFlow/AdMob",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = CashFlow/Info.plist;
@@ -527,7 +526,6 @@
 				DEVELOPMENT_TEAM = 38355BY3GF;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/CashFlow/AdMob",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = CashFlow/Info.plist;
