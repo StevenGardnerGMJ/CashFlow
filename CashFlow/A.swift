@@ -142,14 +142,14 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     // Google广告
     @objc func showStatistics() {
         
-//        if interstitial.isReady {
-//            interstitial.present(fromRootViewController: self)
-//        } else {
+        if interstitial.isReady {
+            interstitial.present(fromRootViewController: self)
+        } else {
             print("Ad wasn't ready")
             let chartVC = CFchartVC()
             chartVC.valueN =  Array(arrAnumber[1...4])
             self.navigationController?.pushViewController(chartVC, animated: true)
-//        }
+        }
     }
     
     

@@ -37,10 +37,10 @@ class CFchartVC: UIViewController,PieChartDelegate {
         chartView.translatesAutoresizingMaskIntoConstraints = false
         var views: [String: AnyObject] = [:]
         views = ["superview":self.view, "chartview":chartView]
-        let consH = NSLayoutConstraint.constraints(withVisualFormat: "H:[superview]-(0)-[chartview(==\(charw_h))]", options: .alignAllCenterY , metrics: nil, views: views)
-        let consV = NSLayoutConstraint.constraints(withVisualFormat: "V:[superview]-(0)-[chartview(==\(charw_h))]", options: .alignAllCenterX, metrics: nil, views: views)
+        let consH = NSLayoutConstraint.constraints(withVisualFormat: "H:[superview]-[chartview(==\(charw_h))]", options: .alignAllCenterY , metrics: nil, views: views)
+        let consV = NSLayoutConstraint.constraints(withVisualFormat: "V:[superview]-[chartview(==\(charw_h))]", options: .alignAllCenterX, metrics: nil, views: views)
         self.view.addConstraints(consH)
-        self.view.addConstraints(consV)
+        self.view.addConstraints(consV) // H:[superview]-[chartview(==\(charw_h))
     
         
     }

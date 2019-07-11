@@ -24,8 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navControler = UINavigationController.init(rootViewController: tabbarVC)
         window?.rootViewController = navControler
         
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
+//        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
+
         return true
     }
 

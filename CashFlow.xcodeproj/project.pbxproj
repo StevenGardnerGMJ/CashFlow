@@ -7,12 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02F7C6511CA4FE9960B3CEE5 /* Pods_CashFlow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F00FFDCBE2C2416A0F40135B /* Pods_CashFlow.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		280CCF3F22957FD2000039E0 /* TKRadarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280CCF3E22957FD2000039E0 /* TKRadarChart.swift */; };
 		28CFEEA42296DC40001A3961 /* CFRadarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CFEEA32296DC40001A3961 /* CFRadarVC.swift */; };
-		28FE67E5228ECE6D002FF3EA /* GoogleAppMeasurement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FE67E1228ECE68002FF3EA /* GoogleAppMeasurement.framework */; };
-		28FE67E6228ECE6D002FF3EA /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FE67E2228ECE68002FF3EA /* GoogleUtilities.framework */; };
-		28FE67E7228ECE6D002FF3EA /* GoogleMobileAds.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FE67E3228ECE6C002FF3EA /* GoogleMobileAds.framework */; };
-		28FE67E8228ECE6D002FF3EA /* nanopb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FE67E4228ECE6D002FF3EA /* nanopb.framework */; };
 		631E9E4F21F7028900E3B47C /* CFtabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E9E4E21F7028900E3B47C /* CFtabBarViewController.swift */; };
 		634CC07A2248598E0026B295 /* C1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634CC0792248598E0026B295 /* C1.swift */; };
 		6355076E2201A95B00437CDB /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6355076D2201A95B00437CDB /* Global.swift */; };
@@ -45,10 +42,6 @@
 /* Begin PBXFileReference section */
 		280CCF3E22957FD2000039E0 /* TKRadarChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKRadarChart.swift; sourceTree = "<group>"; };
 		28CFEEA32296DC40001A3961 /* CFRadarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFRadarVC.swift; sourceTree = "<group>"; };
-		28FE67E1228ECE68002FF3EA /* GoogleAppMeasurement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleAppMeasurement.framework; sourceTree = "<group>"; };
-		28FE67E2228ECE68002FF3EA /* GoogleUtilities.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleUtilities.framework; sourceTree = "<group>"; };
-		28FE67E3228ECE6C002FF3EA /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleMobileAds.framework; sourceTree = "<group>"; };
-		28FE67E4228ECE6D002FF3EA /* nanopb.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = nanopb.framework; sourceTree = "<group>"; };
 		631E9E4E21F7028900E3B47C /* CFtabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFtabBarViewController.swift; sourceTree = "<group>"; };
 		634CC0792248598E0026B295 /* C1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C1.swift; sourceTree = "<group>"; };
 		6355076D2201A95B00437CDB /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
@@ -80,6 +73,9 @@
 		63C3F51F229BEC7D0096E5FA /* BasicBarEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicBarEntry.swift; sourceTree = "<group>"; };
 		63C3F523229BECB70096E5FA /* CFBarChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFBarChartVC.swift; sourceTree = "<group>"; };
 		63F0FD232294F24E0007AB10 /* PieCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PieCharts.framework; path = Carthage/Build/iOS/PieCharts.framework; sourceTree = "<group>"; };
+		9464A6B5402BC5533B2CF85D /* Pods-CashFlow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CashFlow.debug.xcconfig"; path = "Target Support Files/Pods-CashFlow/Pods-CashFlow.debug.xcconfig"; sourceTree = "<group>"; };
+		BBC8AD1D42A66C5376CC6D9A /* Pods-CashFlow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CashFlow.release.xcconfig"; path = "Target Support Files/Pods-CashFlow/Pods-CashFlow.release.xcconfig"; sourceTree = "<group>"; };
+		F00FFDCBE2C2416A0F40135B /* Pods_CashFlow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CashFlow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,27 +84,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				63F0FD242294F24E0007AB10 /* PieCharts.framework in Frameworks */,
-				28FE67E7228ECE6D002FF3EA /* GoogleMobileAds.framework in Frameworks */,
-				28FE67E6228ECE6D002FF3EA /* GoogleUtilities.framework in Frameworks */,
-				28FE67E8228ECE6D002FF3EA /* nanopb.framework in Frameworks */,
-				28FE67E5228ECE6D002FF3EA /* GoogleAppMeasurement.framework in Frameworks */,
+				02F7C6511CA4FE9960B3CEE5 /* Pods_CashFlow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		28FE67E0228ECE2A002FF3EA /* AdMob */ = {
-			isa = PBXGroup;
-			children = (
-				28FE67E1228ECE68002FF3EA /* GoogleAppMeasurement.framework */,
-				28FE67E3228ECE6C002FF3EA /* GoogleMobileAds.framework */,
-				28FE67E2228ECE68002FF3EA /* GoogleUtilities.framework */,
-				28FE67E4228ECE6D002FF3EA /* nanopb.framework */,
-			);
-			path = AdMob;
-			sourceTree = "<group>";
-		};
 		6363EF5522963882006C0A9C /* Chart */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +107,7 @@
 				6389D2AF21E882E80026818D /* CashFlow */,
 				6389D2AE21E882E80026818D /* Products */,
 				63F0FD222294F24D0007AB10 /* Frameworks */,
+				B286857C5EFC81DF66A033BE /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -140,7 +123,6 @@
 			isa = PBXGroup;
 			children = (
 				6363EF5522963882006C0A9C /* Chart */,
-				28FE67E0228ECE2A002FF3EA /* AdMob */,
 				6389D2B021E882E80026818D /* AppDelegate.swift */,
 				635EE0BF22363DF2001F00E8 /* CashFlowModel.xcdatamodeld */,
 				631E9E4E21F7028900E3B47C /* CFtabBarViewController.swift */,
@@ -207,8 +189,18 @@
 			isa = PBXGroup;
 			children = (
 				63F0FD232294F24E0007AB10 /* PieCharts.framework */,
+				F00FFDCBE2C2416A0F40135B /* Pods_CashFlow.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B286857C5EFC81DF66A033BE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9464A6B5402BC5533B2CF85D /* Pods-CashFlow.debug.xcconfig */,
+				BBC8AD1D42A66C5376CC6D9A /* Pods-CashFlow.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -218,6 +210,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6389D2BF21E882F10026818D /* Build configuration list for PBXNativeTarget "CashFlow" */;
 			buildPhases = (
+				CC90B24EEA2B997CA5F74EFD /* [CP] Check Pods Manifest.lock */,
 				6389D2A921E882E80026818D /* Sources */,
 				6389D2AA21E882E80026818D /* Frameworks */,
 				6389D2AB21E882E80026818D /* Resources */,
@@ -297,6 +290,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/Carthage copy-frameworks\n";
+		};
+		CC90B24EEA2B997CA5F74EFD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CashFlow-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -412,6 +427,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "$(inherited)";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -467,6 +483,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -477,6 +494,7 @@
 		};
 		6389D2C021E882F10026818D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9464A6B5402BC5533B2CF85D /* Pods-CashFlow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -491,7 +509,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
+				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = gemaojing.CashFlow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -501,6 +520,7 @@
 		};
 		6389D2C121E882F10026818D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BBC8AD1D42A66C5376CC6D9A /* Pods-CashFlow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -515,7 +535,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = "$(inherited)";
+				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = gemaojing.CashFlow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
