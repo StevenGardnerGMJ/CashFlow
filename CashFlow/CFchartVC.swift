@@ -18,6 +18,12 @@ class CFchartVC: UIViewController,PieChartDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let rightButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        rightButton.setTitle("横屏", for: .normal)
+        let rightBarButtonItem = UIBarButtonItem(title: "rightButton", style: .plain, target: self, action: #selector(self.rightClick))
+        self.navigationItem.rightBarButtonItem =  rightBarButtonItem
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButton)
+        
         if valueN.count != 4 || valueN == valueZero {
             valueN = [1,1,2,1] // 数据不全时指定默认值
             self.navigationController?.popViewController(animated: true)
@@ -44,6 +50,11 @@ class CFchartVC: UIViewController,PieChartDelegate {
     
         
     }
+    
+    @objc func rightClick() {
+        print("横竖屏幕")
+    }
+    
     // A 雷达  B饼状  C 饼状
     
     // pie chart// MARK: - PieChartDelegate
