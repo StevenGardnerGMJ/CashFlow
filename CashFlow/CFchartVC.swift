@@ -22,15 +22,19 @@ class CFchartVC: UIViewController,PieChartDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+         //该页面显示时可以横竖屏切换
          appDelegate.blockRotation = true
         
 //        let rightButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
 //        rightButton.setTitle("横屏", for: .normal)
 //        rightButton.setTitleColor(.blue, for: .normal)
-        let rightBarButtonItem = UIBarButtonItem(title: "横屏", style: .plain, target: self, action: #selector(self.rightClick))
-        self.navigationItem.rightBarButtonItem =  rightBarButtonItem
+//        let rightBarButtonItem = UIBarButtonItem(title: "横屏", style: .plain, target: self, action: #selector(self.rightClick))
+//        self.navigationItem.rightBarButtonItem =  rightBarButtonItem
 //        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButton)
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "横屏"), style: .plain, target: self, action: #selector(rightClick(btn:)))
+    
+
         if valueN.count != 4 || valueN == valueZero {
             valueN = [1,1,2,1] // 数据不全时指定默认值
             self.navigationController?.popViewController(animated: true)
@@ -60,43 +64,31 @@ class CFchartVC: UIViewController,PieChartDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        //该页面显示时禁止横竖屏切换
         appDelegate.blockRotation = false
         
         //判断退出时是否是横屏
         if UIApplication.shared.statusBarOrientation.isLandscape {
             //是横屏让变回竖屏
-            setNewOrientation(fullScreen: false)
+            appDelegate.setNewOrientation(fullScreen: false)
         }
         
     }
     
-    //横竖屏
-    func setNewOrientation(fullScreen: Bool) {
-        if fullScreen { //横屏
-            let resetOrientationTargert = NSNumber(integerLiteral: UIInterfaceOrientation.unknown.rawValue)
-            UIDevice.current.setValue(resetOrientationTargert, forKey: "orientation")
-            
-            let orientationTarget = NSNumber(integerLiteral: UIInterfaceOrientation.landscapeLeft.rawValue)
-            UIDevice.current.setValue(orientationTarget, forKey: "orientation")
-            
-        }else { //竖屏
-            let resetOrientationTargert = NSNumber(integerLiteral: UIInterfaceOrientation.unknown.rawValue)
-            UIDevice.current.setValue(resetOrientationTargert, forKey: "orientation")
-            
-            let orientationTarget = NSNumber(integerLiteral: UIInterfaceOrientation.portrait.rawValue)
-            UIDevice.current.setValue(orientationTarget, forKey: "orientation")
-        }
-    }
+   
     
-    @objc func rightClick() {
+    @objc func rightClick(btn:UIBarButtonItem) {
         print("横竖屏幕")
+//        if btn.isEnabled {
+            self.appDelegate.setNewOrientation(fullScreen: true)
+//        navigationItem.rightBarButtonItem?.setBackButtonBackgroundImage(UIImage(named: "横屏"), for: .normal, barMetrics: .default)
+//        } else {
+//            self.appDelegate.setNewOrientation(fullScreen: false)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "退出横屏"), style: .plain, target: self, action: #selector(rightClick(btn:)))
+//        }
         
-            appDelegate.blockRotation = true
-            DeviceTool.interfaceOrientation(.landscapeLeft)
-            http://www.hangge.com/blog/cache/detail_2174.html
        
-        
-    
     }
     
     // A 雷达  B饼状  C 饼状

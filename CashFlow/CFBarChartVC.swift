@@ -24,9 +24,15 @@ class CFBarChartVC: UIViewController {
     var liabilities = Array<String>()
     var liabilValue = Array<Double>()
     
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        appDelegate.blockRotation = true // 可以横竖屏
         self.view.backgroundColor = UIColor.white
+        
+        let rightBarButtonItem = UIBarButtonItem(title: "横屏", style: .plain, target: self, action: #selector(orientationClick))
+        self.navigationItem.rightBarButtonItem =  rightBarButtonItem
         
         // 柱状图统计
         basicBarChart.backgroundColor = UIColor.white
@@ -42,6 +48,10 @@ class CFBarChartVC: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[basicChart]-|", options: [], metrics: nil, views: ["basicChart":basicBarChart]))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[barChart]-|", options: [], metrics: nil, views: ["barChart":barChart]))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[basicChart]-10-[barChart(==basicChart)]-|", options: [], metrics: nil, views: views))
+        
+        basicBarChart.isUserInteractionEnabled = true
+        let tapGes = UITapGestureRecognizer(target: self,action:#selector(orientationClick))
+        basicBarChart.addGestureRecognizer(tapGes)
         
     }
     
@@ -63,7 +73,20 @@ class CFBarChartVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         self.timer.invalidate() // 界面返回后停止动画效果
+        //该页面显示时禁止横竖屏切换
+        appDelegate.blockRotation = false
+        //判断退出时是否是横屏
+        if UIApplication.shared.statusBarOrientation.isLandscape {
+            //是横屏让变回竖屏
+            appDelegate.setNewOrientation(fullScreen: false)
+        }
     }
+    
+    @objc func orientationClick(tapGes:UITapGestureRecognizer) {
+        self.appDelegate.setNewOrientation(fullScreen: true)
+    }
+    
+    
     // 空数据初始化
     func generateEmptyDataEntries() -> [DataEntry] {
         var result: [DataEntry] = []

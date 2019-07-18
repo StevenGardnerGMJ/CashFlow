@@ -37,6 +37,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return .portrait
         
     }
+    //横竖屏
+    func setNewOrientation(fullScreen: Bool) {
+        if fullScreen {
+            //横屏
+            let resetOrientationTargert = NSNumber(integerLiteral: UIInterfaceOrientation.unknown.rawValue)
+            UIDevice.current.setValue(resetOrientationTargert, forKey: "orientation")
+            
+            let orientationTarget = NSNumber(integerLiteral: UIInterfaceOrientation.landscapeRight.rawValue)
+            UIDevice.current.setValue(orientationTarget, forKey: "orientation")
+            
+        }else {
+            //竖屏
+            let resetOrientationTargert = NSNumber(integerLiteral: UIInterfaceOrientation.unknown.rawValue)
+            UIDevice.current.setValue(resetOrientationTargert, forKey: "orientation")
+            
+            let orientationTarget = NSNumber(integerLiteral: UIInterfaceOrientation.portrait.rawValue)
+            UIDevice.current.setValue(orientationTarget, forKey: "orientation")
+        }
+    }
     
 
     func applicationWillResignActive(_ application: UIApplication) {
