@@ -24,15 +24,17 @@ class CFBarChartVC: UIViewController {
     var liabilities = Array<String>()
     var liabilValue = Array<Double>()
     
+    // 横竖屏协议
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    var isFullScreen = false // 是否横屏
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        appDelegate.blockRotation = true // 可以横竖屏
         self.view.backgroundColor = UIColor.white
         
-        let rightBarButtonItem = UIBarButtonItem(title: "横屏", style: .plain, target: self, action: #selector(orientationClick))
-        self.navigationItem.rightBarButtonItem =  rightBarButtonItem
+        appDelegate.blockRotation = true // 可以横竖屏
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "横屏"), style: .plain, target: self, action: #selector(orientationClick))
         
         // 柱状图统计
         basicBarChart.backgroundColor = UIColor.white
@@ -83,7 +85,16 @@ class CFBarChartVC: UIViewController {
     }
     
     @objc func orientationClick(tapGes:UITapGestureRecognizer) {
-        self.appDelegate.setNewOrientation(fullScreen: true)
+        print("横竖屏幕")
+        if isFullScreen == false {
+            self.appDelegate.setNewOrientation(fullScreen: true)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "退出横屏"), style: .plain, target: self, action: #selector(orientationClick))
+            isFullScreen = true
+        } else {
+            self.appDelegate.setNewOrientation(fullScreen: false)
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "横屏"), style: .plain, target: self, action: #selector(orientationClick))
+            isFullScreen = false
+        }
     }
     
     

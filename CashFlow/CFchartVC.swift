@@ -16,7 +16,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
     let valueZero = [0.0, 0.0, 0.0, 0.0]
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
+    var isFullScreen = false
     
     
     override func viewDidLoad() {
@@ -25,14 +25,8 @@ class CFchartVC: UIViewController,PieChartDelegate {
          //该页面显示时可以横竖屏切换
          appDelegate.blockRotation = true
         
-//        let rightButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-//        rightButton.setTitle("横屏", for: .normal)
-//        rightButton.setTitleColor(.blue, for: .normal)
-//        let rightBarButtonItem = UIBarButtonItem(title: "横屏", style: .plain, target: self, action: #selector(self.rightClick))
-//        self.navigationItem.rightBarButtonItem =  rightBarButtonItem
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: rightButton)
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "横屏"), style: .plain, target: self, action: #selector(rightClick(btn:)))
+        
     
 
         if valueN.count != 4 || valueN == valueZero {
@@ -77,18 +71,18 @@ class CFchartVC: UIViewController,PieChartDelegate {
     }
     
    
-    
+    // 横竖屏幕切换
     @objc func rightClick(btn:UIBarButtonItem) {
         print("横竖屏幕")
-//        if btn.isEnabled {
-            self.appDelegate.setNewOrientation(fullScreen: true)
-//        navigationItem.rightBarButtonItem?.setBackButtonBackgroundImage(UIImage(named: "横屏"), for: .normal, barMetrics: .default)
-//        } else {
-//            self.appDelegate.setNewOrientation(fullScreen: false)
+        if isFullScreen == false {
+        self.appDelegate.setNewOrientation(fullScreen: true)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "退出横屏"), style: .plain, target: self, action: #selector(rightClick(btn:)))
-//        }
-        
-       
+        isFullScreen = true
+        } else {
+        self.appDelegate.setNewOrientation(fullScreen: false)
+         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "横屏"), style: .plain, target: self, action: #selector(rightClick(btn:)))
+         isFullScreen = false
+        }
     }
     
     // A 雷达  B饼状  C 饼状
@@ -171,7 +165,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
             
             specialTextLabel.textAlignment = .justified
 //                specialTextLabel.sizeToFit()
-            container.addSubview(specialTextLabel)
+//            container.addSubview(specialTextLabel)
             
             
             // src of images: www.freepik.com, http://www.flaticon.com/authors/madebyoliver
