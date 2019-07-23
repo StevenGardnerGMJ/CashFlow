@@ -16,7 +16,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     let enteryName    = "Amodel"
     // 主动收入，被动收入 ， 资产，  负债，  健康， 支出
     let arrA = ["职业","小孩","工资","持有现金","月收现金","自由进度"]
-    let personArr = ["职业","E-mail","生活目标","常驻地","电话","昵称"]// headerViewBtn个人信息
+    let personArr = ["职业","昵称","生活目标","常驻地","电话","E-mail"]// headerViewBtn个人信息
     var arrAnumber = Array<Double>() // 数值
     var arrMyInfo  = Array<String>()// 个人信息
     
@@ -37,11 +37,12 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // AdMob 2 //青蛙广告页A ca-app-pub-9319054953457119/9902763490
+        // AdMob 2 //青蛙广告页A ca-app-pub-9319054953457119/9902763490 正式
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
         interstitial.delegate = self // Admob
         let request = GADRequest()
         interstitial.load(request)
+        
         
         if arrAnumber.count != arrA.count {
             for _ in arrA {
@@ -78,10 +79,10 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerRUID") as! headerAView
         header.imagV.image = UIImage(named: "现金流headerV")
         // 昵称 --- 邮箱 ---
-        if arrMyInfo[5] != "" {
-            header.titleLab.text = arrMyInfo[5]
-        } else if arrMyInfo[1] != "" {
+        if arrMyInfo[1] != "" {
             header.titleLab.text = arrMyInfo[1]
+        } else if arrMyInfo[5] != "" {
+            header.titleLab.text = arrMyInfo[5]
         } else {
             header.titleLab.text = "苹果公司未来CEO"
         }
