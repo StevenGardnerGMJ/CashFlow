@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import GoogleMobileAds
 
-class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstitialDelegate {
+class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     let attributeName = ["status","value","myinfo"]
     let enteryName    = "Amodel"
@@ -38,10 +38,10 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     override func viewDidLoad() {
         super.viewDidLoad()
         // AdMob 2 //青蛙广告页A ca-app-pub-9319054953457119/9902763490 正式
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-        interstitial.delegate = self // Admob
-        let request = GADRequest()
-        interstitial.load(request)
+//        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+//        let request = GADRequest()
+//        interstitial.load(request)
+//        interstitial.delegate = self // Admob
         
         
         if arrAnumber.count != arrA.count {
@@ -61,7 +61,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
         
         tableVC.register(headerAView.self, forHeaderFooterViewReuseIdentifier: "headerRUID")
         tableVC.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-
+        // 通知保存数据
         NotificationCenter.default.addObserver(self, selector: #selector(notication), name: NSNotification.Name(rawValue:"isTest"), object: nil)
     }
    
@@ -221,7 +221,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     }
     
     @objc func  notication() {
-        print("=== NotificationCenter_A0---------")
+        print("=== A0 保存数据 ======-")
         saveAdata()
     }
     
@@ -275,12 +275,12 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     /// MARK: --- AdMob GADInterstitialDelegate 监听 ----------
     
     // AdMob
-    func createAndLoadInterstitial() -> GADInterstitial {
-        let interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-        interstitial.delegate = self
-        interstitial.load(GADRequest())
-        return interstitial
-    }
+//    func createAndLoadInterstitial() -> GADInterstitial {
+//        let interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+//        interstitial.delegate = self
+//        interstitial.load(GADRequest())
+//        return interstitial
+//    }
     
     
     /// Tells the delegate an ad request succeeded.
