@@ -321,10 +321,11 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
 class headerAView: UITableViewHeaderFooterView {
     
-    let imagV = UIImageView()
-    let titleLab  = UILabel()
-    let stateBtn  = UIButton()
-    let statisticsBtn = UIButton()
+    let imagV = UIImageView() // 背景图
+    let titleLab  = UILabel() // 名称
+    let stateBtn  = UIButton() // 个人信息 邮箱昵称。。。
+    let statisticsBtn = UIButton()// 统计按钮
+    let adBtn = UIButton() // 广告
     
     
 //    var myString = "I AM KIRIT MODI"
@@ -337,17 +338,19 @@ class headerAView: UITableViewHeaderFooterView {
         contentView.addSubview(titleLab)
         contentView.addSubview(stateBtn)
         contentView.addSubview(statisticsBtn)
+        contentView.addSubview(adBtn)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         imagV.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: self.contentView.frame.height)
         statisticsBtn.frame = CGRect(x: self.contentView.frame.width - 50, y: 10, width: 40, height: 30)
+        adBtn.frame = CGRect(x: 10, y: 5, width: 40, height: 40)
         titleLab.frame = CGRect(x: 20, y: 0.75*imagV.frame.size.height, width: self.frame.width, height: 40)
         titleLab.textAlignment = .center
         titleLab.font = UIFont.systemFont(ofSize: 24)
         
-//        myMutableString = NSMutableAttributedString(string: titleLab.text ?? "CEOOOOOOO", attributes: [NSAttributedStringKey.font:UIFont(name: "Georgia", size: 18.0)!])
+// 彩色文字       myMutableString = NSMutableAttributedString(string: titleLab.text ?? "CEOOOOOOO", attributes: [NSAttributedStringKey.font:UIFont(name: "Georgia", size: 18.0)!])
 //        myMutableString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.red, range: NSRange(location:2,length:4))
 //        titleLab.attributedText = myMutableString
 
@@ -355,6 +358,8 @@ class headerAView: UITableViewHeaderFooterView {
         stateBtn.backgroundColor = UIColor.clear
         statisticsBtn.backgroundColor = UIColor.clear
         statisticsBtn.setImage(UIImage(named: "统计"), for: .normal)
+        adBtn.backgroundColor = UIColor.clear
+        adBtn.setImage(UIImage(named: "广告"), for: .normal)
     }
     
     required init?(coder aDecoder: NSCoder) {
