@@ -25,6 +25,7 @@
 		6389D2C621F086FA0026818D /* B.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389D2C521F086FA0026818D /* B.swift */; };
 		6389D2C821F087080026818D /* C.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6389D2C721F087080026818D /* C.swift */; };
 		63946BF42292B0ED001FFB23 /* CFchartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63946BF32292B0ED001FFB23 /* CFchartVC.swift */; };
+		6399A67022FAD799004F90C5 /* ADVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6399A66F22FAD799004F90C5 /* ADVC.swift */; };
 		63C3F511229BEC270096E5FA /* DataEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C3F50D229BEC270096E5FA /* DataEntry.swift */; };
 		63C3F512229BEC270096E5FA /* UIBezierPathExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C3F50E229BEC270096E5FA /* UIBezierPathExtension.swift */; };
 		63C3F513229BEC270096E5FA /* CustomSegments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C3F50F229BEC270096E5FA /* CustomSegments.swift */; };
@@ -61,6 +62,7 @@
 		6389D2C521F086FA0026818D /* B.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = B.swift; sourceTree = "<group>"; };
 		6389D2C721F087080026818D /* C.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C.swift; sourceTree = "<group>"; };
 		63946BF32292B0ED001FFB23 /* CFchartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFchartVC.swift; sourceTree = "<group>"; };
+		6399A66F22FAD799004F90C5 /* ADVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADVC.swift; sourceTree = "<group>"; };
 		63C3F50D229BEC270096E5FA /* DataEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataEntry.swift; sourceTree = "<group>"; };
 		63C3F50E229BEC270096E5FA /* UIBezierPathExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIBezierPathExtension.swift; sourceTree = "<group>"; };
 		63C3F50F229BEC270096E5FA /* CustomSegments.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegments.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				28CFEEA32296DC40001A3961 /* CFRadarVC.swift */,
 				6363EF5A2297DC2D006C0A9C /* CFLineChartVC.swift */,
 				63C3F523229BECB70096E5FA /* CFBarChartVC.swift */,
+				6399A66F22FAD799004F90C5 /* ADVC.swift */,
 				6389D2B421E882E80026818D /* Main.storyboard */,
 				6389D2B221E882E80026818D /* ViewController.swift */,
 				6389D2B721E882F10026818D /* Assets.xcassets */,
@@ -335,6 +338,7 @@
 				6389D2C821F087080026818D /* C.swift in Sources */,
 				63C3F51B229BEC720096E5FA /* BeautifulBarChartPresenter.swift in Sources */,
 				6389D2B121E882E80026818D /* AppDelegate.swift in Sources */,
+				6399A67022FAD799004F90C5 /* ADVC.swift in Sources */,
 				280CCF3F22957FD2000039E0 /* TKRadarChart.swift in Sources */,
 				63C3F520229BEC7D0096E5FA /* BasicBarChartPresenter.swift in Sources */,
 				63C3F513229BEC270096E5FA /* CustomSegments.swift in Sources */,

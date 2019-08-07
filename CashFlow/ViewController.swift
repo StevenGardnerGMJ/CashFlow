@@ -44,7 +44,18 @@ class ViewController: UIViewController {
  */
 
 
-
+// 禁止 textField 输入多个小数点  执行协议 UITextFieldDelegate
+//func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//    if (string == ".") && textField.text?.replacingOccurrences(of: " ", with: "").count == 0 {
+//        //  首位为空和 "."
+//        textField.text = ""
+//        return false
+//    } else if (string == ".") && (textField.text?.contains("."))! {
+//        return false
+//    } else {
+//        return true
+//    }
+//}
 
 
 

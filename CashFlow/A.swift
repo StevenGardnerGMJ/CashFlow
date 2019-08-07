@@ -38,10 +38,10 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         // AdMob 2 //青蛙广告页A ca-app-pub-9319054953457119/9902763490 正式
-//        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-//        let request = GADRequest()
-//        interstitial.load(request)
-//        interstitial.delegate = self // Admob
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        let request = GADRequest()
+        interstitial.load(request)
+
         
         
         if arrAnumber.count != arrA.count {
@@ -89,6 +89,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         header.stateBtn.addTarget(self, action: #selector(showAlterSheet), for: .touchUpInside)
         header.statisticsBtn.addTarget(self, action: #selector(showStatistics), for: .touchUpInside)
+        header.adBtn.addTarget(self, action: #selector(showAD), for: .touchUpInside)
         return header
         
     }
@@ -138,6 +139,12 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
 //        }
         editRowAction.backgroundColor = UIColor.orange
         return [editRowAction]
+    }
+    
+    @objc func showAD() {
+        print("g广告公告内容")
+        let AD = ADVC()
+        self.navigationController?.pushViewController(AD, animated: true)
     }
     
     // Google广告
@@ -368,18 +375,7 @@ class headerAView: UITableViewHeaderFooterView {
 }
 
 
-// 禁止 textField 输入多个小数点  执行协议 UITextFieldDelegate
-//func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//    if (string == ".") && textField.text?.replacingOccurrences(of: " ", with: "").count == 0 {
-//        //  首位为空和 "."
-//        textField.text = ""
-//        return false
-//    } else if (string == ".") && (textField.text?.contains("."))! {
-//        return false
-//    } else {
-//        return true
-//    }
-//}
+
 
 
 
