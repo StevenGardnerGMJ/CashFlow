@@ -10,13 +10,13 @@ import UIKit
 import CoreData
 import GoogleMobileAds
 
-class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstitialDelegate {
+class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     let attributeName = ["status","value","myinfo"]
     let enteryName    = "Amodel"
     // 主动收入，被动收入 ， 资产，  负债，  健康， 支出
     let arrA = ["职业","小孩","工资","持有现金","月收现金","自由进度"]
-    let personArr = ["职业","E-mail","生活目标","常驻地","电话","昵称"]// headerViewBtn个人信息
+    let personArr = ["职业","昵称","生活目标","常驻地","电话","E-mail"]// headerViewBtn个人信息
     var arrAnumber = Array<Double>() // 数值
     var arrMyInfo  = Array<String>()// 个人信息
     
@@ -37,11 +37,12 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // AdMob 2 //青蛙广告页A ca-app-pub-9319054953457119/9902763490
+        // AdMob 2 //青蛙广告页A ca-app-pub-9319054953457119/9902763490 正式
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-        interstitial.delegate = self // Admob
         let request = GADRequest()
         interstitial.load(request)
+
+        
         
         if arrAnumber.count != arrA.count {
             for _ in arrA {
@@ -60,7 +61,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
         
         tableVC.register(headerAView.self, forHeaderFooterViewReuseIdentifier: "headerRUID")
         tableVC.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-
+        // 通知保存数据
         NotificationCenter.default.addObserver(self, selector: #selector(notication), name: NSNotification.Name(rawValue:"isTest"), object: nil)
     }
    
@@ -78,16 +79,17 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
         let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerRUID") as! headerAView
         header.imagV.image = UIImage(named: "现金流headerV")
         // 昵称 --- 邮箱 ---
-        if arrMyInfo[5] != "" {
-            header.titleLab.text = arrMyInfo[5]
-        } else if arrMyInfo[1] != "" {
+        if arrMyInfo[1] != "" {
             header.titleLab.text = arrMyInfo[1]
+        } else if arrMyInfo[5] != "" {
+            header.titleLab.text = arrMyInfo[5]
         } else {
             header.titleLab.text = "苹果公司未来CEO"
         }
         
         header.stateBtn.addTarget(self, action: #selector(showAlterSheet), for: .touchUpInside)
         header.statisticsBtn.addTarget(self, action: #selector(showStatistics), for: .touchUpInside)
+        header.adBtn.addTarget(self, action: #selector(showAD), for: .touchUpInside)
         return header
         
     }
@@ -137,6 +139,12 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
 //        }
         editRowAction.backgroundColor = UIColor.orange
         return [editRowAction]
+    }
+    
+    @objc func showAD() {
+        print("g广告公告内容")
+        let AD = ADVC()
+        self.navigationController?.pushViewController(AD, animated: true)
     }
     
     // Google广告
@@ -220,7 +228,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     }
     
     @objc func  notication() {
-        print("=== NotificationCenter_A0---------")
+        print("=== A0 保存数据 ======-")
         saveAdata()
     }
     
@@ -274,12 +282,12 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
     /// MARK: --- AdMob GADInterstitialDelegate 监听 ----------
     
     // AdMob
-    func createAndLoadInterstitial() -> GADInterstitial {
-        let interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-        interstitial.delegate = self
-        interstitial.load(GADRequest())
-        return interstitial
-    }
+//    func createAndLoadInterstitial() -> GADInterstitial {
+//        let interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+//        interstitial.delegate = self
+//        interstitial.load(GADRequest())
+//        return interstitial
+//    }
     
     
     /// Tells the delegate an ad request succeeded.
@@ -320,10 +328,11 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource,GADInterstit
 
 class headerAView: UITableViewHeaderFooterView {
     
-    let imagV = UIImageView()
-    let titleLab  = UILabel()
-    let stateBtn  = UIButton()
-    let statisticsBtn = UIButton()
+    let imagV = UIImageView() // 背景图
+    let titleLab  = UILabel() // 名称
+    let stateBtn  = UIButton() // 个人信息 邮箱昵称。。。
+    let statisticsBtn = UIButton()// 统计按钮
+    let adBtn = UIButton() // 广告
     
     
 //    var myString = "I AM KIRIT MODI"
@@ -336,17 +345,19 @@ class headerAView: UITableViewHeaderFooterView {
         contentView.addSubview(titleLab)
         contentView.addSubview(stateBtn)
         contentView.addSubview(statisticsBtn)
+        contentView.addSubview(adBtn)
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         imagV.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: self.contentView.frame.height)
         statisticsBtn.frame = CGRect(x: self.contentView.frame.width - 50, y: 10, width: 40, height: 30)
+        adBtn.frame = CGRect(x: 10, y: 5, width: 40, height: 40)
         titleLab.frame = CGRect(x: 20, y: 0.75*imagV.frame.size.height, width: self.frame.width, height: 40)
         titleLab.textAlignment = .center
         titleLab.font = UIFont.systemFont(ofSize: 24)
         
-//        myMutableString = NSMutableAttributedString(string: titleLab.text ?? "CEOOOOOOO", attributes: [NSAttributedStringKey.font:UIFont(name: "Georgia", size: 18.0)!])
+// 彩色文字       myMutableString = NSMutableAttributedString(string: titleLab.text ?? "CEOOOOOOO", attributes: [NSAttributedStringKey.font:UIFont(name: "Georgia", size: 18.0)!])
 //        myMutableString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.red, range: NSRange(location:2,length:4))
 //        titleLab.attributedText = myMutableString
 
@@ -354,6 +365,8 @@ class headerAView: UITableViewHeaderFooterView {
         stateBtn.backgroundColor = UIColor.clear
         statisticsBtn.backgroundColor = UIColor.clear
         statisticsBtn.setImage(UIImage(named: "统计"), for: .normal)
+        adBtn.backgroundColor = UIColor.clear
+        adBtn.setImage(UIImage(named: "广告"), for: .normal)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -362,18 +375,7 @@ class headerAView: UITableViewHeaderFooterView {
 }
 
 
-// 禁止 textField 输入多个小数点  执行协议 UITextFieldDelegate
-//func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//    if (string == ".") && textField.text?.replacingOccurrences(of: " ", with: "").count == 0 {
-//        //  首位为空和 "."
-//        textField.text = ""
-//        return false
-//    } else if (string == ".") && (textField.text?.contains("."))! {
-//        return false
-//    } else {
-//        return true
-//    }
-//}
+
 
 
 

@@ -133,9 +133,9 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         // AdMob 2  //青蛙广告页A ca-app-pub-9319054953457119/9902763490
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-//        interstitial.delegate = self // Admob
         let request = GADRequest()
         interstitial.load(request)
+        
         
         if incomeArr.count == 0 || expendArr.count == 0 ||  incomeArr.count != income.count {
             for _ in income {

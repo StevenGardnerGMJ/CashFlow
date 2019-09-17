@@ -50,9 +50,9 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         // AdMob 2 //青蛙广告页A ca-app-pub-9319054953457119/9902763490
         interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-//        interstitial.delegate = self // Admob
         let request = GADRequest()
         interstitial.load(request)
+   
         
         
         if assetsValue.count == 0 || liabiValue.count == 0 {

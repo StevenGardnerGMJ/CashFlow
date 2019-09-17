@@ -64,8 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        saveData(name: "=====applicationDidEnterBackground")
-       // 通知 协议 BLock
+        saveData(name: "=====应用程序已进入后台===")
+       // 通知 协议 BLock 保存数据
        NotificationCenter.default.post(name: NSNotification.Name("isTest"), object: self, userInfo: ["post":"NewTest"])
         
         
@@ -80,8 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        saveData(name: "========applicationWillTerminate==========")
-        // 通知 协议 BLock
+        saveData(name: "========应用程序将终止=========")
+        // 通知 协议 BLock 保存数据
         NotificationCenter.default.post(name: NSNotification.Name("isTest"), object: self, userInfo: ["post":"NewTest"])
         
         
