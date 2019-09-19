@@ -9,6 +9,7 @@
 import UIKit
 import PieCharts
 
+// 饼状统计图
 class CFchartVC: UIViewController,PieChartDelegate {
     var chartView = PieChart() //饼状统计数据
     let titleN = Array<String>()

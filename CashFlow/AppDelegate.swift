@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navControler
         
         let warning = "GAD 找不到start方法了？？ 怎么解决？"
-//        GADMobileAds.sharedInstance()
-        
+//      GADMobileAds.sharedInstance()
+//      资产比负债 -> 杜邦分析模型 -> 增长率 -> 收益率
         return true
     }
     /// 横竖屏

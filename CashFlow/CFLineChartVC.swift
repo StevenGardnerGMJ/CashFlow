@@ -9,6 +9,7 @@
 import UIKit
 import QuartzCore
 
+// 这线统计图
 class CFLineChartVC: UIViewController,LineChartDelegate {
 
     var label = UILabel()

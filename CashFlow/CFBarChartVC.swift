@@ -8,10 +8,9 @@
 
 import UIKit
 
+// 柱状统计图 统计界面使用
 class CFBarChartVC: UIViewController {
     
-    // 资产比负债 杜邦分析模型 增长率 收益率
-
     var basicBarChart = BasicBarChart()
     var barChart =  BeautifulBarChart()
     var timer = Timer()
