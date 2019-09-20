@@ -9,7 +9,7 @@
 
 import UIKit
 import GoogleMobileAds
-
+// 收入与支出界面
 class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     let total = ["总收入","总支出"]
@@ -250,6 +250,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 self.tableV.reloadData()
         }
         }
+        tableV.reloadData()
         
     }
     

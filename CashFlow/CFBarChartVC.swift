@@ -39,22 +39,58 @@ class CFBarChartVC: UIViewController {
         basicBarChart.backgroundColor = UIColor.white
         basicBarChart.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(basicBarChart)
-
         
+        // 气泡状统计
         barChart.backgroundColor = UIColor.white
         barChart.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(barChart)
         
+        
+
+        
+        // 适配 --> 半屏显示 上下半屏
         let views = ["basicChart":basicBarChart,"barChart":barChart]
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[basicChart]-|", options: [], metrics: nil, views: ["basicChart":basicBarChart]))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[barChart]-|", options: [], metrics: nil, views: ["barChart":barChart]))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[basicChart]-10-[barChart(==basicChart)]-|", options: [], metrics: nil, views: views))
         
         basicBarChart.isUserInteractionEnabled = true
-        let tapGes = UITapGestureRecognizer(target: self,action:#selector(orientationClick))
+        
+        let tapGes = UITapGestureRecognizer(target: self,action:#selector(viewDidLoad2))
         basicBarChart.addGestureRecognizer(tapGes)
         
+        let tapGesD = UITapGestureRecognizer(target: self, action: #selector(viewDidLoad3))
+        barChart.addGestureRecognizer(tapGesD)
+        
     }
+    
+    @objc func  viewDidLoad2 () {
+        print("viewDidLoad2======")
+        
+        // 视图的先后顺序决定是否能全屏显示
+        view.bringSubview(toFront: basicBarChart)
+        let viewbasic = ["basicChart":basicBarChart]
+        
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[barChart]-|", options: [], metrics: nil, views: ["barChart":barChart]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[basicChart]-|", options: [], metrics: nil, views: ["basicChart":basicBarChart]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[basicChart]-|", options: [], metrics: nil, views: viewbasic))
+        
+        
+    }
+    
+    @objc func  viewDidLoad3 () {
+        print("viewDidLoad3")
+        let viewBar = ["barChart":barChart]
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[basicChart]-|", options: [], metrics: nil, views: ["basicChart":basicBarChart]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[barChart]-|", options: [], metrics: nil, views: ["barChart":barChart]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-[barChart]-|", options: [], metrics: nil, views: viewBar))
+    }
+    
+    
+    
+    
+    
+    
     
     override func viewDidAppear(_ animated: Bool) {
         let dataEntries = generateEmptyDataEntries()

@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 import GoogleMobileAds
-
+// 界面A  现状界面
 class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     let attributeName = ["status","value","myinfo"]

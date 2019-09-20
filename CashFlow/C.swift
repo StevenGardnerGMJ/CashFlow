@@ -8,7 +8,7 @@
 
 import UIKit
 import GoogleMobileAds
-
+// 资产与负债界面
 class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     let mName_C = "Cmodel"

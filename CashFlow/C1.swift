@@ -8,6 +8,7 @@
 
 import UIKit
 
+// 人情关系界面
 class C1: UITableViewController {
     
     let reuseID = "cellC1"
@@ -141,7 +142,7 @@ class C1: UITableViewController {
         let alterControl = UIAlertController(title: "添加人情往来", message: nil, preferredStyle: UIAlertControllerStyle.alert)
         
         alterControl.addTextField { (tF) in
-            tF.placeholder = "输入事件"
+            tF.placeholder = "例如:张三送53°茅台一箱和美金3000"
         }
         let sureAction = UIAlertAction(title: "确定", style: .default) { (action) in
             let tfStr = alterControl.textFields?.last?.text
