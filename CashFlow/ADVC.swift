@@ -21,6 +21,13 @@ class ADVC: UIViewController {
         self.view.addSubview(conLable)
     }
     
+    
+    let headerV = UITableViewHeaderFooterView()
+    
+    var tabviewAD = UITableView()
+    // 什么是资产 什么是负债 什么是现金流 什么是健康状况 什么是杜邦统计模型
+    // 大盘指数 油价  风口理论 汇率  webview
+    // 调查表A--住房需求调查  tabviewcell
 
 
 }
