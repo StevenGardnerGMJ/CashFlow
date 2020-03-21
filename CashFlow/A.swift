@@ -23,7 +23,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var dic = Dictionary<String, String>()
     let headRUID:String = "headerRUID"
     var tableVC = UITableView()
-    var interstitial: GADInterstitial!// Admob 1
+    var interstitial: GADInterstitial!// Admob广告 1
     
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -37,10 +37,14 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // AdMob 2 //青蛙广告页A ca-app-pub-9319054953457119/9902763490 正式
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-        let request = GADRequest()
-        interstitial.load(request)
+        
+// AdMob 2 广告页A种 ca-app-pub-9319054953457119/9902763490 正式
+        // 一次性广告显示
+//        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+//        let request = GADRequest()
+//        interstitial.load(request)
+        // 重复广告显示
+        interstitial = createAndLoadInterstitial()
 
         
         
@@ -117,6 +121,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let detailtext = NumberFormatter.localizedString(from: number, number: .currencyAccounting)
             cellA.detailTextLabel?.text = "\(detailtext)"
         }
+        cellA.textLabel?.font = .systemFont(ofSize: 21)
         return cellA
     }
     
@@ -141,23 +146,31 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         return [editRowAction]
     }
     
-    @objc func showAD() {
-        print("g广告公告内容")
-        let AD = ADVC()
-        self.navigationController?.pushViewController(AD, animated: true)
-    }
     
-    // Google广告
-    @objc func showStatistics() {
+    
+    //MARK:    ------------ Google广告 ------------
+    @objc func showAD() {
         
         if interstitial.isReady {
             interstitial.present(fromRootViewController: self)
         } else {
             print("Ad wasn't ready")
-            let chartVC = CFchartVC()
-            chartVC.valueN =  Array(arrAnumber[1...4])
-            self.navigationController?.pushViewController(chartVC, animated: true)
+            print("g广告公告内容")
+            let AD = ADVC()
+            self.navigationController?.pushViewController(AD, animated: true)
+            
         }
+        
+    }
+    
+
+    @objc func showStatistics() {
+        
+        print("Ad wasn't ready")
+        let chartVC = CFchartVC()
+        chartVC.valueN =  Array(arrAnumber[1...4])
+        self.navigationController?.pushViewController(chartVC, animated: true)
+        
     }
     
     
@@ -282,12 +295,12 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     /// MARK: --- AdMob GADInterstitialDelegate 监听 ----------
     
     // AdMob
-//    func createAndLoadInterstitial() -> GADInterstitial {
-//        let interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-//        interstitial.delegate = self
-//        interstitial.load(GADRequest())
-//        return interstitial
-//    }
+    func createAndLoadInterstitial() -> GADInterstitial {
+        let interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        interstitial.delegate = self as? GADInterstitialDelegate
+        interstitial.load(GADRequest())
+        return interstitial
+    }
     
     
     /// Tells the delegate an ad request succeeded.
@@ -295,24 +308,24 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         print("interstitialDidReceiveAd")
     }
     
-    /// Tells the delegate an ad request failed.
+   
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
         print("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
     
-    /// Tells the delegate that an interstitial will be presented.
+    
     func interstitialWillPresentScreen(_ ad: GADInterstitial) {
         print("interstitialWillPresentScreen")
     }
 
-    /// Tells the delegate the interstitial is to be animated off the screen.
+    
     func interstitialWillDismissScreen(_ ad: GADInterstitial) {
         print("interstitialWillDismissScreen")
     }
     
-    /// Tells the delegate the interstitial had been animated off the screen.
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
-//        interstitial = createAndLoadInterstitial()
+        // 广告重复显示
+        interstitial = createAndLoadInterstitial()
     }
 
     
@@ -355,7 +368,7 @@ class headerAView: UITableViewHeaderFooterView {
         adBtn.frame = CGRect(x: 10, y: 5, width: 40, height: 40)
         titleLab.frame = CGRect(x: 20, y: 0.75*imagV.frame.size.height, width: self.frame.width, height: 40)
         titleLab.textAlignment = .center
-        titleLab.font = UIFont.systemFont(ofSize: 24)
+        titleLab.font = UIFont.boldSystemFont(ofSize: 24)
         
 // 彩色文字       myMutableString = NSMutableAttributedString(string: titleLab.text ?? "CEOOOOOOO", attributes: [NSAttributedStringKey.font:UIFont(name: "Georgia", size: 18.0)!])
 //        myMutableString.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.red, range: NSRange(location:2,length:4))

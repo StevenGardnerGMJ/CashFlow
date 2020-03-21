@@ -13,7 +13,7 @@ import Foundation
 import UIKit
 import CoreData
 
-
+// MARK: ---------数据库操作
 func getContext() -> NSManagedObjectContext {
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     return appDelegate.persistentContainer.viewContext

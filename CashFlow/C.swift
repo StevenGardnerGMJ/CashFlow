@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GoogleMobileAds
+//import GoogleMobileAds
 // 资产与负债界面
 class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -30,7 +30,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let relatDate = Array<Date>()// 日期
     var isNeedReadCoreDare = true
     var tableC = UITableView()
-    var interstitial: GADInterstitial!// Admob 1
+//    var interstitial: GADInterstitial!// Admob广告 1
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,10 +48,10 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // AdMob 2 //青蛙广告页A ca-app-pub-9319054953457119/9902763490
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-        let request = GADRequest()
-        interstitial.load(request)
+//        // AdMob 2 广告页C种 ca-app-pub-9319054953457119/9902763490
+//        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+//        let request = GADRequest()
+//        interstitial.load(request)
    
         
         
@@ -199,6 +199,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerA") as! headerAView
             headerView.imagV.image = UIImage(named: "现金流headerV")
             headerView.titleLab.text = "资产与负债表"
+            headerView.titleLab.textColor = #colorLiteral(red: 0.4218756557, green: 0.681618154, blue: 0.07648370415, alpha: 1)
             headerView.statisticsBtn.addTarget(self, action: #selector(showStatistics), for: .touchUpInside)
             return headerView
             
@@ -251,6 +252,8 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         }
         let nameStr = cell?.textLabel?.text ?? ""
         cell?.imageView?.image = UIImage(named: nameStr)
+        cell?.textLabel?.textColor = #colorLiteral(red: 0.4218756557, green: 0.681618154, blue: 0.07648370415, alpha: 1)
+        cell?.textLabel?.font = .systemFont(ofSize: 19)
         return cell!
     }
     
@@ -290,9 +293,9 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     @objc func showStatistics() {
         
-        if interstitial.isReady {
-            interstitial.present(fromRootViewController: self)
-        } else {
+//        if interstitial.isReady {
+//            interstitial.present(fromRootViewController: self)
+//        } else {
             print("Ad wasn't ready")
             let chartVC = CFBarChartVC()// CFLineChartVC()
             chartVC.assetsArr   = self.assets
@@ -300,7 +303,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             chartVC.liabilities = self.liabilities
             chartVC.liabilValue = self.liabiValue
             self.navigationController?.pushViewController(chartVC, animated: true)
-        }
+//        }
     }
     
     
@@ -452,8 +455,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
 }
 
 
-/// MARK: --- 自定义View
-
+/// MARK: -------C界面 头部 负债列表
 class headerCView: UITableViewHeaderFooterView {
     let imageV = UIImageView()
     let titleL = UILabel()
@@ -476,6 +478,10 @@ class headerCView: UITableViewHeaderFooterView {
         imageV.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: self.contentView.frame.height)
         titleL.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: 40)
         titleL.textAlignment = .center
+        //  子列表header标题
+        titleL.textColor = #colorLiteral(red: 0.4218756557, green: 0.681618154, blue: 0.07648370415, alpha: 1)
+        titleL.font = UIFont.boldSystemFont(ofSize: 21.0)
+        
         contentBtn.frame = CGRect(x: self.contentView.frame.size.width - 60, y: 0, width: 40, height: 30)
         contentBtn.setTitle("增加", for: .normal)
         contentBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
