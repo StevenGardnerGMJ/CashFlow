@@ -1,45 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.98" systemVersion="18D109" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Amodel" representedClassName="Amodel" syncable="YES" codeGenerationType="class">
-        <attribute name="myinfo" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="myinfo" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Bexpend" representedClassName="Bexpend" syncable="YES" codeGenerationType="class">
-        <attribute name="keyname" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="keyname" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Bincome" representedClassName="Bincome" syncable="YES" codeGenerationType="class">
-        <attribute name="keyname" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="keyname" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Bmodel" representedClassName="Bmodel" syncable="YES" codeGenerationType="class">
-        <attribute name="income" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="outcome" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="income" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="outcome" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="C1model" representedClassName="C1model" syncable="YES" codeGenerationType="class">
-        <attribute name="dates" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="relations" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="dates" optional="YES" attributeType="String"/>
+        <attribute name="relations" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="CachedURLResponse" representedClassName="CachedURLResponse" syncable="YES" codeGenerationType="class">
+        <attribute name="data" optional="YES" attributeType="Binary"/>
+        <attribute name="encoding" optional="YES" attributeType="String"/>
+        <attribute name="mimeType" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Cassets" representedClassName="Cassets" syncable="YES" codeGenerationType="class">
-        <attribute name="keyname" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="keyname" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="CLiabilities" representedClassName="CLiabilities" syncable="YES" codeGenerationType="class">
-        <attribute name="keyname" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="keyname" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Cmodel" representedClassName="Cmodel" syncable="YES" codeGenerationType="class">
-        <attribute name="assets" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="liabilities" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="relations" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="assets" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="liabilities" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="relations" optional="YES" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Myinfo" representedClassName="Myinfo" syncable="YES" codeGenerationType="class">
-        <attribute name="person" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="person" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Timemodel" representedClassName="Timemodel" syncable="YES" codeGenerationType="class">
-        <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <configuration name="ConfigurationA"/>
     <elements>
@@ -53,5 +60,6 @@
         <element name="Cmodel" positionX="18" positionY="63" width="128" height="90"/>
         <element name="Myinfo" positionX="-18" positionY="18" width="128" height="30"/>
         <element name="Timemodel" positionX="-18" positionY="18" width="128" height="60"/>
+        <element name="CachedURLResponse" positionX="-18" positionY="54" width="128" height="118"/>
     </elements>
 </model>

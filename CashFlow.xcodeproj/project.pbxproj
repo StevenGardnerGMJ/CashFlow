@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		02F7C6511CA4FE9960B3CEE5 /* Pods_CashFlow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F00FFDCBE2C2416A0F40135B /* Pods_CashFlow.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		280CCF3F22957FD2000039E0 /* TKRadarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280CCF3E22957FD2000039E0 /* TKRadarChart.swift */; };
+		282FE97E2459CBCA008AE411 /* ADVC1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282FE97D2459CBCA008AE411 /* ADVC1.swift */; };
 		28CFEEA42296DC40001A3961 /* CFRadarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CFEEA32296DC40001A3961 /* CFRadarVC.swift */; };
+		28FDBBDC2429F6DC00B61002 /* MyURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FDBBDB2429F6DC00B61002 /* MyURLProtocol.swift */; };
 		631E9E4F21F7028900E3B47C /* CFtabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E9E4E21F7028900E3B47C /* CFtabBarViewController.swift */; };
 		634CC07A2248598E0026B295 /* C1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634CC0792248598E0026B295 /* C1.swift */; };
 		6355076E2201A95B00437CDB /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6355076D2201A95B00437CDB /* Global.swift */; };
@@ -42,7 +44,9 @@
 
 /* Begin PBXFileReference section */
 		280CCF3E22957FD2000039E0 /* TKRadarChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKRadarChart.swift; sourceTree = "<group>"; };
+		282FE97D2459CBCA008AE411 /* ADVC1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADVC1.swift; sourceTree = "<group>"; };
 		28CFEEA32296DC40001A3961 /* CFRadarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFRadarVC.swift; sourceTree = "<group>"; };
+		28FDBBDB2429F6DC00B61002 /* MyURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyURLProtocol.swift; sourceTree = "<group>"; };
 		631E9E4E21F7028900E3B47C /* CFtabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFtabBarViewController.swift; sourceTree = "<group>"; };
 		634CC0792248598E0026B295 /* C1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C1.swift; sourceTree = "<group>"; };
 		6355076D2201A95B00437CDB /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
@@ -133,6 +137,8 @@
 				6389D2C521F086FA0026818D /* B.swift */,
 				6389D2C721F087080026818D /* C.swift */,
 				6399A66F22FAD799004F90C5 /* ADVC.swift */,
+				282FE97D2459CBCA008AE411 /* ADVC1.swift */,
+				28FDBBDB2429F6DC00B61002 /* MyURLProtocol.swift */,
 				634CC0792248598E0026B295 /* C1.swift */,
 				63946BF32292B0ED001FFB23 /* CFchartVC.swift */,
 				28CFEEA32296DC40001A3961 /* CFRadarVC.swift */,
@@ -324,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6355076E2201A95B00437CDB /* Global.swift in Sources */,
+				282FE97E2459CBCA008AE411 /* ADVC1.swift in Sources */,
 				63C3F521229BEC7D0096E5FA /* BasicBarChart.swift in Sources */,
 				6389D2C621F086FA0026818D /* B.swift in Sources */,
 				634CC07A2248598E0026B295 /* C1.swift in Sources */,
@@ -331,6 +338,7 @@
 				63C3F51C229BEC720096E5FA /* BeautifulBarEntry.swift in Sources */,
 				6363EF5B2297DC2D006C0A9C /* CFLineChartVC.swift in Sources */,
 				63C3F522229BEC7D0096E5FA /* BasicBarEntry.swift in Sources */,
+				28FDBBDC2429F6DC00B61002 /* MyURLProtocol.swift in Sources */,
 				6389D2C421F086E90026818D /* A.swift in Sources */,
 				63C3F511229BEC270096E5FA /* DataEntry.swift in Sources */,
 				6363EF592297D9E0006C0A9C /* LineChart.swift in Sources */,

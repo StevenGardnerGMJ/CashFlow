@@ -201,6 +201,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             headerView.titleLab.text = "资产与负债表"
             headerView.titleLab.textColor = #colorLiteral(red: 0.4218756557, green: 0.681618154, blue: 0.07648370415, alpha: 1)
             headerView.statisticsBtn.addTarget(self, action: #selector(showStatistics), for: .touchUpInside)
+            headerView.adBtn.addTarget(self, action: #selector(showAD), for: .touchUpInside)
             return headerView
             
         } else {
@@ -217,6 +218,14 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             return headView
         }
     }
+    
+    // MARK: ========= 广告 ========
+      @objc func showAD() {
+        
+              let AD1 = ADVC1()
+              self.navigationController?.pushViewController(AD1, animated: true)
+          
+      }
     
     
     

@@ -67,6 +67,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
             header.titleLab.text = "现金流量报表"
             header.titleLab.textColor = #colorLiteral(red: 1, green: 0.3426144123, blue: 0.2921580672, alpha: 1)
             header.statisticsBtn.addTarget(self, action: #selector(showStatistics), for: .touchUpInside)
+            header.adBtn.addTarget(self, action: #selector(showAD), for: .touchUpInside)
             return header
             
         } else {
@@ -80,6 +81,13 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         }
         
     }
+    // MARK: ========= 广告 ========
+    @objc func showAD() {
+        
+        
+        
+    }
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return default_row_H // 64
