@@ -79,8 +79,6 @@
 		63C3F51F229BEC7D0096E5FA /* BasicBarEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicBarEntry.swift; sourceTree = "<group>"; };
 		63C3F523229BECB70096E5FA /* CFBarChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFBarChartVC.swift; sourceTree = "<group>"; };
 		63F0FD232294F24E0007AB10 /* PieCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PieCharts.framework; path = Carthage/Build/iOS/PieCharts.framework; sourceTree = "<group>"; };
-		9464A6B5402BC5533B2CF85D /* Pods-CashFlow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CashFlow.debug.xcconfig"; path = "Target Support Files/Pods-CashFlow/Pods-CashFlow.debug.xcconfig"; sourceTree = "<group>"; };
-		BBC8AD1D42A66C5376CC6D9A /* Pods-CashFlow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CashFlow.release.xcconfig"; path = "Target Support Files/Pods-CashFlow/Pods-CashFlow.release.xcconfig"; sourceTree = "<group>"; };
 		F00FFDCBE2C2416A0F40135B /* Pods_CashFlow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CashFlow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -113,7 +111,6 @@
 				6389D2AF21E882E80026818D /* CashFlow */,
 				6389D2AE21E882E80026818D /* Products */,
 				63F0FD222294F24D0007AB10 /* Frameworks */,
-				B286857C5EFC81DF66A033BE /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -201,15 +198,6 @@
 				F00FFDCBE2C2416A0F40135B /* Pods_CashFlow.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		B286857C5EFC81DF66A033BE /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				9464A6B5402BC5533B2CF85D /* Pods-CashFlow.debug.xcconfig */,
-				BBC8AD1D42A66C5376CC6D9A /* Pods-CashFlow.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -512,7 +500,6 @@
 		};
 		6389D2C021E882F10026818D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9464A6B5402BC5533B2CF85D /* Pods-CashFlow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -537,7 +524,6 @@
 		};
 		6389D2C121E882F10026818D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BBC8AD1D42A66C5376CC6D9A /* Pods-CashFlow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
