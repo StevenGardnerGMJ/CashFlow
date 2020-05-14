@@ -3,13 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		02F7C6511CA4FE9960B3CEE5 /* Pods_CashFlow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F00FFDCBE2C2416A0F40135B /* Pods_CashFlow.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		280CCF3F22957FD2000039E0 /* TKRadarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280CCF3E22957FD2000039E0 /* TKRadarChart.swift */; };
 		282FE97E2459CBCA008AE411 /* ADVC1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282FE97D2459CBCA008AE411 /* ADVC1.swift */; };
+		28CEA024246C715B0030201A /* PieCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F0FD232294F24E0007AB10 /* PieCharts.framework */; };
+		28CEA027246C715D0030201A /* Pods_CashFlow.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F00FFDCBE2C2416A0F40135B /* Pods_CashFlow.framework */; };
+		28CEA028246C715D0030201A /* Pods_CashFlow.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F00FFDCBE2C2416A0F40135B /* Pods_CashFlow.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		28CFEEA42296DC40001A3961 /* CFRadarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28CFEEA32296DC40001A3961 /* CFRadarVC.swift */; };
 		28FDBBDC2429F6DC00B61002 /* MyURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FDBBDB2429F6DC00B61002 /* MyURLProtocol.swift */; };
 		631E9E4F21F7028900E3B47C /* CFtabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631E9E4E21F7028900E3B47C /* CFtabBarViewController.swift */; };
@@ -39,14 +41,28 @@
 		63C3F521229BEC7D0096E5FA /* BasicBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C3F51E229BEC7C0096E5FA /* BasicBarChart.swift */; };
 		63C3F522229BEC7D0096E5FA /* BasicBarEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C3F51F229BEC7D0096E5FA /* BasicBarEntry.swift */; };
 		63C3F524229BECB70096E5FA /* CFBarChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C3F523229BECB70096E5FA /* CFBarChartVC.swift */; };
-		63F0FD242294F24E0007AB10 /* PieCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63F0FD232294F24E0007AB10 /* PieCharts.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		28CEA026246C715B0030201A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				28CEA028246C715D0030201A /* Pods_CashFlow.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		280CCF3E22957FD2000039E0 /* TKRadarChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TKRadarChart.swift; sourceTree = "<group>"; };
 		282FE97D2459CBCA008AE411 /* ADVC1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADVC1.swift; sourceTree = "<group>"; };
 		28CFEEA32296DC40001A3961 /* CFRadarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFRadarVC.swift; sourceTree = "<group>"; };
 		28FDBBDB2429F6DC00B61002 /* MyURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyURLProtocol.swift; sourceTree = "<group>"; };
+		4BC8EC26E0105F49F62C1F73 /* Pods-CashFlow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CashFlow.release.xcconfig"; path = "Target Support Files/Pods-CashFlow/Pods-CashFlow.release.xcconfig"; sourceTree = "<group>"; };
 		631E9E4E21F7028900E3B47C /* CFtabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFtabBarViewController.swift; sourceTree = "<group>"; };
 		634CC0792248598E0026B295 /* C1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C1.swift; sourceTree = "<group>"; };
 		6355076D2201A95B00437CDB /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
@@ -79,6 +95,7 @@
 		63C3F51F229BEC7D0096E5FA /* BasicBarEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicBarEntry.swift; sourceTree = "<group>"; };
 		63C3F523229BECB70096E5FA /* CFBarChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFBarChartVC.swift; sourceTree = "<group>"; };
 		63F0FD232294F24E0007AB10 /* PieCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PieCharts.framework; path = Carthage/Build/iOS/PieCharts.framework; sourceTree = "<group>"; };
+		BCB3369FE8B9585B5D7626DE /* Pods-CashFlow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CashFlow.debug.xcconfig"; path = "Target Support Files/Pods-CashFlow/Pods-CashFlow.debug.xcconfig"; sourceTree = "<group>"; };
 		F00FFDCBE2C2416A0F40135B /* Pods_CashFlow.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CashFlow.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -87,8 +104,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63F0FD242294F24E0007AB10 /* PieCharts.framework in Frameworks */,
-				02F7C6511CA4FE9960B3CEE5 /* Pods_CashFlow.framework in Frameworks */,
+				28CEA024246C715B0030201A /* PieCharts.framework in Frameworks */,
+				28CEA027246C715D0030201A /* Pods_CashFlow.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +128,7 @@
 				6389D2AF21E882E80026818D /* CashFlow */,
 				6389D2AE21E882E80026818D /* Products */,
 				63F0FD222294F24D0007AB10 /* Frameworks */,
+				6A71450D774C42AB56356B68 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -200,6 +218,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6A71450D774C42AB56356B68 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BCB3369FE8B9585B5D7626DE /* Pods-CashFlow.debug.xcconfig */,
+				4BC8EC26E0105F49F62C1F73 /* Pods-CashFlow.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -211,7 +238,8 @@
 				6389D2A921E882E80026818D /* Sources */,
 				6389D2AA21E882E80026818D /* Frameworks */,
 				6389D2AB21E882E80026818D /* Resources */,
-				63F0FD212294F15A0007AB10 /* ShellScript */,
+				2F58EF56E1AE4D890EAF4FDF /* [CP] Embed Pods Frameworks */,
+				28CEA026246C715B0030201A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -270,23 +298,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		63F0FD212294F15A0007AB10 /* ShellScript */ = {
+		2F58EF56E1AE4D890EAF4FDF /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CashFlow/Pods-CashFlow-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/PieCharts.framework",
-			);
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CashFlow/Pods-CashFlow-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/Carthage copy-frameworks\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CashFlow/Pods-CashFlow-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		CC90B24EEA2B997CA5F74EFD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -500,14 +527,12 @@
 		};
 		6389D2C021E882F10026818D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BCB3369FE8B9585B5D7626DE /* Pods-CashFlow.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 38355BY3GF;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = CashFlow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -524,14 +549,12 @@
 		};
 		6389D2C121E882F10026818D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4BC8EC26E0105F49F62C1F73 /* Pods-CashFlow.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 38355BY3GF;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = CashFlow/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
