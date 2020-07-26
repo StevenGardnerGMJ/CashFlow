@@ -8,7 +8,8 @@
 //  参考：三方库模仿Mail.app的SwipeCellKit
 
 import UIKit
-//import GoogleMobileAds
+import GoogleMobileAds
+
 // 收入与支出界面
 class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -20,7 +21,8 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var expendArr = Array<Double>()
     var totalArr  = Array<Double>()
     
-//    var interstitial: GADInterstitial!// Admob广告 1
+    var interstitial: GADInterstitial!// Admob广告 B
+    
     
     override func viewWillAppear(_ animated: Bool) {
         readData()
@@ -34,14 +36,14 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleAction = UITableViewRowAction(style: .destructive, title: "清除") { (action, indexpath) in
-            print("A清除")
+            //            print("A清除")
         }
         let editAction = UITableViewRowAction(style: .default, title: "编辑") { (action, indexpath) in
-            print("编辑=====\(indexPath.section),\(indexPath.row)")
+            //            print("编辑=====\(indexPath.section),\(indexPath.row)")
             self.showAlter(indexP: indexPath)
         }
         let moreAction = UITableViewRowAction(style: .normal, title: "更多") { (action, indexpath) in
-            print("更多")
+            //            print("更多")
         }
         editAction.backgroundColor = UIColor.init(red: 255/255.0, green: 204/255.0, blue: 0/255.0, alpha: 1.0)
         if indexPath.section == 0 {
@@ -60,7 +62,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-      
+        
         if section == 0 {
             let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerB") as! headerAView
             header.imagV.image = UIImage(named: "现金流headerV")
@@ -84,6 +86,15 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     // MARK: ========= 广告 ========
     @objc func showAD() {
         
+        if interstitial.isReady {
+            interstitial.present(fromRootViewController: self)
+        } else {
+            //            print("Ad wasn't ready")
+            //            print("g广告公告内容")
+            let AD = ADVC2()
+            self.navigationController?.pushViewController(AD, animated: true)
+            
+        }
         
         
     }
@@ -101,7 +112,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
         if section == 1 {
             return income.count
         } else if section == 2 {
-           return expenditure.count
+            return expenditure.count
         } else {
             return 2 // section 0
         }
@@ -126,7 +137,7 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
             cell?.imageView?.image = UIImage(named: "\(expenditure[indexPath.row])")
             detailValue = currencyAccounting(num: expendArr[indexPath.row])
         default:
-             cell?.textLabel?.text = "B"
+            cell?.textLabel?.text = "B"
         }
         cell?.detailTextLabel?.text = detailValue
         cell?.textLabel?.textColor = #colorLiteral(red: 1, green: 0.3426144123, blue: 0.2921580672, alpha: 1)
@@ -139,13 +150,14 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
-//        // AdMob 2  广告页B种 ca-app-pub-9319054953457119/9902763490
-//        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-//        let request = GADRequest()
-//        interstitial.load(request)
+        
+        // AdMob 2  广告页B种
+        // ca-app-pub-9319054953457119/7342558071 正式
+        // ca-app-pub-3940256099942544/4411468910 测试
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        let request = GADRequest()
+        interstitial.load(request)
         
         
         if incomeArr.count == 0 || expendArr.count == 0 ||  incomeArr.count != income.count {
@@ -211,22 +223,22 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     @objc func showStatistics() {
         
-//        if interstitial.isReady {
-//            interstitial.present(fromRootViewController: self)
-//        } else {
-            print("Ad wasn't ready")
-            let chartVC = CFBarChartVC()//CFRadarVC()
-            chartVC.assetsArr = self.income
-            chartVC.assetsValue = self.incomeArr
-            chartVC.liabilities = self.expenditure
-            chartVC.liabilValue = self.expendArr
-            
-            self.navigationController?.pushViewController(chartVC, animated: true)
-//        }
+        //        if interstitial.isReady {
+        //            interstitial.present(fromRootViewController: self)
+        //        } else {
+        //            print("Ad wasn't ready")
+        let chartVC = CFBarChartVC()//CFRadarVC()
+        chartVC.assetsArr = self.income
+        chartVC.assetsValue = self.incomeArr
+        chartVC.liabilities = self.expenditure
+        chartVC.liabilValue = self.expendArr
+        
+        self.navigationController?.pushViewController(chartVC, animated: true)
+        //        }
     }
     
     func getData(arr:Array<String>) -> Array<String> {
-        PrintCCLog("得到数据")
+        //        PrintCCLog("得到数据")
         let str = arr[0]
         var arrBack = Array<String>()
         arrBack.append(str)
@@ -234,39 +246,39 @@ class B: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func readData() {
-//        getClass(modelname: "Bmodel") { (dataArr) in
-//            let arr = dataArr as! [Bmodel]
-//            for c in arr {
-//                self.totalArr.append(c.income)
-//                self.totalArr.append(c.outcome)
-//            }
-//        }
+        //        getClass(modelname: "Bmodel") { (dataArr) in
+        //            let arr = dataArr as! [Bmodel]
+        //            for c in arr {
+        //                self.totalArr.append(c.income)
+        //                self.totalArr.append(c.outcome)
+        //            }
+        //        }
         getClass(modelname: "Bincome") { (dataArr) in
             let arr = dataArr as! [Bincome]
             if arr.count > 0 {
-            self.incomeArr = Array<Double>()
-            for c in arr {
-                self.incomeArr.append(c.value)
-            }
+                self.incomeArr = Array<Double>()
+                for c in arr {
+                    self.incomeArr.append(c.value)
+                }
                 self.tableV.reloadData()
             }
         }
         getClass(modelname: "Bexpend") { (dataArr) in
             let arr = dataArr as! [Bexpend]
             if arr.count > 0 {
-            self.expendArr = Array<Double>()
-            for c in arr {
-                self.expendArr.append(c.value)
-            }
+                self.expendArr = Array<Double>()
+                for c in arr {
+                    self.expendArr.append(c.value)
+                }
                 self.tableV.reloadData()
-        }
+            }
         }
         tableV.reloadData()
         
     }
     
     func saveData() {
-        print("保存数据===== B =====")
+        //        print("保存数据===== B =====")
         if incomeArr.count > 0 {
             deleteClass(modelname: "Bincome")
             addCoreDataClass(arrs: [incomeArr], keyArr: ["value"], mName: "Bincome")

@@ -113,17 +113,17 @@ class C1: UITableViewController {
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let deleAction = UITableViewRowAction(style: .destructive, title: "清除") { (action, indexpath) in
-            print("清除")
+//            print("清除")
             self.defaultArr.remove(at: indexPath.row)
             self.dateArr.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .fade)
         }
         let editAction = UITableViewRowAction(style: .default, title: "日期") { (action, indexpath) in
-            print("日期")
+//            print("日期")
             self.showDatePicker(inP: indexPath)
         }
         let moreAction = UITableViewRowAction(style: .normal, title: "事件") { (action, indexpath) in
-            print("事件")
+//            print("事件")
             self.changeRelations(inP: indexPath)
         }
         editAction.backgroundColor = UIColor.gray
@@ -138,7 +138,7 @@ class C1: UITableViewController {
     
     @objc func addRelations() {
         
-        print("----添加时间----")
+//        print("----添加时间----")
         let alterControl = UIAlertController(title: "添加人情往来", message: nil, preferredStyle: UIAlertControllerStyle.alert)
         
         alterControl.addTextField { (tF) in
@@ -197,12 +197,12 @@ class C1: UITableViewController {
     func hideDatePicker(inP:IndexPath) {
         // 若点击非持有cell
         guard inP.row == sIndex else {
-            print("//点击非弹出日期cell 返回")
+//            print("//点击非弹出日期cell 返回")
             return
         }
         datePickerVisible = false
         if defaultArr.count == 1 || inP.row >= defaultArr.count - 1 {
-            print("超过删除范围")
+//            print("超过删除范围")
         } else {
             let rowNum = inP.row + 1
             defaultArr.remove(at: rowNum)
@@ -228,14 +228,14 @@ class C1: UITableViewController {
         let dateFormater = DateFormatter()
         dateFormater.dateFormat  = "YYYY-MM-dd"
         let str = dateFormater.string(from: date)
-        print(str)
+//        print(str)
         return str
     }
     
     // MARK: - save  data
     
     func readCoreDate_C1() {
-        print("=====readCoreDate_C1===")
+//        print("=====readCoreDate_C1===")
         getClass(modelname: "C1model") { (data) in
             let arr = data as! [C1model]
             if arr.count > 0 {
@@ -248,7 +248,7 @@ class C1: UITableViewController {
                 self.tempArr = self.defaultArr
                 self.tableView.reloadData()
             } else {
-                print("warning：数据为空")
+//                print("warning：数据为空")
             }
         }
         

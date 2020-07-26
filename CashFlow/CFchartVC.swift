@@ -74,7 +74,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
    
     // 横竖屏幕切换
     @objc func rightClick(btn:UIBarButtonItem) {
-        print("横竖屏幕")
+//        print("横竖屏幕")
         if isFullScreen == false {
         self.appDelegate.setNewOrientation(fullScreen: true)
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "退出横屏"), style: .plain, target: self, action: #selector(rightClick(btn:)))
@@ -91,7 +91,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
     // pie chart// MARK: - PieChartDelegate
     
     func onSelected(slice: PieSlice, selected: Bool) {
-        print("Selected: \(selected), slice: \(slice)")
+//        print("Selected: \(selected), slice: \(slice)")
     }
     
     // MARK: - Models  切片数据  加上颜色
@@ -186,7 +186,7 @@ class CFchartVC: UIViewController,PieChartDelegate {
             let textFont = UIFont.systemFont(ofSize: 14)
             let textMaxSize = CGSize(width: 100, height: CGFloat(MAXFLOAT))
             let textLabelSize = self.textSize(text: textstring ?? "00", font: textFont, maxSize: textMaxSize)
-            print(textLabelSize)
+//            print(textLabelSize)
             
             
             

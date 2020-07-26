@@ -45,11 +45,11 @@ func batchUpdate(){
         
         //批量更新的结果，上面resultType类型指定为updatedObjectsCountResultType，所以result显示的为 更新的个数
         
-        print("\(batchResult.result!)")
+//        print("\(batchResult.result!)")
         
     } catch   {
         
-        print("error")
+       // print("error")
         
     }
     
@@ -98,9 +98,9 @@ func countClass() {
         
         let averageNo = result["AverageNo"]!
         
-        print("\(averageNo)")
+//        print("\(averageNo)")
     } catch  {
-        print("failed")
+//        print("failed")
     }
     
 }
@@ -131,7 +131,7 @@ func modifyClass() {
     do {
         try context.execute(asyncFecthRequest)
     } catch  {
-        print("error")
+//        print("error")
     }
 }
 
@@ -151,7 +151,7 @@ func deleteClass(modelname:String) -> Void {
     do {
         try context.execute(asyncFetchRequest)
     } catch  {
-        print("error")
+//        print("error")
     }
 }
 
@@ -170,7 +170,7 @@ func addCoreDataClass(arrs:Array<Any>,keyArr:Array<String>,mName:String){
         
         var tempArr = Array<Any>()
         for t in 0..<arrs.count { // 2种变量类型
-            print("i = \(i)，t = \(t) ")
+//            print("i = \(i)，t = \(t) ")
             let vArr = arrs[t] as! Array<Any> // [A1-1 A2-1] 分离数据数组
             let value = vArr[i]
             let key   = keyArr[t]  // 变量数据库名称
@@ -210,7 +210,7 @@ func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
         classEntity.setValue(arrays[0], forKey: keyArr[0])
         classEntity.setValue(arrays[1], forKey: keyArr[1])
     default:
-        print("插入信息")
+//        print("插入信息")
         classEntity.setValue(arrays[0], forKey: keyArr[0])
     }
     
@@ -241,7 +241,7 @@ func getClass(modelname:String,completionHandler:@escaping(_ data:Array<Any>)->(
     do {
         try context.execute(asyncFetchRequest)
     } catch  {
-        print("error")
+//        print("error")
     }
     
 }
@@ -256,7 +256,7 @@ public  func PrintCCLog<T>(_ message:T,file:String = #file,funcName:String = #fu
     //    let funcName = #function
     //    print("\(file):\(funcName)-",dic);
     // 文件名：行数---要打印的信息
-    print("\(file):(\(lineNum))--\(message)")
+//    print("\(file):(\(lineNum))--\(message)")
     
 }
 

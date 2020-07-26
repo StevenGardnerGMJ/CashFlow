@@ -7,7 +7,8 @@
 //
 
 import UIKit
-//import GoogleMobileAds
+import GoogleMobileAds
+
 // 资产与负债界面
 class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -30,7 +31,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let relatDate = Array<Date>()// 日期
     var isNeedReadCoreDare = true
     var tableC = UITableView()
-//    var interstitial: GADInterstitial!// Admob广告 1
+    var interstitial: GADInterstitial!// Admob广告 C
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,11 +49,12 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        // AdMob 2 广告页C种 ca-app-pub-9319054953457119/9902763490
-//        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-//        let request = GADRequest()
-//        interstitial.load(request)
-   
+        // AdMob 2 广告页C种
+        // 正式 ca-app-pub-9319054953457119/9815967732
+        //      ca-app-pub-3940256099942544/4411468910 测试
+        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        let request = GADRequest()
+        interstitial.load(request)
         
         
         if assetsValue.count == 0 || liabiValue.count == 0 {
@@ -69,11 +71,12 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
     }
     
+    
     // MARK:UI Table View Delegate
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let titleAction = UIContextualAction(style: .normal, title: "名称") { (action, view, handeler) in
-            print("修改资产项目名称")
+            //            print("修改资产项目名称")
             
             let oldname = tableView.cellForRow(at: indexPath)?.textLabel?.text
             
@@ -120,7 +123,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             
         }
         let cleanAction = UITableViewRowAction(style: .normal, title: "清零") { (action, indexpath) in
-            print("清零值数据")
+            //            print("清零值数据")
         }
         let editAction = UITableViewRowAction(style: .default, title: "数值") { (action, indexpath) in
             let cell = self.tableC.cellForRow(at: indexPath)
@@ -179,7 +182,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     // MARK： UI Table View Data  Source
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 3
@@ -220,14 +223,15 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     // MARK: ========= 广告 ========
-      @objc func showAD() {
+    @objc func showAD() {
+        if interstitial.isReady {
+            interstitial.present(fromRootViewController: self)
+        } else {
+            let AD1 = ADVC1()
+            self.navigationController?.pushViewController(AD1, animated: true)
+        }
         
-              let AD1 = ADVC1()
-              self.navigationController?.pushViewController(AD1, animated: true)
-          
-      }
-    
-    
+    }
     
     
     
@@ -302,22 +306,22 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     @objc func showStatistics() {
         
-//        if interstitial.isReady {
-//            interstitial.present(fromRootViewController: self)
-//        } else {
-            print("Ad wasn't ready")
-            let chartVC = CFBarChartVC()// CFLineChartVC()
-            chartVC.assetsArr   = self.assets
-            chartVC.assetsValue = self.assetsValue
-            chartVC.liabilities = self.liabilities
-            chartVC.liabilValue = self.liabiValue
-            self.navigationController?.pushViewController(chartVC, animated: true)
-//        }
+        //        if interstitial.isReady {
+        //            interstitial.present(fromRootViewController: self)
+        //        } else {
+        //            print("Ad wasn't ready")
+        let chartVC = CFBarChartVC()// CFLineChartVC()
+        chartVC.assetsArr   = self.assets
+        chartVC.assetsValue = self.assetsValue
+        chartVC.liabilities = self.liabilities
+        chartVC.liabilValue = self.liabiValue
+        self.navigationController?.pushViewController(chartVC, animated: true)
+        //        }
     }
     
     
     @objc func newAssetsLib(inP:UIButton){
-        print("增加资产负债 \(inP.tag)")
+        //        print("增加资产负债 \(inP.tag)")
         var row = 0
         switch inP.tag  {
         case 1:
@@ -377,7 +381,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     
     /// MARK: 数据操作
-  
+    
     func readData_C(){
         
         getClass(modelname: mName_Ca) { (data) in
@@ -386,7 +390,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 self.assets = Array<String>()
                 self.assetsValue = Array<Double>()
                 for c in arr {
-                    print(c.keyname ?? "", c.value)
+                    //                    print(c.keyname ?? "", c.value)
                     self.assets.append(c.keyname ?? "")
                     self.assetsValue.append(c.value)
                 }
@@ -413,9 +417,9 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let arr = dataModel as! [Cmodel]
             if arr.count > 0 {
                 for c in arr {
-                    print(c.assets, c.liabilities, c.relations)
+                    //                    print(c.assets, c.liabilities, c.relations)
                     let de = Decimal(c.relations)
-                    print(de)
+                    //                    print(de)
                     self.relations = Int(c.relations)// 仅需
                 }
                 self.tableC.reloadData()
@@ -427,7 +431,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     func saveData_C(){
         
-        print("======SaveData_C =========")
+        //        print("======SaveData_C =========")
         
         isNeedReadCoreDare = true
         

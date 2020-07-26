@@ -65,7 +65,7 @@ class CFBarChartVC: UIViewController {
     }
     
     @objc func  viewDidLoad2 () {
-        print("viewDidLoad2======")
+//        print("viewDidLoad2======")
         
         // 视图的先后顺序决定是否能全屏显示
         view.bringSubview(toFront: basicBarChart)
@@ -79,7 +79,7 @@ class CFBarChartVC: UIViewController {
     }
     
     @objc func  viewDidLoad3 () {
-        print("viewDidLoad3")
+//        print("viewDidLoad3")
         let viewBar = ["barChart":barChart]
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[basicChart]-|", options: [], metrics: nil, views: ["basicChart":basicBarChart]))
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[barChart]-|", options: [], metrics: nil, views: ["barChart":barChart]))
@@ -120,7 +120,7 @@ class CFBarChartVC: UIViewController {
     }
     
     @objc func orientationClick(tapGes:UITapGestureRecognizer) {
-        print("横竖屏幕")
+//        print("横竖屏幕")
         if isFullScreen == false {
             self.appDelegate.setNewOrientation(fullScreen: true)
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "退出横屏"), style: .plain, target: self, action: #selector(orientationClick))

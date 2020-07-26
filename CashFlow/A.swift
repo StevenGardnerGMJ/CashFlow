@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import GoogleMobileAds
+
 // 界面A  现状界面
 class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -27,7 +28,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     
     override func viewWillDisappear(_ animated: Bool) {
-        print("====Savedata_A======")
+//        print("====Savedata_A======")
         saveAdata()
     }
     
@@ -38,11 +39,13 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-// AdMob 2 广告页A种 ca-app-pub-9319054953457119/9902763490 正式
-        // 一次性广告显示
-//        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
-//        let request = GADRequest()
-//        interstitial.load(request)
+// AdMob ca-app-pub-9319054953457119/9902763490 正式A
+ //      ca-app-pub-3940256099942544/4411468910 测试
+        
+// 一次性广告显示
+ interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        let request = GADRequest()
+        interstitial.load(request)
         // 重复广告显示
         interstitial = createAndLoadInterstitial()
 
@@ -67,6 +70,8 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableVC.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         // 通知保存数据
         NotificationCenter.default.addObserver(self, selector: #selector(notication), name: NSNotification.Name(rawValue:"isTest"), object: nil)
+
+        
     }
    
     
@@ -134,7 +139,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
 //            print("A清除")
 //        }
         let editRowAction = UITableViewRowAction(style: .default, title: "编辑") { (action, indexPath) in
-            print("B编辑")
+//            print("B编辑")
             let cell = tableView.cellForRow(at: indexPath)
             let title = cell?.textLabel?.text
             self.showView(title: title!, row: indexPath.row)
@@ -154,9 +159,9 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         if interstitial.isReady {
             interstitial.present(fromRootViewController: self)
         } else {
-            print("Ad wasn't ready")
-            print("g广告公告内容")
-            let AD = ADVC()
+//            print("Ad wasn't ready")
+//            print("g广告公告内容")
+            let AD = ADVC2()
             self.navigationController?.pushViewController(AD, animated: true)
             
         }
@@ -166,7 +171,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     @objc func showStatistics() {
         
-        print("Ad wasn't ready")
+//        print("Ad wasn't ready")
         let chartVC = CFchartVC()
         chartVC.valueN =  Array(arrAnumber[1...4])
         self.navigationController?.pushViewController(chartVC, animated: true)
@@ -187,7 +192,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
             var i = 0
             for textF in alterS.textFields! {
                 if textF.text == "" {
-                    print("未填写空值")
+//                    print("未填写空值")
                 } else {
                     self.arrMyInfo[i] =  textF.text ?? ""
                 }
@@ -241,7 +246,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     @objc func  notication() {
-        print("=== A0 保存数据 ======-")
+//        print("=== A0 保存数据 ======-")
         saveAdata()
     }
     
@@ -252,7 +257,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func getClassA(modelname:String) { // -> Array<Float>
-        print("getClass")
+//        print("getClass")
         let context = getContext()
         var arr = Array<Double>()
         var arr2 = Array<String>()
@@ -264,7 +269,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
             for  c in fetchObject {
                 arr.append(c.value) // BLock内延迟处理
                 arr2.append(c.myinfo ?? "")
-                print("\(c.status ?? "")--\(c.value)--\(c.myinfo ?? "")")
+//                print("\(c.status ?? "")--\(c.value)--\(c.myinfo ?? "")")
             }
             guard arr.count == 0, arr2.count == 0 else {
                 self.arrAnumber = arr
@@ -276,7 +281,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
         do {
             try context.execute(asyncFetchRequest)
         } catch  {
-            print("error")
+//            print("error")
         }
         
     }
@@ -284,7 +289,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func saveAdata() {
         deleteClass(modelname: enteryName)
         var i = 0
-        print("\(arrAnumber)")
+//        print("\(arrAnumber)")
         for key in arrA {
             let arrs = [key,arrAnumber[i],arrMyInfo[i]] as [Any]
             insertClass(arrays: arrs, keyArr: attributeName, modelname: enteryName)
@@ -305,22 +310,22 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     /// Tells the delegate an ad request succeeded.
     func interstitialDidReceiveAd(_ ad: GADInterstitial) {
-        print("interstitialDidReceiveAd")
+//        print("interstitialDidReceiveAd")
     }
     
    
     func interstitial(_ ad: GADInterstitial, didFailToReceiveAdWithError error: GADRequestError) {
-        print("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
+//        print("interstitial:didFailToReceiveAdWithError: \(error.localizedDescription)")
     }
     
     
     func interstitialWillPresentScreen(_ ad: GADInterstitial) {
-        print("interstitialWillPresentScreen")
+//        print("interstitialWillPresentScreen")
     }
 
     
     func interstitialWillDismissScreen(_ ad: GADInterstitial) {
-        print("interstitialWillDismissScreen")
+//        print("interstitialWillDismissScreen")
     }
     
     func interstitialDidDismissScreen(_ ad: GADInterstitial) {
@@ -332,7 +337,7 @@ class A: UIViewController,UITableViewDelegate,UITableViewDataSource {
     /// Tells the delegate that a user click will open another app
     /// (such as the App Store), backgrounding the current app.
     func interstitialWillLeaveApplication(_ ad: GADInterstitial) {
-        print("interstitialWillLeaveApplication")
+//        print("interstitialWillLeaveApplication")
     }
     
 }

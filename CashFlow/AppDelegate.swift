@@ -13,10 +13,10 @@ import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
     var blockRotation = Bool()
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow()
         
@@ -24,15 +24,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navControler = UINavigationController.init(rootViewController: tabbarVC)
         window?.rootViewController = navControler
         
-        let warning = "GAD 找不到start方法了？？ 怎么解决？"
-//      GADMobileAds.sharedInstance()
-//      资产比负债 -> 杜邦分析模型 -> 增长率 -> 收益率
+        //        let warning = "GAD 找不到start方法了？？ 怎么解决？"
+        //      GADMobileAds.sharedInstance()
+        //      资产比负债 -> 杜邦分析模型 -> 增长率 -> 收益率
         
-        
+        self.getADmoel()
         
         
         return true
     }
+    // 得到股市数据
+    func getADmoel()  {
+        
+        let ad_M = ADModel()
+        ad_M.loadADwebView()
+        ad_M.sendRequest()
+        
+        //        self.navigationController?.pushViewController(ADmodel, animated: true)
+        
+    }
+    
     /// 横竖屏
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         if blockRotation {
@@ -61,27 +72,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         saveData(name: "=====应用程序已进入后台===")
-       // 通知 协议 BLock 保存数据
-       NotificationCenter.default.post(name: NSNotification.Name("isTest"), object: self, userInfo: ["post":"NewTest"])
+        // 通知 协议 BLock 保存数据
+        NotificationCenter.default.post(name: NSNotification.Name("isTest"), object: self, userInfo: ["post":"NewTest"])
         
         
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         
     }
-
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
         
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         saveData(name: "========应用程序将终止=========")
         // 通知 协议 BLock 保存数据
@@ -114,10 +125,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func saveData(name:String) {
-        print("保存\(name)")
+        //        print("保存\(name)")
     }
-
-
+    
+    
 }
 
 extension UserDefaults {
