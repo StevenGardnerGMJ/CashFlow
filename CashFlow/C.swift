@@ -10,7 +10,9 @@ import UIKit
 import GoogleMobileAds
 
 // 资产与负债界面
-class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class C: UIViewController,UITableViewDelegate,UITableViewDataSource, GADRewardBasedVideoAdDelegate, GADInterstitialDelegate {
+    
+    
     
     let mName_C = "Cmodel"
     let mName_Ca = "Cassets"
@@ -50,11 +52,13 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         super.viewDidLoad()
         
         // AdMob 2 广告页C种
-        // 正式 ca-app-pub-9319054953457119/9815967732
-        //      ca-app-pub-3940256099942544/4411468910 测试
-        interstitial = GADInterstitial(adUnitID: "ca-app-pub-3940256099942544/4411468910")
+        interstitial = GADInterstitial(adUnitID: AdMobcaapppubC)
         let request = GADRequest()
         interstitial.load(request)
+        
+        // 重复 广告
+//        interstitial = createAndLoadInterstitial()
+//        GADRewardBasedVideoAd.sharedInstance().delegate = self
         
         
         if assetsValue.count == 0 || liabiValue.count == 0 {
@@ -66,8 +70,8 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         tableC.dataSource = self
         self.view.addSubview(tableC)
         tableC.register(UITableViewCell.self, forCellReuseIdentifier: "cellC")
-        tableC.register(headerAView.self, forHeaderFooterViewReuseIdentifier: "headerA")
-        tableC.register(headerCView.self, forHeaderFooterViewReuseIdentifier: "headerC")
+        tableC.register(headerCView.self, forHeaderFooterViewReuseIdentifier: "headerA")
+        tableC.register(headerC1View.self, forHeaderFooterViewReuseIdentifier: "headerC")
         
     }
     
@@ -170,12 +174,17 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 64
+        
+        if kScreenHeight >= 1024 {
+            return 100
+        } else {
+            return default_row_H //64
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 200
+            return 300
         } else {
             return 40
         }
@@ -199,16 +208,21 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerA") as! headerAView
-            headerView.imagV.image = UIImage(named: "现金流headerV")
-            headerView.titleLab.text = "资产与负债表"
-            headerView.titleLab.textColor = #colorLiteral(red: 0.4218756557, green: 0.681618154, blue: 0.07648370415, alpha: 1)
+            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerA") as! headerCView
+            if kScreenWidth == 1024  {
+                headerView.imagV.image = UIImage(named: "FrogiPad1024C")
+            } else if kScreenWidth >= 1366 {
+                headerView.imagV.image = UIImage(named: "FrogiPad1366C")
+            } else {
+                headerView.imagV.image = UIImage(named: "FrogiPhone414C")
+            }
+            
             headerView.statisticsBtn.addTarget(self, action: #selector(showStatistics), for: .touchUpInside)
             headerView.adBtn.addTarget(self, action: #selector(showAD), for: .touchUpInside)
             return headerView
             
         } else {
-            let headView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerC") as! headerCView
+            let headView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "headerC") as! headerC1View
             if section == 1 {
                 headView.titleL.text = "资产列表"
                 headView.contentBtn.tag = 1
@@ -221,19 +235,6 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             return headView
         }
     }
-    
-    // MARK: ========= 广告 ========
-    @objc func showAD() {
-        if interstitial.isReady {
-            interstitial.present(fromRootViewController: self)
-        } else {
-            let AD1 = ADVC1()
-            self.navigationController?.pushViewController(AD1, animated: true)
-        }
-        
-    }
-    
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cellC")
@@ -265,8 +266,14 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         }
         let nameStr = cell?.textLabel?.text ?? ""
         cell?.imageView?.image = UIImage(named: nameStr)
-        cell?.textLabel?.textColor = #colorLiteral(red: 0.4218756557, green: 0.681618154, blue: 0.07648370415, alpha: 1)
-        cell?.textLabel?.font = .systemFont(ofSize: 19)
+        cell?.textLabel?.textColor = #colorLiteral(red: 0.6056007743, green: 0.2474309206, blue: 0.0722637102, alpha: 1)
+        
+        if kScreenHeight >= 1024 {
+            cell?.textLabel?.font = .systemFont(ofSize: 30)
+            cell?.detailTextLabel?.font = .systemFont(ofSize: 28)
+        } else {
+            cell?.textLabel?.font = .systemFont(ofSize: 19)
+        }
         return cell!
     }
     
@@ -304,24 +311,66 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         self.present(alterC, animated: true, completion: nil)
     }
     
+    
+    // MARK: ========= 广告 ========
+    @objc func showAD() {
+        
+        if interstitial.isReady {
+            interstitial.present(fromRootViewController: self)
+        } else {
+            
+            let AD = ADVC2()
+            AD.markerName = "china" // 中国股市
+            self.navigationController?.pushViewController(AD, animated: true)
+        }
+        
+        //        if GADRewardBasedVideoAd.sharedInstance().isReady == true {
+        //          GADRewardBasedVideoAd.sharedInstance().present(fromRootViewController: self)
+        //        }
+        
+    }
+    
+    func createAndLoadInterstitial() -> GADInterstitial {
+      let interstitial = GADInterstitial(adUnitID: AdMobcaapppubC)
+      interstitial.delegate = self
+      interstitial.load(GADRequest())
+      return interstitial
+    }
+
+    func interstitialDidDismissScreen(_ ad: GADInterstitial) {
+      interstitial = createAndLoadInterstitial()
+    }
+    
+    func rewardBasedVideoAd(_ rewardBasedVideoAd: GADRewardBasedVideoAd, didRewardUserWith reward: GADAdReward) {
+        
+        let AD = ADVC2()
+        AD.markerName = "china" // 中国股市
+        self.navigationController?.pushViewController(AD, animated: true)
+    }
+    // 下一次
+    func rewardBasedVideoAdDidClose(_ rewardBasedVideoAd: GADRewardBasedVideoAd) {
+        GADRewardBasedVideoAd.sharedInstance().load(GADRequest(),
+                                                    withAdUnitID: AdMobA)
+    }
+    
+    // 柱状图 
     @objc func showStatistics() {
         
-        //        if interstitial.isReady {
-        //            interstitial.present(fromRootViewController: self)
-        //        } else {
-        //            print("Ad wasn't ready")
-        let chartVC = CFBarChartVC()// CFLineChartVC()
-        chartVC.assetsArr   = self.assets
-        chartVC.assetsValue = self.assetsValue
-        chartVC.liabilities = self.liabilities
-        chartVC.liabilValue = self.liabiValue
-        self.navigationController?.pushViewController(chartVC, animated: true)
-        //        }
+        if interstitial.isReady {
+            interstitial.present(fromRootViewController: self)
+        } else {
+            let chartVC = CFBarChartVC()// CFLineChartVC()
+            chartVC.assetsArr   = self.assets
+            chartVC.assetsValue = self.assetsValue
+            chartVC.liabilities = self.liabilities
+            chartVC.liabilValue = self.liabiValue
+            self.navigationController?.pushViewController(chartVC, animated: true)
+        }
     }
     
     
     @objc func newAssetsLib(inP:UIButton){
-        //        print("增加资产负债 \(inP.tag)")
+        
         var row = 0
         switch inP.tag  {
         case 1:
@@ -377,9 +426,6 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     
-    
-    
-    
     /// MARK: 数据操作
     
     func readData_C(){
@@ -418,7 +464,7 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
             if arr.count > 0 {
                 for c in arr {
                     //                    print(c.assets, c.liabilities, c.relations)
-                    let de = Decimal(c.relations)
+//                    let de = Decimal(c.relations)
                     //                    print(de)
                     self.relations = Int(c.relations)// 仅需
                 }
@@ -463,13 +509,11 @@ class C: UIViewController,UITableViewDelegate,UITableViewDataSource {
         }
     }
     
-    
-    
 }
 
 
 /// MARK: -------C界面 头部 负债列表
-class headerCView: UITableViewHeaderFooterView {
+class headerC1View: UITableViewHeaderFooterView {
     let imageV = UIImageView()
     let titleL = UILabel()
     let contentBtn = UIButton()
@@ -498,8 +542,8 @@ class headerCView: UITableViewHeaderFooterView {
         contentBtn.frame = CGRect(x: self.contentView.frame.size.width - 60, y: 0, width: 40, height: 30)
         contentBtn.setTitle("增加", for: .normal)
         contentBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14.0)
-        contentBtn.setTitleColor(UIColor.black, for: .normal)
-        contentBtn.backgroundColor = UIColor.clear
+//        contentBtn.setTitleColor(UIColor.black, for: .normal)
+        contentBtn.backgroundColor = UIColor.gray
         contentBtn.layer.cornerRadius = 8
         contentBtn.layer.masksToBounds = true
         contentBtn.layer.borderColor = UIColor.gray.cgColor
@@ -507,6 +551,39 @@ class headerCView: UITableViewHeaderFooterView {
     }
     
 }
+
+class headerCView: UITableViewHeaderFooterView {
+    
+    let imagV = UIImageView() // 背景图
+    let statisticsBtn = UIButton()// 统计按钮
+    let adBtn = UIButton()   // 广告按钮
+    
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        contentView.backgroundColor = UIColor.gray
+        contentView.addSubview(imagV)
+        contentView.addSubview(statisticsBtn)
+        contentView.addSubview(adBtn)
+
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        imagV.frame = CGRect(x: 0, y: 0, width: self.contentView.frame.width, height: self.contentView.frame.height)
+        statisticsBtn.frame = CGRect(x: self.contentView.frame.width - 50, y: 10, width: 40, height: 30)
+        adBtn.frame = CGRect(x: 10, y: 5, width: 40, height: 40)
+    
+        statisticsBtn.backgroundColor = UIColor.clear
+        statisticsBtn.setImage(UIImage(named: "统计"), for: .normal)
+        adBtn.backgroundColor = UIColor.clear
+        adBtn.setImage(UIImage(named: "广告"), for: .normal)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 
 
 

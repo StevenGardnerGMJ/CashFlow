@@ -19,7 +19,9 @@ class ADVC1: UIViewController,UITextFieldDelegate,WKUIDelegate,WKNavigationDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        
+    
+
 //     纳斯达克指数 NASDAQ: 7417.86  字体大红27号
 //     市盈率(P/E Ratio): 22.7      字体大红27号
 //     (2020-03-24)(数据来源: CNN)  灰色19号

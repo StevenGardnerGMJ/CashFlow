@@ -135,7 +135,7 @@ func modifyClass() {
     }
 }
 
-//MARK:    删除班级信息
+//MARK:    删除信息
 func deleteClass(modelname:String) -> Void {
    let app = UIApplication.shared.delegate as! AppDelegate
    let context = getContext()
@@ -151,7 +151,7 @@ func deleteClass(modelname:String) -> Void {
     do {
         try context.execute(asyncFetchRequest)
     } catch  {
-//        print("error")
+        print("error删除表出错")
     }
 }
 
@@ -163,7 +163,7 @@ func addCoreDataClass(arrs:Array<Any>,keyArr:Array<String>,mName:String){
     
     var i = 0 // 数据
     for _ in oArr {
-        
+        // 执行 oArr.count
         let context = getContext()
         let Entity = NSEntityDescription.entity(forEntityName: mName, in: context)
         let classEntity = NSManagedObject(entity: Entity!, insertInto: context)
@@ -190,7 +190,7 @@ func addCoreDataClass(arrs:Array<Any>,keyArr:Array<String>,mName:String){
     }
 }
 
-// 插入信息   arraya: 变量数组    keyArr: 数据库名称
+// 插入信息   arraya: 变量数组    keyArr: 数据库名称arr
 func insertClass(arrays:Array<Any>,keyArr:Array<String>,modelname:String) {
     let context = getContext()
     let Entity = NSEntityDescription.entity(forEntityName: modelname, in: context)
@@ -276,9 +276,25 @@ public let default_H:CGFloat = 40
 public let default_row_H:CGFloat = 64
 public let default_w:CGFloat = 200
 
+public let kScreenWidth  = UIScreen.main.bounds.width
+public let kScreenHeight = UIScreen.main.bounds.height
 
 
+#if DEBUG
+//AdMob 测试
+public let AdMobcaapppubA:String = "ca-app-pub-3940256099942544/4411468910"
+public let AdMobcaapppubB:String = "ca-app-pub-3940256099942544/4411468910"
+public let AdMobcaapppubC:String = "ca-app-pub-3940256099942544/4411468910"
+public let AdMobA:String = "ca-app-pub-3940256099942544/1712485313"
 
+#else
+// Admob 正式: 避免加载过多广告引起用户不满
+public let AdMobcaapppubA:String = "ca-app-pub-9319054953457119/9902763490"
+public let AdMobcaapppubB:String = "ca-app-pub-9319054953457119/7342558071"
+public let AdMobcaapppubC:String = "ca-app-pub-9319054953457119/9815967732"
+public let AdMobA:String = "ca-app-pub-9319054953457119/2825309081"
+
+#endif
 
 
 

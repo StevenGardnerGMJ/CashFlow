@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import iAd
 import GoogleMobileAds
+import AdSupport
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,29 +20,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var blockRotation = Bool()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        window = UIWindow()
         
+        // 添加上证优秀公司？ 资产归类一次？
+        GADRewardBasedVideoAd.sharedInstance().load(GADRequest(),
+              withAdUnitID: AdMobA)
+        
+        window = UIWindow()
         let tabbarVC = CFtabBarViewController()
         let navControler = UINavigationController.init(rootViewController: tabbarVC)
         window?.rootViewController = navControler
+
         
-        //        let warning = "GAD 找不到start方法了？？ 怎么解决？"
-        //      GADMobileAds.sharedInstance()
         //      资产比负债 -> 杜邦分析模型 -> 增长率 -> 收益率
         
-        self.getADmoel()
-        
-        
+        self.getADmoel() // 得到股市数据
+    
         return true
     }
     // 得到股市数据
     func getADmoel()  {
+        if kScreenWidth >= 1024 {
+            let ad_M = ADModelPad()
+            ad_M.loadADwebView()
+        } else {
+            let ad_M = ADModel()
+            ad_M.loadADwebView()
+            
+        }
         
-        let ad_M = ADModel()
-        ad_M.loadADwebView()
-        ad_M.sendRequest()
-        
-        //        self.navigationController?.pushViewController(ADmodel, animated: true)
+    
+    }
+    func  googleSDKversion(){
+       
         
     }
     

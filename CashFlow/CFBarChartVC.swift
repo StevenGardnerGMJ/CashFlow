@@ -29,19 +29,19 @@ class CFBarChartVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = getColor()//UIColor.white
         
         appDelegate.blockRotation = true // 可以横竖屏
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "横屏"), style: .plain, target: self, action: #selector(orientationClick))
         
         // 柱状图统计
-        basicBarChart.backgroundColor = UIColor.white
+        basicBarChart.backgroundColor = getColor()//UIColor.black
         basicBarChart.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(basicBarChart)
         
         // 气泡状统计
-        barChart.backgroundColor = UIColor.white
+        barChart.backgroundColor = getColor()//UIColor.black
         barChart.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(barChart)
         
@@ -166,6 +166,21 @@ class CFBarChartVC: UIViewController {
     }
 
 }
+
+// 深色模式
+fileprivate func getColor() -> UIColor {
+    if #available(iOS 13.0, *) {
+        return UIColor { (collection) -> UIColor in
+            if (collection.userInterfaceStyle == .dark) {
+                return UIColor.clear
+            }
+            return UIColor.white
+        }
+    } else {
+        return UIColor.white
+    }
+}
+
 
 
 //        barChart.frame = CGRect(x: 0, y: basicBarChart.frame.size.height, width: self.view.bounds.width, height: self.view.bounds.height / 2.0)

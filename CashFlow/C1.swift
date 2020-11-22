@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StoreKit
 
 // 人情关系界面
 class C1: UITableViewController {
@@ -25,6 +26,8 @@ class C1: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 弹出系统好评
+        SKStoreReviewController.requestReview()
         
         //        self.navigationController?.title = "C1"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "增加"), style: .plain, target: self, action: #selector(addRelations))
@@ -55,7 +58,13 @@ class C1: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 64 //预估高度
+        
+        if kScreenHeight >= 1024 {
+            return 120
+        } else {
+            return 64 //预估高度
+        }
+        
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -106,6 +115,10 @@ class C1: UITableViewController {
             cell.textLabel?.text = defaultArr[indexPath.row]
             cell.detailTextLabel?.text = dateArr[indexPath.row]
             cell.textLabel?.numberOfLines = 0
+            if kScreenWidth >= 1024 {
+                cell.textLabel?.font = .systemFont(ofSize: 30)
+                cell.detailTextLabel?.font = .systemFont(ofSize: 26)
+            }
             return cell
             
         }

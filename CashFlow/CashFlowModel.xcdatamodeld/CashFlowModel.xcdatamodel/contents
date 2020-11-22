@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G73" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Amodel" representedClassName="Amodel" syncable="YES" codeGenerationType="class">
         <attribute name="myinfo" optional="YES" attributeType="String"/>
         <attribute name="status" optional="YES" attributeType="String"/>
@@ -45,6 +45,14 @@
         <attribute name="person" optional="YES" attributeType="String"/>
         <attribute name="value" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="Record" representedClassName="Record" syncable="YES" codeGenerationType="class">
+        <attribute name="decimal" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="ie" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="integer" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="titledate" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Timemodel" representedClassName="Timemodel" syncable="YES" codeGenerationType="class">
         <attribute name="time" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
@@ -55,11 +63,12 @@
         <element name="Bincome" positionX="-9" positionY="27" width="128" height="75"/>
         <element name="Bmodel" positionX="-18" positionY="27" width="128" height="75"/>
         <element name="C1model" positionX="27" positionY="90" width="128" height="75"/>
+        <element name="CachedURLResponse" positionX="-18" positionY="54" width="128" height="118"/>
         <element name="Cassets" positionX="9" positionY="72" width="128" height="30"/>
         <element name="CLiabilities" positionX="18" positionY="81" width="128" height="30"/>
         <element name="Cmodel" positionX="18" positionY="63" width="128" height="90"/>
         <element name="Myinfo" positionX="-18" positionY="18" width="128" height="30"/>
         <element name="Timemodel" positionX="-18" positionY="18" width="128" height="60"/>
-        <element name="CachedURLResponse" positionX="-18" positionY="54" width="128" height="118"/>
+        <element name="Record" positionX="-18" positionY="54" width="128" height="133"/>
     </elements>
 </model>

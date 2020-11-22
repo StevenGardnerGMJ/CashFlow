@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6389D2AC21E882E80026818D"
-               BuildableName = "CashFlow.app"
+               BuildableName = "&#x9752;&#x86d9;&#x8bb0;&#x8d26;.app"
                BlueprintName = "CashFlow"
                ReferencedContainer = "container:CashFlow.xcodeproj">
             </BuildableReference>
@@ -23,7 +23,7 @@
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6389D2AC21E882E80026818D"
-            BuildableName = "CashFlow.app"
+            BuildableName = "&#x9752;&#x86d9;&#x8bb0;&#x8d26;.app"
             BlueprintName = "CashFlow"
             ReferencedContainer = "container:CashFlow.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6389D2AC21E882E80026818D"
-            BuildableName = "CashFlow.app"
+            BuildableName = "&#x9752;&#x86d9;&#x8bb0;&#x8d26;.app"
             BlueprintName = "CashFlow"
             ReferencedContainer = "container:CashFlow.xcodeproj">
          </BuildableReference>
